@@ -36,6 +36,9 @@ OF SUCH DAMAGE.
 
 #include "main.h"
 #include "inverter.h"
+
+
+
 void gpio_config(void);
 void rcu_config(void);
 void uart_init(void);
@@ -44,6 +47,7 @@ void spi0_init(void);
 void pwm_config_lcd_bl(void);
 void pwm_config_buzzer(void);
 void heat_timer_config(void);
+void i2c_config(void);
 
 
 uint32_t sck;
@@ -58,11 +62,12 @@ int main(void)
 	systick_config();
 	rcu_config();
 	gpio_config();
-	TUYA_ON;
-	//spi0_init();
-	//adc_config();
-	//pwm_config_buzzer();
-	//pwm_config_lcd_bl();
+	//TUYA_ON;
+	spi0_init();
+	adc_config();
+	i2c_config();
+	pwm_config_buzzer();
+	pwm_config_lcd_bl();
 	//heat_timer_config();
   //sck = rcu_clock_freq_get(CK_APB1);
 	//sck = rcu_clock_freq_get(CK_SYS);
@@ -71,17 +76,15 @@ int main(void)
 	//timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,50);
 	//timer_channel_output_pulse_value_config(TIMER16,TIMER_CH_0,500);
 
-   //loop();
+
+  loop();
 }
 void TIMER_Heat_callback()
 {
 
 }
 
-uint32_t HAL_GetTick()
-{
-	return SysTick->VAL;
-}
+
 
 void rcu_config(void)
 {
@@ -94,6 +97,8 @@ void rcu_config(void)
 		rcu_periph_clock_enable(RCU_USART1);
 		rcu_periph_clock_enable(RCU_TIMER16);
 	  rcu_periph_clock_enable(RCU_TIMER1);
+	  rcu_periph_clock_enable(RCU_ADC);
+	  rcu_periph_clock_enable(RCU_I2C0);
     // ADCCLK = PCLK2/6 
     rcu_adc_clock_config(RCU_ADCCK_APB2_DIV6);
 
@@ -118,8 +123,8 @@ void gpio_config(void)
 	
 		// Buzzer PWM pin
 	  gpio_af_set(GPIOB, GPIO_AF_2, GPIO_PIN_9);
-	  gpio_mode_set(GPIOB, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO_PIN_9);
-    gpio_output_options_set(GPIOB, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ,GPIO_PIN_9);
+	  gpio_mode_set(GPIOB, GPIO_MODE_AF, GPIO_PUPD_PULLDOWN, GPIO_PIN_9);
+    gpio_output_options_set(GPIOB, GPIO_OTYPE_PP, GPIO_OSPEED_2MHZ,GPIO_PIN_9);
     
 		// I2C pins
     gpio_af_set(GPIOA, GPIO_AF_4, GPIO_PIN_9);
@@ -150,9 +155,23 @@ void gpio_config(void)
 
 }
 
+void i2c_config(void)
+{
+    /* enable I2C clock */
+    
+    /* configure I2C clock */
+    i2c_clock_config(I2C0,400000,I2C_DTCY_2);
+    /* configure I2C address */
+    i2c_mode_addr_config(I2C0,I2C_I2CMODE_ENABLE,I2C_ADDFORMAT_7BITS,0x81);
+    /* enable I2C0 */
+    i2c_enable(I2C0);
+    /* enable acknowledge */
+    i2c_ack_config(I2C0,I2C_ACK_ENABLE);
+		//i2c_ack_config(I2C0,I2C_ACK_DISABLE);
+}
+
 void adc_config(void)
 {
-	
 	  //adc_discontinuous_mode_config(ADC_REGULAR_CHANNEL, 1);
 	  adc_special_function_config(ADC_SCAN_MODE, DISABLE);
 
@@ -251,9 +270,9 @@ void pwm_config_lcd_bl(void)
     timer_ocintpara.ocnidlestate = TIMER_OCN_IDLE_STATE_LOW;
     timer_channel_output_config(TIMER1,TIMER_CH_0,&timer_ocintpara);
 
-    timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,500);
+    timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,0);
     timer_channel_output_mode_config(TIMER1,TIMER_CH_0,TIMER_OC_MODE_PWM0);
-    timer_channel_output_shadow_config(TIMER1,TIMER_CH_0,TIMER_OC_SHADOW_DISABLE);
+    timer_channel_output_shadow_config(TIMER1,TIMER_CH_0,TIMER_OC_SHADOW_ENABLE);
 
     timer_primary_output_config(TIMER1,ENABLE);
     /* auto-reload preload enable */
@@ -265,14 +284,14 @@ void pwm_config_buzzer(void)
 {
     timer_oc_parameter_struct timer_ocintpara;
     timer_parameter_struct timer_initpara;
-    
-    timer_deinit(TIMER16);
 
+    timer_deinit(TIMER16);
+		
     /* TIMER16 configuration */
     timer_initpara.prescaler         = 84-1;
     timer_initpara.alignedmode       = TIMER_COUNTER_EDGE;
     timer_initpara.counterdirection  = TIMER_COUNTER_UP;
-    timer_initpara.period            = 330;
+    timer_initpara.period            = 2000;
     timer_initpara.clockdivision     = TIMER_CKDIV_DIV1;
     timer_initpara.repetitioncounter = 0;
     timer_init(TIMER16,&timer_initpara);
@@ -292,8 +311,10 @@ void pwm_config_buzzer(void)
 
     timer_primary_output_config(TIMER16,ENABLE);
     /* auto-reload preload enable */
-    timer_auto_reload_shadow_enable(TIMER16);
-    //timer_enable(TIMER16);
+    //timer_auto_reload_shadow_enable(TIMER16);
+    timer_enable(TIMER16);
+		delay_1ms(1);
+    timer_disable(TIMER16);
 		
 }
 
@@ -320,5 +341,8 @@ void heat_timer_config(void)
     timer_enable(TIMER13);
 	  nvic_irq_enable(TIMER13_IRQn, 0,0);
 }
+
+
+
 
 //end

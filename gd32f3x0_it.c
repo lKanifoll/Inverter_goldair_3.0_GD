@@ -35,8 +35,9 @@ OF SUCH DAMAGE.
 
 #include "gd32f3x0_it.h"
 #include "systick.h"
-extern void TIMER_Heat_callback();
 
+extern void TIMER_Heat_callback();
+extern void SysTick_Handler_Callback();
 /*!
     \brief      this function handles NMI exception
     \param[in]  none
@@ -133,7 +134,10 @@ void PendSV_Handler(void)
 */
 void SysTick_Handler(void)
 {
+		
     delay_decrement();
+		SystemTickInc();
+		
 }
 
 

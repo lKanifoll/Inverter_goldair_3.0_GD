@@ -33,6 +33,7 @@
 .\objects\inverter.o: ..\systick.h
 .\objects\inverter.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\inverter.o: ..\inc\pixels.h
+.\objects\inverter.o: ..\inc\ClickButton.h
 .\objects\inverter.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\inverter.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\inverter.o: ..\inc\crc32.h

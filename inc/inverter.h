@@ -174,9 +174,9 @@ void DrawWifi();
 void DrawWindowOpen();
 void open_window_func();
 WorkMode getCalendarMode();
-
-
-
+uint8_t xw09A_read_data(uint8_t button_num);
+void SysTick_Handler_Callback();
+void smooth_backlight(uint8_t mode);
 
 
 

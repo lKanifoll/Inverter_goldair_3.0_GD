@@ -45,5 +45,7 @@ void delay_1ms(uint32_t count);
 void delay_1us(uint32_t count);
 /* delay decrement */
 void delay_decrement(void);
+void SystemTickInc(void);
 
+uint32_t GetSystemTick();
 #endif /* SYS_TICK_H */

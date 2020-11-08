@@ -36,6 +36,9 @@ OF SUCH DAMAGE.
 #include "gd32f3x0.h"
 #include "systick.h"
 
+__IO uint32_t uwtick;
+
+
 volatile static uint32_t delay;
 
 /*!
@@ -90,3 +93,19 @@ void delay_decrement(void)
         delay--;
     }
 }
+
+void SystemTickInc()
+{
+	uwtick++;
+}
+
+uint32_t GetSystemTick()
+{
+	return uwtick;
+}
+
+void SystemTickIRQ()
+{
+	
+}
+

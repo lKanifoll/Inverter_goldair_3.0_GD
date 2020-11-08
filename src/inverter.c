@@ -3,7 +3,7 @@
 
 #include "inverter.h"
 
-//#include "ClickButton.h"
+#include "ClickButton.h"
 #include <string.h>
 #include "math.h"
 #include "crc32.h"
@@ -16,7 +16,7 @@
 //#include <OpenWindowControl.h>
 //#include <wifi.h>
 
-
+uint16_t raw;
 
 /* Private variables ---------------------------------------------------------*/
 /*
@@ -166,21 +166,45 @@ StateBrightness _stateBrightness = StateBrightness_ON;
 //Wifi _wifi;
 uint32_t nextChangeLevel = 0;
 uint32_t refrash_time = 0;
+uint8_t btn_buff[2];
 
-/*
-ClickButton _key_window(Key0_GPIO_Port, Key0_Pin);
-ClickButton _key_power(Key1_GPIO_Port, Key1_Pin);
-ClickButton _key_menu(Key2_GPIO_Port, Key2_Pin);
-ClickButton _key_back(Key3_GPIO_Port, Key3_Pin);
-ClickButton _key_down(Key4_GPIO_Port, Key4_Pin, 500, true);
-ClickButton _key_up(Key5_GPIO_Port, Key5_Pin, 500, true);
-*/
+ClickButton _key_window(12);
+ClickButton _key_power(11);
+ClickButton _key_menu(10);
+ClickButton _key_back(9);
+ClickButton _key_down(7, 500, true);
+ClickButton _key_up(6, 500, true);
+
 Pixels pxs(240, 320);
 static struct DeviceSettings _settings;
 struct tm _dateTime;
 static struct OnOffSettings _onoffSet = { 0, 0};
 static struct PresetSettings _presetSet = {0, 0};
 static struct TemperatureSettings _tempConfig;
+
+void smooth_backlight(uint8_t mode)
+{
+	if(mode)
+	{
+		for(uint16_t i=0;i<500;i+=4)
+		{
+			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,i);
+			//if(i>300) i+=5;
+			//i++;
+			delay_1ms(2);	
+		}	
+	}
+	else
+	{
+		for(uint16_t j=500;j>1;j-=1)
+		{
+			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,j);
+			//if(i>300) i+=5;
+			//i++;
+			//delay_1ms(2);	
+		}
+	}
+}
 
 void SaveFlash()
 {
@@ -372,9 +396,10 @@ void DrawMenu()
 
 void MainScreen()
 {
-	_backLight = 130;	
+	
 	currentMenu = NULL;
 	DrawMainScreen();
+		
 }
 
 void DrawCustomDay(int _old = -1)
@@ -433,12 +458,13 @@ void MenuNext()
 		currentMenu->next();
 	else if (currentMenu->counts > 0)
 	{
-		_backLight = 130;
+		smooth_backlight(0);	
 		currentMenu->selected++;
 		if (currentMenu->selected >= currentMenu->counts)
 			currentMenu->selected = 0;
 	
 		DrawMenu();
+		smooth_backlight(1);	
 	}
 }
 
@@ -453,12 +479,13 @@ void MenuPrev()
 		currentMenu->prev();
 	else if (currentMenu->counts > 0)
 	{
-		_backLight = 130;
+		smooth_backlight(0);	
 		currentMenu->selected--;
 		if (currentMenu->selected < 0)
 			currentMenu->selected = currentMenu->counts - 1;
 		
 		DrawMenu();
+		smooth_backlight(1);	
 	}
 }
 
@@ -521,23 +548,26 @@ void MenuOK()
 		PrepareEditParameter();
 	else
 		AcceptParameter();
-	
+	smooth_backlight(0);
 	DrawMenu();
+	smooth_backlight(1);
 }
 
 void GoOK(int step = 1)
 {
-	//_timeoutSaveFlash = HAL_GetTick();
+	_timeoutSaveFlash = GetSystemTick();
 
 	if ((currentMenu->ID == 411) && (currentMenu->parent->parent->selected == 4))
 	{
 		_modeOK.parent = currentMenu->parent;
 		currentMenu = &_datetimeMenu[1];
 		currentMenu->parent = _modeOK.parent;
+		smooth_backlight(0);
 		pxs.clear();
 		int16_t width, height;
 		pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
 		pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+		smooth_backlight(1);
 		delay_1ms(2000);
 		
 	}	
@@ -546,10 +576,12 @@ void GoOK(int step = 1)
 		_modeOK.parent = currentMenu->parent;
 		currentMenu = &_mainMenu[4];
 		currentMenu->parent = old;
+		smooth_backlight(0);
 		pxs.clear();
 		int16_t width, height;
 		pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
 	  pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+		smooth_backlight(1);
 		delay_1ms(2000);
 	}		
   else
@@ -559,7 +591,7 @@ void GoOK(int step = 1)
 			_modeOK.parent = _modeOK.parent->parent;
 		currentMenu = &_modeOK;
 	}
-	//idleTimeout = HAL_GetTick();
+	idleTimeout = GetSystemTick();
 }
 
 void DrawDateEdit()
@@ -1075,15 +1107,11 @@ void On()
 }
 void MenuBack()
 {
-	_backLight = 130;
-		#ifdef DEBUG
-	printf("MenuBack\n");
-	#endif
-	
 
 	if (currentMenu->parent != NULL)
 	{
 		// if back in schedule to calendar on/off
+		smooth_backlight(0);
 		if ((currentMenu->ID == 51) && (!_settings.calendarOn))
 		{
 			struct MenuItem* old = currentMenu->parent;
@@ -1091,6 +1119,7 @@ void MenuBack()
 			currentMenu->parent = old;
 			_onoffSet.current = _settings.calendarOn;
 			_onoffSet.parameter = _settings.calendarOn;
+			
 			DrawMenu();
 		}
 		else
@@ -1103,6 +1132,7 @@ void MenuBack()
 			currentMenu = currentMenu->parent;
 			DrawMenu();
 		}
+		smooth_backlight(1);
 	}
 	else
 	{
@@ -1207,8 +1237,8 @@ void AcceptParameter()
 				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
 				delay_1ms(1000);
 				pxs.clear();
-				//_timeoutSaveFlash = HAL_GetTick();
-//				idleTimeout = HAL_GetTick();	
+				_timeoutSaveFlash = GetSystemTick();
+				idleTimeout = GetSystemTick();	
 				InitTimer();				
 			}		
 			if (currentMenu->selected == 2)
@@ -1253,8 +1283,8 @@ void AcceptParameter()
 						pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
 						delay_1ms(1000);
 						pxs.clear();
-//						_timeoutSaveFlash = HAL_GetTick();
-//						idleTimeout = HAL_GetTick();
+						_timeoutSaveFlash = GetSystemTick();
+						idleTimeout = GetSystemTick();
 					}
 			if (currentMenu->selected == 3)
 			{
@@ -1298,8 +1328,8 @@ void AcceptParameter()
 				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
 				delay_1ms(1000);
 				pxs.clear();
-				_timeoutSaveFlash = HAL_GetTick();
-				idleTimeout = HAL_GetTick();				
+				_timeoutSaveFlash = GetSystemTick();
+				idleTimeout = GetSystemTick();				
 			}
 			if (currentMenu->selected == 2)
 			{
@@ -1398,10 +1428,12 @@ void AcceptParameter()
 
 void EnterMenu()
 {
+	smooth_backlight(0);	
 	currentMenu = &_menu;
 	currentMenu->selected = 0;
-	_backLight = 130;
+	
 	DrawMenu();
+	smooth_backlight(1);	
 }
 
 void SetPower(int8_t value)
@@ -1501,11 +1533,15 @@ extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			}
 	}
 }
+*/
 
-extern "C" void HAL_SYSTICK_Callback(void)
+void SysTick_Handler_Callback()
 {
-	static int keyTimer = 0;
-
+	
+	
+	
+	//xw09A_read_data(1);
+/*
 	if (keyTimer-- <= 0)
 	{
 		_key_window.update();
@@ -1516,17 +1552,52 @@ extern "C" void HAL_SYSTICK_Callback(void)
 		_key_up.update();
 
 		keyTimer = 5;
-	}
+	}*/
 }
-*/
+uint16_t result;
+uint8_t p_buffer[2];
+uint8_t xw09A_read_data(uint8_t button_num)
+{  
+    while(i2c_flag_get(I2C0, I2C_FLAG_I2CBSY));
+    i2c_start_on_bus(I2C0);
+	
+    while(!i2c_flag_get(I2C0, I2C_FLAG_SBSEND));
+    i2c_master_addressing(I2C0, 0x81, I2C_RECEIVER);
+    i2c_ack_config(I2C0,I2C_ACK_DISABLE);
+		i2c_ackpos_config(I2C0,I2C_ACKPOS_NEXT);
+	
+    while(!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND));    
+    i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+	
+		while(!i2c_flag_get(I2C0, I2C_FLAG_BTC));
+		i2c_stop_on_bus(I2C0);
+		//efff  f7ff
+		//fbff	fdff
+		//ff7f	ffbf
+		
+		p_buffer[0] = i2c_data_receive(I2C0);
+		p_buffer[1] = i2c_data_receive(I2C0);
+		result = ~(p_buffer[0] << 8 | p_buffer[1]);
+		while(I2C_CTL0(I2C0)&0x0200){};
+    i2c_ack_config(I2C0, I2C_ACK_ENABLE);
+    i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
+    
+		if(result & (1 << button_num))
+			return true;
+		else
+			return false;
+}
+
 void beep()
-{/*
+{
 	if (_settings.soundOn)
 	{
-		HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+		//timer_primary_output_config(TIMER16,ENABLE);
+		timer_enable(TIMER16);
 		delay_1ms(20);
-		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
-	}*/
+		//timer_primary_output_config(TIMER16,DISABLE);
+		timer_disable(TIMER16);
+	}
 }
 
 int8_t getTemperature()
@@ -1535,7 +1606,7 @@ int8_t getTemperature()
 //	HAL_ADC_PollForConversion(&hadc, 100);
 //	uint32_t raw = HAL_ADC_GetValue(&hadc);
 //	HAL_ADC_Stop(&hadc);
-	uint32_t raw;
+	
 	while(adc_flag_get(ADC_FLAG_EOC))
 	{
 		raw = adc_regular_data_read();
@@ -1578,10 +1649,10 @@ void DrawWindowOpen()
 {
 	_stateBrightness = StateBrightness_ON;
 	LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
-//	if (_timerBlink < HAL_GetTick())
+	if (_timerBlink < GetSystemTick())
 	{
 		_blink = !_blink;
-//		_timerBlink = HAL_GetTick() + 500;
+		_timerBlink = GetSystemTick() + 500;
 
 		pxs.clear();
 		if (_blink)
@@ -1592,7 +1663,7 @@ void DrawWindowOpen()
 
 void DrawWifi()
 {/*
-	if (_wifi.status() == -1)
+//	if (_wifi.status() == -1)
 	{
 		if (_blink)
 		{
@@ -1602,10 +1673,10 @@ void DrawWifi()
 		return;
 	}
 	
-	if (_timerBlink < HAL_GetTick())
+	if (_timerBlink < GetSystemTick())
 	{
-		_timerBlink = HAL_GetTick();
-		if (_wifi.status() == 0)
+		_timerBlink = GetSystemTick();
+//		if (_wifi.status() == 0)
 		{
 			pxs.setColor(BG_COLOR);
 			if (_settings.workMode == WorkMode_Off)
@@ -1747,6 +1818,7 @@ void DrawTextSelected(int16_t x, int16_t y, char* text, bool selected, bool unde
 
 void DrawMainScreen(uint32_t updater)
 {
+	
 	if ((currentMenu != NULL) && (!_settings.blocked))
 		return;
 
@@ -1758,6 +1830,7 @@ void DrawMainScreen(uint32_t updater)
 	}
 	else                                                                                            
 	{
+		smooth_backlight(0);
 		pxs.clear();
 	}
 	
@@ -1790,8 +1863,8 @@ void DrawMainScreen(uint32_t updater)
 	{
 		if(_settings.workMode == WorkMode_Off)
 			pxs.drawCompressedBitmap(22, 59, (uint8_t*)img_wifi_png_comp);
-		else
-			pxs.drawCompressedBitmap(_xWifi + 6, 125, (uint8_t*)img_wifi_png_comp);	
+		//else
+			//pxs.drawCompressedBitmap(_xWifi + 6, 125, (uint8_t*)img_wifi_png_comp);	
 	}
 //	else
 	{
@@ -1871,6 +1944,11 @@ void DrawMainScreen(uint32_t updater)
 			pxs.print(21, 183, "CUSTOM");
 		else
 			pxs.print(21, 183, "AUTO");
+	}
+	
+  if (updater != 0x01)
+	{
+		smooth_backlight(1);
 	}
 }
 
@@ -2063,10 +2141,12 @@ void startScreen()
 	pxs.clear(); 
 	pxs.displayOn();
 	
-	_backLight = 140;
+	smooth_backlight(0);
 	if (pxs.sizeCompressedBitmap(width, height, img_logo_png_comp) == 0)
 		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2-10, img_logo_png_comp);
-	delay_1ms(2000);	
+	smooth_backlight(1);
+	delay_1ms(2000);
+	smooth_backlight(0);
 	pxs.clear(); 	
 	pxs.setColor(modeColors[0]); 
 	pxs.setFont(ElectroluxSansRegular20a);
@@ -2085,9 +2165,9 @@ void startScreen()
 		sprintf(ver_buffer, "%s%s", "V.", VERSION);	
 		width_t = pxs.getTextWidth(ver_buffer);
 		pxs.print(320/2 - width_t/2, 185, ver_buffer);
- 
+  smooth_backlight(1);
 	delay_1ms(2000);
-	 _backLight = 140;
+	smooth_backlight(0);
 	currentMenu = NULL;
 	nextChangeLevel = 0;
 	if (_settings.calendarOn == 1)
@@ -2152,14 +2232,13 @@ void startScreen()
 
 void deviceON()
 {
-	_backLight = 500;
-	_backLight_div = 0;
+	//smooth_backlight(1);
 	_settings.on = 1;
 	startScreen();
 	_error_fl = 0;
 	InitTimer();
-//	_timeoutSaveFlash = HAL_GetTick();
-//	_timerStart = HAL_GetTick();
+	_timeoutSaveFlash = GetSystemTick();
+	_timerStart = GetSystemTick();
 	
 	if (_settings.heatMode == HeatMode_Auto)
 		SetPower(10);
@@ -2176,10 +2255,11 @@ void deviceOFF()
 	open_window_temp_main_start = 255;
 	window_was_opened = 0;
 	window_is_opened = 0;
+	smooth_backlight(0);
 	pxs.displayOff();
 	pxs.clear();
 	InitTimer();
-//	_timeoutSaveFlash = HAL_GetTick();
+	_timeoutSaveFlash = GetSystemTick();
 }
 
 bool keyPressed()
@@ -2192,7 +2272,7 @@ bool keyPressed()
 		beep();
 		result = false;
 	}	
-//	idleTimeout = HAL_GetTick();
+	idleTimeout = GetSystemTick();
 	
 	if (_settings.blocked && !_settings.on)
 	{
@@ -2212,7 +2292,7 @@ bool keyPressed()
 		if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 		else _stateBrightness = StateBrightness_LOW;
 		blocked();
-		idleTimeout = HAL_GetTick() - 27000;
+		idleTimeout = GetSystemTick() - 27000;
 		result = false;
 	}
 	
@@ -2221,7 +2301,7 @@ bool keyPressed()
 		if((_settings.displayAutoOff) && (_stateBrightness == StateBrightness_OFF))
 		{
 			DrawMainScreen();
-			nextChangeLevel = HAL_GetTick();
+			nextChangeLevel = GetSystemTick();
 		}
 		pxs.displayOn();
 		if(_settings.brightness) _stateBrightness = StateBrightness_ON;
@@ -2229,7 +2309,7 @@ bool keyPressed()
 		
 	}
 	
-	nextChangeLevel = HAL_GetTick() + 5000;
+	nextChangeLevel = GetSystemTick() + 5000;
 	return result;	
 	
 }
@@ -2259,7 +2339,7 @@ bool f_open_window (int8_t temp_current, uint8_t power_current)
 			_settings.workMode = WorkMode_Antifrost;
 			window_was_opened = 1;
 			_settings.calendarOn = 0;
-//			_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+			_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 			DrawMainScreen();
 			return true;
     }
@@ -2334,8 +2414,7 @@ void loop(void)
 	pxs.enableAntialiasing(true);
 	pxs.init();
 	pxs.clear(); 
-	startScreen();
-	//while(1);
+
 	getTemperature();
 	getTemperature();
 	getTemperature();
@@ -2348,7 +2427,7 @@ void loop(void)
 //	  HAL_TIM_Base_Start_IT(&htim7);
 //	  HAL_TIM_Base_Start_IT(&htim14);	
 		startScreen();
-		_timerStart = HAL_GetTick();
+		_timerStart = GetSystemTick();
 		
 	}
 	else
@@ -2358,18 +2437,30 @@ void loop(void)
 		pxs.displayOff();
 	}
 	
-	InitTimer();
+	//InitTimer();
 	if (_settings.heatMode == HeatMode_Auto)
 		SetPower(0);
 	
 	while (1)
   {
+		static int keyTimer = 0;
+		if (keyTimer-- <= 0)
+		{
+			_key_window.update();
+			_key_power.update();
+			_key_menu.update();
+			_key_back.update();
+			_key_down.update();
+			_key_up.update();
+
+			keyTimer = 5;
+		}
 //		LL_IWDG_ReloadCounter(IWDG);
 		//===================================================UART MAINTANCE
 //		_wifi.check(_settings, _error, _timerStart / 1000);
 		//=================================================================
 
-/*
+
 		if (_key_window.getPressed()&& !_error && (currentMenu == NULL))
 		{
 			if(!_settings.on)
@@ -2382,7 +2473,7 @@ void loop(void)
 			if(!window_is_opened)
 			{
 				_settings.modeOpenWindow = !_settings.modeOpenWindow;
-//				_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+				_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 			}
 			open_window_func();
 		}
@@ -2407,13 +2498,13 @@ void loop(void)
 			
 		if(!window_is_opened)
 		{
-//			if (_timeoutSaveFlash != 0 && HAL_GetTick() >= _timeoutSaveFlash)
+			if (_timeoutSaveFlash != 0 && GetSystemTick() >= _timeoutSaveFlash)
 			{
 				_timeoutSaveFlash = 0;
 				SaveFlash();
-				_wifi.sendChanged(_settings, _error, _timerStart / 1000);
+				//_wifi.sendChanged(_settings, _error, _timerStart / 1000);
 			}
-			if (__SaveFlash != 0 && HAL_GetTick() >= __SaveFlash)
+			if (__SaveFlash != 0 && GetSystemTick() >= __SaveFlash)
 			{
 				__SaveFlash = 0;
 				SaveFlash();			
@@ -2426,7 +2517,7 @@ void loop(void)
 					beep();
 					_settings.blocked = !_settings.blocked;
 					pxs.displayOn();
-					idleTimeout = HAL_GetTick();
+					idleTimeout = GetSystemTick();
 					if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 					else _stateBrightness = StateBrightness_LOW;
 					_backLight = 140;
@@ -2434,7 +2525,7 @@ void loop(void)
 						blocked();
 					else
 						unblocked();
-          _timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;				  
+          _timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;				  
 					_key_down.getPressed();
 					_key_up.getPressed();
 					_key_down.getLongPressed();
@@ -2471,7 +2562,7 @@ void loop(void)
 					{
 						_settings.calendarOn = 0;
 						_settings.workMode = WorkMode_Comfort;
-						_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
 						_backLight = 140;
 						DrawMainScreen(updater);
@@ -2482,24 +2573,24 @@ void loop(void)
 					{
 						//_settings.tempComfort = getModeTemperature();
 						_settings.workMode = WorkMode_Comfort;
-						_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
 						_backLight = 140;
 					}
 					else
 					{
 						_settings.tempComfort--;
-						_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						heat_from_cold = 1;
 						if (_settings.tempComfort > MAX_TEMP_COMFORT)
 						{
 							_settings.tempComfort = MIN_TEMP_COMFORT;
-							_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+							_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						}
 						else if (_settings.tempComfort < MIN_TEMP_COMFORT)
 						{
 							_settings.tempComfort = MAX_TEMP_COMFORT;
-							_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+							_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						}
 					}
 					
@@ -2528,7 +2619,7 @@ void loop(void)
 					{
 						_settings.calendarOn = 0;
 						_settings.workMode = WorkMode_Comfort;
-						_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
 						_backLight = 140;
 						DrawMainScreen(updater);
@@ -2539,24 +2630,24 @@ void loop(void)
 					{
 						//_settings.tempComfort = getModeTemperature();
 						_settings.workMode = WorkMode_Comfort;
-						_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
 						_backLight = 140;
 					}
 					else
 					{
 						_settings.tempComfort++;
-						_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						heat_from_cold = 1;
 						if (_settings.tempComfort > MAX_TEMP_COMFORT)
 						{
 							_settings.tempComfort = MIN_TEMP_COMFORT;
-							_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+							_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						}
 						else if (_settings.tempComfort < MIN_TEMP_COMFORT)
 						{
 							_settings.tempComfort = MAX_TEMP_COMFORT;
-							_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+							_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						}
 					}
 					DrawMainScreen(updater);
@@ -2614,45 +2705,45 @@ void loop(void)
 							_settings.workMode = WorkMode_Comfort;
 					}
 					
-					_timeoutSaveFlash = HAL_GetTick() + SAVE_TIMEOUT;
+					_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 					_backLight = 140;
 					DrawMainScreen();
 				}
 			}
-		}*/
+		}
 			if(!_settings.on)
 				continue;		
 	//==========================================================buttons end	
 		
 		if(refresh_system)
 		{
-//			idleTimeout = HAL_GetTick();
+			idleTimeout = GetSystemTick();
 		}
 		// auto switch off
 		if (_settings.displayAutoOff && !_error && !window_is_opened)
 		{
-			if (1)//(HAL_GetTick() > idleTimeout + 30000)
+			if(GetSystemTick() > idleTimeout + 30000)
 			{
 				_stateBrightness = StateBrightness_OFF;
 				_backLight = 140;
 				LL_GPIO_ResetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
 			}
-			else if (HAL_GetTick() > idleTimeout + 15000)
+			else if (GetSystemTick() > idleTimeout + 15000)
 			{
 				_backLight = 80;
 				_stateBrightness = StateBrightness_LOW;
 			}
 		}
 
-		if(1) //(HAL_GetTick() > idleTimeout + 2000 && currentMenu != NULL && currentMenu->ID == 999)
+		if(GetSystemTick() > idleTimeout + 2000 && currentMenu != NULL && currentMenu->ID == 999)
 		{
 			MenuBack();
 		}
-		else if (HAL_GetTick() > idleTimeout + 15000 && currentMenu != NULL)
+		else if (GetSystemTick() > idleTimeout + 15000 && currentMenu != NULL)
 		{
 			MainScreen();
 		}
-		if ((HAL_GetTick() > (idleTimeout + 5000)) && (_settings.brightness == 0) && (_stateBrightness < StateBrightness_OFF) /*&& (!_settings.displayAutoOff)*/) // If 50% brightness, back from 100% to 50% after 5s
+		if ((GetSystemTick() > (idleTimeout + 5000)) && (_settings.brightness == 0) && (_stateBrightness < StateBrightness_OFF) /*&& (!_settings.displayAutoOff)*/) // If 50% brightness, back from 100% to 50% after 5s
 		{
 			//_stateBrightness = StateBrightness_LOW;
 		}		
@@ -2660,7 +2751,7 @@ void loop(void)
 		
 		
 //============================================================================= refrash display	
-		if (((HAL_GetTick() > nextChangeLevel) || (refresh_system)) && _settings.on)
+		if (((GetSystemTick() > nextChangeLevel) || (refresh_system)) && _settings.on)
 		{	
 
 			temp_current = getTemperature();
@@ -2840,18 +2931,18 @@ void loop(void)
 					}						
 				if(refresh_system)
 				{
-					idleTimeout = HAL_GetTick();
+					idleTimeout = GetSystemTick();
 					refresh_system = false;
 				}
 				else
 				{
-					nextChangeLevel = HAL_GetTick() + 60000;			
+					nextChangeLevel = GetSystemTick() + 60000;			
 				}					
 			}
 		}
 		
 //========================================================= refrash 1 sec		
-		//if (HAL_GetTick() > refrash_time && _settings.on)
+		if (GetSystemTick() > refrash_time && _settings.on)
 		{	
 			if (currentMenu == NULL && !_error)
 			{
@@ -2893,7 +2984,7 @@ void loop(void)
 					if (_settings.workMode != currentWorkMode)
 					{
 						_settings.workMode = currentWorkMode;
-						nextChangeLevel = HAL_GetTick() + 1000;
+						nextChangeLevel = GetSystemTick() + 1000;
 						_backLight = 140;
 						DrawMainScreen();
 					}
@@ -2915,7 +3006,7 @@ void loop(void)
 				  }
 					show_icon = !show_icon;
 				}
-			refrash_time = HAL_GetTick() + 1000;
+			refrash_time = GetSystemTick() + 1000;
 		}
 //=============================================================================================		
 		if (currentMenu == NULL && !_error)
