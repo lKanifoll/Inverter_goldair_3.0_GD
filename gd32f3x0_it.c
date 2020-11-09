@@ -38,6 +38,8 @@ OF SUCH DAMAGE.
 
 extern void TIMER_Heat_callback();
 extern void SysTick_Handler_Callback();
+extern void receive_uart_int();
+extern uint8_t idle_flag_stat;
 /*!
     \brief      this function handles NMI exception
     \param[in]  none
@@ -154,5 +156,42 @@ void TIMER13_IRQHandler(void)
         timer_interrupt_flag_clear(TIMER13, TIMER_INT_UP);
         /* toggle selected led */
         TIMER_Heat_callback();
+    }
+}
+
+/*!
+    \brief      this function handles USART RBNE interrupt request and TBE interrupt request
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+void USART1_IRQHandler(void)
+{
+    if(RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_RBNE)){
+        /* receive data */
+       // receiver_buffer[rxcount++] = usart_data_receive(USART1);
+       //if(rxcount == receivesize){
+       //     usart_interrupt_disable(USART1, USART_INT_RBNE);
+       //}
+			 
+			receive_uart_int();
+			return;
+    }
+    if(RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_IDLE)){
+        /* receive data */
+       // receiver_buffer[rxcount++] = usart_data_receive(USART1);
+       //if(rxcount == receivesize){
+       //     usart_interrupt_disable(USART1, USART_INT_RBNE);
+       //}
+			 usart_interrupt_flag_clear(USART1, USART_INT_FLAG_IDLE);
+			 idle_flag_stat = 1;
+			 receive_uart_int();
+    }
+    if(RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_TBE)){
+        /* transmit data */
+        //usart_data_transmit(USART1, transmitter_buffer[txcount++]);
+        //if(txcount == transfersize){
+        //    usart_interrupt_disable(USART1, USART_INT_TBE);
+        //}
     }
 }

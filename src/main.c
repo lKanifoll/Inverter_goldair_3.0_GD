@@ -36,7 +36,7 @@ OF SUCH DAMAGE.
 
 #include "main.h"
 #include "inverter.h"
-
+#include <stdio.h>
 
 
 void gpio_config(void);
@@ -51,8 +51,9 @@ void i2c_config(void);
 
 
 uint32_t sck;
-
-
+uint8_t recv_buffer[16];
+uint8_t recv_buffer_compl[16];
+uint8_t idle_flag_stat;
 
 
 
@@ -62,7 +63,8 @@ int main(void)
 	systick_config();
 	rcu_config();
 	gpio_config();
-	//TUYA_ON;
+	TUYA_ON;
+	uart_init();
 	spi0_init();
 	adc_config();
 	i2c_config();
@@ -76,15 +78,31 @@ int main(void)
 	//timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,50);
 	//timer_channel_output_pulse_value_config(TIMER16,TIMER_CH_0,500);
 
+	while(1)
+	{
 
-  loop();
+	}
+  //loop();
 }
 void TIMER_Heat_callback()
 {
 
 }
 
-
+void receive_uart_int()
+{
+	static uint8_t i = 0;
+	//while(RESET == usart_flag_get(USART1, USART_FLAG_IDLE))
+	if(idle_flag_stat==0)
+	{
+		recv_buffer[i++] = usart_data_receive(USART1);
+	}
+	if(idle_flag_stat)
+	{
+		i = 0;
+		idle_flag_stat = 0;
+	}
+}
 
 void rcu_config(void)
 {
@@ -201,6 +219,8 @@ void adc_config(void)
 void uart_init(void)
 {
     /* USART configure */
+	  nvic_irq_enable(USART1_IRQn, 0, 0);
+	
     usart_deinit(USART1);
 		usart_parity_config(USART1, USART_PM_NONE);
 		usart_word_length_set(USART1, USART_WL_8BIT);
@@ -210,6 +230,12 @@ void uart_init(void)
     usart_dma_receive_config(USART1, USART_DENR_ENABLE);
 		usart_baudrate_set(USART1, 9600U);
     usart_enable(USART1);
+	
+    //usart_interrupt_enable(USART1, USART_INT_TBE);
+    while (RESET == usart_flag_get(USART1, USART_FLAG_TC));
+    usart_interrupt_enable(USART1, USART_INT_RBNE);
+		usart_interrupt_enable(USART1, USART_INT_IDLE);
+		delay_1ms(100);
 }
 
 void spi0_init(void)
