@@ -410,6 +410,11 @@
               <FileType>8</FileType>
               <FilePath>..\src\Pixels.cpp</FilePath>
             </File>
+            <File>
+              <FileName>wifi.c</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\src\wifi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

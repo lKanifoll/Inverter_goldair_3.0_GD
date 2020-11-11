@@ -48,12 +48,17 @@ void pwm_config_lcd_bl(void);
 void pwm_config_buzzer(void);
 void heat_timer_config(void);
 void i2c_config(void);
+void RTC_config(void);
+void rtc_setup(void);
+void rtc_show_time(void);
 
 
 uint32_t sck;
-uint8_t recv_buffer[16];
-uint8_t recv_buffer_compl[16];
-uint8_t idle_flag_stat;
+
+
+
+__IO uint32_t prescaler_a = 0, prescaler_s = 0;
+rtc_parameter_struct rtc_initpara;
 
 
 
@@ -63,13 +68,20 @@ int main(void)
 	systick_config();
 	rcu_config();
 	gpio_config();
-	TUYA_ON;
+	TUYA_OFF;
 	uart_init();
 	spi0_init();
 	adc_config();
 	i2c_config();
 	pwm_config_buzzer();
 	pwm_config_lcd_bl();
+	
+	pmu_backup_write_enable();
+	
+	
+	RTC_config();
+	//delay_1ms(500);
+	rtc_setup();
 	//heat_timer_config();
   //sck = rcu_clock_freq_get(CK_APB1);
 	//sck = rcu_clock_freq_get(CK_SYS);
@@ -80,7 +92,9 @@ int main(void)
 
 	while(1)
 	{
-
+		//usart_data_transmit(USART1,  (uint8_t)0xff);
+		//while(RESET == usart_flag_get(USART1, USART_FLAG_TBE));
+		//delay_1ms(500);
 	}
   //loop();
 }
@@ -89,20 +103,7 @@ void TIMER_Heat_callback()
 
 }
 
-void receive_uart_int()
-{
-	static uint8_t i = 0;
-	//while(RESET == usart_flag_get(USART1, USART_FLAG_IDLE))
-	if(idle_flag_stat==0)
-	{
-		recv_buffer[i++] = usart_data_receive(USART1);
-	}
-	if(idle_flag_stat)
-	{
-		i = 0;
-		idle_flag_stat = 0;
-	}
-}
+
 
 void rcu_config(void)
 {
@@ -117,6 +118,8 @@ void rcu_config(void)
 	  rcu_periph_clock_enable(RCU_TIMER1);
 	  rcu_periph_clock_enable(RCU_ADC);
 	  rcu_periph_clock_enable(RCU_I2C0);
+	  rcu_periph_clock_enable(RCU_PMU);
+	 
     // ADCCLK = PCLK2/6 
     rcu_adc_clock_config(RCU_ADCCK_APB2_DIV6);
 
@@ -229,9 +232,11 @@ void uart_init(void)
     usart_transmit_config(USART1, USART_TRANSMIT_ENABLE);
     usart_dma_receive_config(USART1, USART_DENR_ENABLE);
 		usart_baudrate_set(USART1, 9600U);
+	  //usart_halfduplex_enable(USART1);
     usart_enable(USART1);
 	
-    //usart_interrupt_enable(USART1, USART_INT_TBE);
+    
+	
     while (RESET == usart_flag_get(USART1, USART_FLAG_TC));
     usart_interrupt_enable(USART1, USART_INT_RBNE);
 		usart_interrupt_enable(USART1, USART_INT_IDLE);
@@ -370,5 +375,64 @@ void heat_timer_config(void)
 
 
 
+void RTC_config(void)
+{
+	  rcu_periph_clock_enable(RCU_PMU);
+    pmu_backup_write_enable();
+		rcu_osci_on(RCU_LXTAL);
+		/* wait till LXTAL is ready */
+		rcu_osci_stab_wait(RCU_LXTAL);
+		/* select the RTC clock source */
+		rcu_rtc_clock_config(RCU_RTCSRC_LXTAL);
+		
+		prescaler_s = 0xFF;
+		prescaler_a = 0x7F;
 
+    rcu_periph_clock_enable(RCU_RTC);
+    rtc_register_sync_wait();
+}
+
+void rtc_setup(void)
+{
+    /* setup RTC time value */
+    //uint32_t tmp_hh = 0xFF, tmp_mm = 0xFF, tmp_ss = 0xFF;
+
+    rtc_initpara.rtc_factor_asyn = prescaler_a;
+    rtc_initpara.rtc_factor_syn = prescaler_s;
+    rtc_initpara.rtc_year = 0x20;
+    rtc_initpara.rtc_day_of_week = RTC_WEDSDAY;
+    rtc_initpara.rtc_month = RTC_NOV;
+    rtc_initpara.rtc_date = 0x11;
+    rtc_initpara.rtc_display_format = RTC_24HOUR;
+    //rtc_initpara.rtc_am_pm = RTC_PM;
+
+    /* current time input */
+    //printf("=======Configure RTC Time========\n\r");
+    //printf("  please input hour:\n\r");
+
+    rtc_initpara.rtc_hour = 0x17;
+       
+    //printf("  please input minute:\n\r");
+
+    rtc_initpara.rtc_minute = 0x32;
+
+    //printf("  please input seconds:\n\r");
+    rtc_initpara.rtc_second = 0x00;
+
+    /* RTC current time configuration */
+    if(ERROR == rtc_init(&rtc_initpara)){    
+			while(1);
+		}
+
+    //rtc_show_time();
+    //RTC_BKP0 = BKP_VALUE;
+    
+}
+
+void rtc_show_time(void)
+{
+    rtc_current_time_get(&rtc_initpara);  
+    //printf("Current time: %0.2x:%0.2x:%0.2x\n\r", \
+    //      rtc_initpara.rtc_hour, rtc_initpara.rtc_minute, rtc_initpara.rtc_second);
+}
 //end

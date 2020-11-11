@@ -5,6 +5,7 @@
 ".\objects\inverter.o"
 ".\objects\crc32.o"
 ".\objects\pixels.o"
+".\objects\wifi.o"
 ".\objects\system_gd32f3x0.o"
 ".\objects\startup_gd32f3x0.o"
 ".\objects\gd32f3x0_adc.o"

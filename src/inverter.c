@@ -15,7 +15,8 @@
 #include <stddef.h>     /* offsetof */
 //#include <OpenWindowControl.h>
 //#include <wifi.h>
-
+#define RTC_CLOCK_SOURCE_IRC40K 
+#define BKP_VALUE    0x32F0
 uint16_t raw;
 
 /* Private variables ---------------------------------------------------------*/

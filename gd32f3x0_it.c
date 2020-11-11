@@ -175,23 +175,29 @@ void USART1_IRQHandler(void)
        //}
 			 
 			receive_uart_int();
+			//usart_interrupt_enable(USART1, USART_INT_IDLE);
 			return;
     }
-    if(RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_IDLE)){
+    if((RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_IDLE)) && idle_flag_stat == 0){
         /* receive data */
        // receiver_buffer[rxcount++] = usart_data_receive(USART1);
        //if(rxcount == receivesize){
-       //     usart_interrupt_disable(USART1, USART_INT_RBNE);
+        //usart_interrupt_disable(USART1, USART_INT_RBNE);
+				
        //}
 			 usart_interrupt_flag_clear(USART1, USART_INT_FLAG_IDLE);
+			 //usart_interrupt_disable(USART1, USART_INT_IDLE);
+			
 			 idle_flag_stat = 1;
 			 receive_uart_int();
+
     }
     if(RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_TBE)){
         /* transmit data */
         //usart_data_transmit(USART1, transmitter_buffer[txcount++]);
         //if(txcount == transfersize){
-        //    usart_interrupt_disable(USART1, USART_INT_TBE);
+            //
         //}
+       
     }
 }
