@@ -5,7 +5,7 @@ uint8_t idle_count = 0;
 uint8_t crc = 0;
 uint8_t answer_cmd[50] = {0x55, 0xAA, 0x03};
 uint8_t answer_cmd1[50] = {0x55, 0xAA, 0x03};
-char prod_info[] = "{\"p\":\"helloworld!!!!!!\",\"v\":\"1.1.1\",\"m\":0}";
+char prod_info[] = "{\"p\":\"it7a8gqmqer2qbfz\",\"v\":\"1.1.1\",\"m\":0}";
 
 uint8_t chksum8(const uint8_t *buff, size_t len)
 {
@@ -123,7 +123,7 @@ void receive_uart_int()
 						//memmove(answer_cmd+6, prod_info, 0x2A);
 						//answer_cmd[6] = 0x00;
 						answer_cmd[6] = chksum8(answer_cmd, 6);
-						usart_transmit_frame(answer_cmd, 7);*/					
+						usart_transmit_frame(answer_cmd, 7);		*/			
 					}						
 				}
 				

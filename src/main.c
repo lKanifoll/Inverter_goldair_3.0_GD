@@ -68,20 +68,20 @@ int main(void)
 	systick_config();
 	rcu_config();
 	gpio_config();
-	TUYA_OFF;
+	TUYA_ON;
 	uart_init();
-	spi0_init();
-	adc_config();
-	i2c_config();
-	pwm_config_buzzer();
-	pwm_config_lcd_bl();
+	//spi0_init();
+	//adc_config();
+	//i2c_config();
+	//pwm_config_buzzer();
+	//pwm_config_lcd_bl();
 	
-	pmu_backup_write_enable();
+	//pmu_backup_write_enable();
 	
 	
-	RTC_config();
+	//RTC_config();
 	//delay_1ms(500);
-	rtc_setup();
+	//rtc_setup();
 	//heat_timer_config();
   //sck = rcu_clock_freq_get(CK_APB1);
 	//sck = rcu_clock_freq_get(CK_SYS);

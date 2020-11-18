@@ -92,28 +92,20 @@ Section Cross References
     main.o(i.main) refers to main.o(i._Z10rcu_configv) for rcu_config()
     main.o(i.main) refers to main.o(i._Z11gpio_configv) for gpio_config()
     main.o(i.main) refers to main.o(i._Z9uart_initv) for uart_init()
-    main.o(i.main) refers to main.o(i._Z9spi0_initv) for spi0_init()
-    main.o(i.main) refers to main.o(i._Z10adc_configv) for adc_config()
-    main.o(i.main) refers to main.o(i._Z10i2c_configv) for i2c_config()
-    main.o(i.main) refers to main.o(i._Z17pwm_config_buzzerv) for pwm_config_buzzer()
-    main.o(i.main) refers to main.o(i._Z17pwm_config_lcd_blv) for pwm_config_lcd_bl()
-    main.o(i.main) refers to gd32f3x0_pmu.o(i.pmu_backup_write_enable) for pmu_backup_write_enable
-    main.o(i.main) refers to main.o(i._Z10RTC_configv) for RTC_config()
-    main.o(i.main) refers to main.o(i._Z9rtc_setupv) for rtc_setup()
-    main.o(.ARM.exidx) refers to main.o(i._Z9rtc_setupv) for i._Z9rtc_setupv
-    main.o(.ARM.exidx) refers to main.o(i._Z10RTC_configv) for i._Z10RTC_configv
-    main.o(.ARM.exidx) refers to main.o(i._Z17pwm_config_lcd_blv) for i._Z17pwm_config_lcd_blv
-    main.o(.ARM.exidx) refers to main.o(i._Z17pwm_config_buzzerv) for i._Z17pwm_config_buzzerv
-    main.o(.ARM.exidx) refers to main.o(i._Z10i2c_configv) for i._Z10i2c_configv
-    main.o(.ARM.exidx) refers to main.o(i._Z10adc_configv) for i._Z10adc_configv
-    main.o(.ARM.exidx) refers to main.o(i._Z9spi0_initv) for i._Z9spi0_initv
     main.o(.ARM.exidx) refers to main.o(i._Z9uart_initv) for i._Z9uart_initv
     main.o(.ARM.exidx) refers to main.o(i._Z11gpio_configv) for i._Z11gpio_configv
     main.o(.ARM.exidx) refers to main.o(i._Z10rcu_configv) for i._Z10rcu_configv
     main.o(.ARM.exidx) refers to main.o(i.main) for i.main
     main.o(.ARM.exidx) refers to main.o(i.TIMER_Heat_callback) for i.TIMER_Heat_callback
+    main.o(.ARM.exidx) refers to main.o(i._Z10i2c_configv) for i._Z10i2c_configv
+    main.o(.ARM.exidx) refers to main.o(i._Z10adc_configv) for i._Z10adc_configv
+    main.o(.ARM.exidx) refers to main.o(i._Z9spi0_initv) for i._Z9spi0_initv
     main.o(.ARM.exidx) refers to main.o(i.spi_write_byte) for i.spi_write_byte
+    main.o(.ARM.exidx) refers to main.o(i._Z17pwm_config_lcd_blv) for i._Z17pwm_config_lcd_blv
+    main.o(.ARM.exidx) refers to main.o(i._Z17pwm_config_buzzerv) for i._Z17pwm_config_buzzerv
     main.o(.ARM.exidx) refers to main.o(i._Z17heat_timer_configv) for i._Z17heat_timer_configv
+    main.o(.ARM.exidx) refers to main.o(i._Z10RTC_configv) for i._Z10RTC_configv
+    main.o(.ARM.exidx) refers to main.o(i._Z9rtc_setupv) for i._Z9rtc_setupv
     main.o(.ARM.exidx) refers to main.o(i._Z13rtc_show_timev) for i._Z13rtc_show_timev
     systick.o(i.GetSystemTick) refers to systick.o(.data) for .data
     systick.o(i.SystemTickInc) refers to systick.o(.data) for .data
@@ -1439,8 +1431,15 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_it.o(.revsh_text), (4 bytes).
     Removing main.o(.rev16_text), (4 bytes).
     Removing main.o(.revsh_text), (4 bytes).
+    Removing main.o(i._Z10RTC_configv), (68 bytes).
+    Removing main.o(i._Z10adc_configv), (92 bytes).
+    Removing main.o(i._Z10i2c_configv), (52 bytes).
     Removing main.o(i._Z13rtc_show_timev), (12 bytes).
     Removing main.o(i._Z17heat_timer_configv), (100 bytes).
+    Removing main.o(i._Z17pwm_config_buzzerv), (148 bytes).
+    Removing main.o(i._Z17pwm_config_lcd_blv), (140 bytes).
+    Removing main.o(i._Z9rtc_setupv), (64 bytes).
+    Removing main.o(i._Z9spi0_initv), (60 bytes).
     Removing main.o(i.spi_write_byte), (20 bytes).
     Removing main.o(.ARM.exidx), (8 bytes).
     Removing main.o(.ARM.exidx), (8 bytes).
@@ -1457,6 +1456,8 @@ Removing Unused input sections from the image.
     Removing main.o(.ARM.exidx), (8 bytes).
     Removing main.o(.ARM.exidx), (8 bytes).
     Removing main.o(.ARM.exidx), (8 bytes).
+    Removing main.o(.bss), (20 bytes).
+    Removing main.o(.data), (8 bytes).
     Removing main.o(.data), (4 bytes).
     Removing systick.o(.rev16_text), (4 bytes).
     Removing systick.o(.revsh_text), (4 bytes).
@@ -1693,11 +1694,17 @@ Removing Unused input sections from the image.
     Removing system_gd32f3x0.o(i.SystemCoreClockUpdate), (144 bytes).
     Removing gd32f3x0_adc.o(.rev16_text), (4 bytes).
     Removing gd32f3x0_adc.o(.revsh_text), (4 bytes).
+    Removing gd32f3x0_adc.o(i.adc_calibration_enable), (36 bytes).
+    Removing gd32f3x0_adc.o(i.adc_channel_length_config), (60 bytes).
+    Removing gd32f3x0_adc.o(i.adc_data_alignment_config), (28 bytes).
     Removing gd32f3x0_adc.o(i.adc_deinit), (22 bytes).
     Removing gd32f3x0_adc.o(i.adc_disable), (16 bytes).
     Removing gd32f3x0_adc.o(i.adc_discontinuous_mode_config), (64 bytes).
     Removing gd32f3x0_adc.o(i.adc_dma_mode_disable), (16 bytes).
     Removing gd32f3x0_adc.o(i.adc_dma_mode_enable), (16 bytes).
+    Removing gd32f3x0_adc.o(i.adc_enable), (24 bytes).
+    Removing gd32f3x0_adc.o(i.adc_external_trigger_config), (60 bytes).
+    Removing gd32f3x0_adc.o(i.adc_external_trigger_source_config), (40 bytes).
     Removing gd32f3x0_adc.o(i.adc_flag_clear), (16 bytes).
     Removing gd32f3x0_adc.o(i.adc_flag_get), (20 bytes).
     Removing gd32f3x0_adc.o(i.adc_inserted_channel_config), (80 bytes).
@@ -1710,7 +1717,11 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_adc.o(i.adc_oversample_mode_config), (44 bytes).
     Removing gd32f3x0_adc.o(i.adc_oversample_mode_disable), (16 bytes).
     Removing gd32f3x0_adc.o(i.adc_oversample_mode_enable), (16 bytes).
+    Removing gd32f3x0_adc.o(i.adc_regular_channel_config), (120 bytes).
     Removing gd32f3x0_adc.o(i.adc_regular_data_read), (12 bytes).
+    Removing gd32f3x0_adc.o(i.adc_resolution_config), (24 bytes).
+    Removing gd32f3x0_adc.o(i.adc_software_trigger_enable), (32 bytes).
+    Removing gd32f3x0_adc.o(i.adc_special_function_config), (92 bytes).
     Removing gd32f3x0_adc.o(i.adc_tempsensor_vrefint_disable), (16 bytes).
     Removing gd32f3x0_adc.o(i.adc_tempsensor_vrefint_enable), (16 bytes).
     Removing gd32f3x0_adc.o(i.adc_vbat_disable), (16 bytes).
@@ -1880,7 +1891,9 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_gpio.o(i.gpio_port_write), (4 bytes).
     Removing gd32f3x0_i2c.o(.rev16_text), (4 bytes).
     Removing gd32f3x0_i2c.o(.revsh_text), (4 bytes).
+    Removing gd32f3x0_i2c.o(i.i2c_ack_config), (20 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_ackpos_config), (20 bytes).
+    Removing gd32f3x0_i2c.o(i.i2c_clock_config), (252 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_data_receive), (6 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_data_transmit), (4 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_deinit), (48 bytes).
@@ -1889,6 +1902,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_i2c.o(i.i2c_dma_last_transfer_config), (12 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_dualaddr_disable), (10 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_dualaddr_enable), (12 bytes).
+    Removing gd32f3x0_i2c.o(i.i2c_enable), (10 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_flag_clear), (34 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_flag_get), (22 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_interrupt_disable), (20 bytes).
@@ -1896,6 +1910,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_i2c.o(i.i2c_interrupt_flag_clear), (36 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_interrupt_flag_get), (80 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_master_addressing), (18 bytes).
+    Removing gd32f3x0_i2c.o(i.i2c_mode_addr_config), (22 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_pec_enable), (12 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_pec_transfer_enable), (12 bytes).
     Removing gd32f3x0_i2c.o(i.i2c_pec_value_get), (8 bytes).
@@ -1916,6 +1931,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_pmu.o(.rev16_text), (4 bytes).
     Removing gd32f3x0_pmu.o(.revsh_text), (4 bytes).
     Removing gd32f3x0_pmu.o(i.pmu_backup_write_disable), (16 bytes).
+    Removing gd32f3x0_pmu.o(i.pmu_backup_write_enable), (16 bytes).
     Removing gd32f3x0_pmu.o(i.pmu_deinit), (22 bytes).
     Removing gd32f3x0_pmu.o(i.pmu_flag_clear), (32 bytes).
     Removing gd32f3x0_pmu.o(i.pmu_flag_get), (20 bytes).
@@ -1948,6 +1964,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_rcu.o(i.rcu_ckout_config), (20 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_deepsleep_voltage_set), (32 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_deinit), (124 bytes).
+    Removing gd32f3x0_rcu.o(i.rcu_flag_get), (32 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_hxtal_clock_monitor_disable), (16 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_hxtal_clock_monitor_enable), (16 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_hxtal_prediv_config), (20 bytes).
@@ -1961,11 +1978,14 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_rcu.o(i.rcu_osci_bypass_mode_disable), (60 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_osci_bypass_mode_enable), (60 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_osci_off), (28 bytes).
+    Removing gd32f3x0_rcu.o(i.rcu_osci_on), (28 bytes).
+    Removing gd32f3x0_rcu.o(i.rcu_osci_stab_wait), (236 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_periph_clock_disable), (28 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_periph_clock_sleep_disable), (28 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_periph_clock_sleep_enable), (28 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_pll_config), (52 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_pll_preselection_config), (24 bytes).
+    Removing gd32f3x0_rcu.o(i.rcu_rtc_clock_config), (24 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_system_clock_source_config), (20 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_system_clock_source_get), (16 bytes).
     Removing gd32f3x0_rcu.o(i.rcu_usart_clock_config), (24 bytes).
@@ -1988,10 +2008,14 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_rtc.o(i.rtc_flag_clear), (16 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_flag_get), (20 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_hour_adjust), (32 bytes).
+    Removing gd32f3x0_rtc.o(i.rtc_init), (156 bytes).
+    Removing gd32f3x0_rtc.o(i.rtc_init_mode_enter), (52 bytes).
+    Removing gd32f3x0_rtc.o(i.rtc_init_mode_exit), (16 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_interrupt_disable), (52 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_interrupt_enable), (52 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_refclock_detection_disable), (48 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_refclock_detection_enable), (48 bytes).
+    Removing gd32f3x0_rtc.o(i.rtc_register_sync_wait), (80 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_second_adjust), (80 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_subsecond_get), (16 bytes).
     Removing gd32f3x0_rtc.o(i.rtc_tamper_disable), (16 bytes).
@@ -2018,6 +2042,8 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_spi.o(i.spi_crc_polynomial_set), (12 bytes).
     Removing gd32f3x0_spi.o(i.spi_disable), (10 bytes).
     Removing gd32f3x0_spi.o(i.spi_dma_disable), (20 bytes).
+    Removing gd32f3x0_spi.o(i.spi_dma_enable), (20 bytes).
+    Removing gd32f3x0_spi.o(i.spi_enable), (10 bytes).
     Removing gd32f3x0_spi.o(i.spi_i2s_data_frame_format_config), (16 bytes).
     Removing gd32f3x0_spi.o(i.spi_i2s_data_receive), (6 bytes).
     Removing gd32f3x0_spi.o(i.spi_i2s_data_transmit), (4 bytes).
@@ -2026,6 +2052,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_spi.o(i.spi_i2s_interrupt_disable), (36 bytes).
     Removing gd32f3x0_spi.o(i.spi_i2s_interrupt_enable), (36 bytes).
     Removing gd32f3x0_spi.o(i.spi_i2s_interrupt_flag_get), (84 bytes).
+    Removing gd32f3x0_spi.o(i.spi_init), (46 bytes).
     Removing gd32f3x0_spi.o(i.spi_nss_internal_high), (10 bytes).
     Removing gd32f3x0_spi.o(i.spi_nss_internal_low), (10 bytes).
     Removing gd32f3x0_spi.o(i.spi_nss_output_disable), (10 bytes).
@@ -2051,6 +2078,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_timer.o(.rev16_text), (4 bytes).
     Removing gd32f3x0_timer.o(.revsh_text), (4 bytes).
     Removing gd32f3x0_timer.o(i.timer_auto_reload_shadow_disable), (10 bytes).
+    Removing gd32f3x0_timer.o(i.timer_auto_reload_shadow_enable), (10 bytes).
     Removing gd32f3x0_timer.o(i.timer_automatic_output_disable), (10 bytes).
     Removing gd32f3x0_timer.o(i.timer_automatic_output_enable), (10 bytes).
     Removing gd32f3x0_timer.o(i.timer_autoreload_value_config), (4 bytes).
@@ -2067,8 +2095,12 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_timer.o(i.timer_channel_input_capture_prescaler_config), (78 bytes).
     Removing gd32f3x0_timer.o(i.timer_channel_input_struct_para_init), (14 bytes).
     Removing gd32f3x0_timer.o(i.timer_channel_output_clear_config), (78 bytes).
+    Removing gd32f3x0_timer.o(i.timer_channel_output_config), (492 bytes).
     Removing gd32f3x0_timer.o(i.timer_channel_output_fast_config), (78 bytes).
+    Removing gd32f3x0_timer.o(i.timer_channel_output_mode_config), (78 bytes).
     Removing gd32f3x0_timer.o(i.timer_channel_output_polarity_config), (78 bytes).
+    Removing gd32f3x0_timer.o(i.timer_channel_output_pulse_value_config), (30 bytes).
+    Removing gd32f3x0_timer.o(i.timer_channel_output_shadow_config), (78 bytes).
     Removing gd32f3x0_timer.o(i.timer_channel_output_state_config), (78 bytes).
     Removing gd32f3x0_timer.o(i.timer_channel_output_struct_para_init), (16 bytes).
     Removing gd32f3x0_timer.o(i.timer_channel_remap_config), (4 bytes).
@@ -2077,9 +2109,12 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_timer.o(i.timer_counter_read), (4 bytes).
     Removing gd32f3x0_timer.o(i.timer_counter_up_direction), (10 bytes).
     Removing gd32f3x0_timer.o(i.timer_counter_value_config), (4 bytes).
+    Removing gd32f3x0_timer.o(i.timer_deinit), (116 bytes).
+    Removing gd32f3x0_timer.o(i.timer_disable), (10 bytes).
     Removing gd32f3x0_timer.o(i.timer_dma_disable), (8 bytes).
     Removing gd32f3x0_timer.o(i.timer_dma_enable), (8 bytes).
     Removing gd32f3x0_timer.o(i.timer_dma_transfer_config), (22 bytes).
+    Removing gd32f3x0_timer.o(i.timer_enable), (10 bytes).
     Removing gd32f3x0_timer.o(i.timer_event_software_generate), (8 bytes).
     Removing gd32f3x0_timer.o(i.timer_external_clock_mode0_config), (26 bytes).
     Removing gd32f3x0_timer.o(i.timer_external_clock_mode1_config), (18 bytes).
@@ -2089,6 +2124,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_timer.o(i.timer_flag_clear), (6 bytes).
     Removing gd32f3x0_timer.o(i.timer_flag_get), (10 bytes).
     Removing gd32f3x0_timer.o(i.timer_hall_mode_config), (24 bytes).
+    Removing gd32f3x0_timer.o(i.timer_init), (160 bytes).
     Removing gd32f3x0_timer.o(i.timer_input_capture_config), (300 bytes).
     Removing gd32f3x0_timer.o(i.timer_input_pwm_capture_config), (334 bytes).
     Removing gd32f3x0_timer.o(i.timer_input_trigger_source_select), (16 bytes).
@@ -2102,6 +2138,7 @@ Removing Unused input sections from the image.
     Removing gd32f3x0_timer.o(i.timer_output_value_selection_config), (30 bytes).
     Removing gd32f3x0_timer.o(i.timer_prescaler_config), (16 bytes).
     Removing gd32f3x0_timer.o(i.timer_prescaler_read), (6 bytes).
+    Removing gd32f3x0_timer.o(i.timer_primary_output_config), (20 bytes).
     Removing gd32f3x0_timer.o(i.timer_quadrature_decoder_mode_config), (64 bytes).
     Removing gd32f3x0_timer.o(i.timer_repetition_value_config), (4 bytes).
     Removing gd32f3x0_timer.o(i.timer_single_pulse_mode_config), (24 bytes).
@@ -2269,7 +2306,7 @@ Removing Unused input sections from the image.
     Removing pixels.o(.constdata__ZTI10PixelsBase), (8 bytes).
     Removing pixels.o(.constdata__ZTS10PixelsBase), (13 bytes).
 
-833 unused section(s) (total 125096 bytes) removed from the image.
+878 unused section(s) (total 128288 bytes) removed from the image.
 
 ==============================================================================
 
@@ -2279,153 +2316,153 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    ../../../clib/unwind_pr.c                0x00000000   Number         0  unwind_prcommon.o ABSOLUTE
     ../../../clib/unwind_pr.c                0x00000000   Number         0  unwind_pr0.o ABSOLUTE
+    ../../../clib/unwind_pr.c                0x00000000   Number         0  unwind_prcommon.o ABSOLUTE
+    ../../../clib/unwinder.c                 0x00000000   Number         0  unwind_activity.o ABSOLUTE
     ../../../clib/unwinder.c                 0x00000000   Number         0  unwind_activity.o ABSOLUTE
     ../../../clib/unwinder.c                 0x00000000   Number         0  unwinder.o ABSOLUTE
     ../../../clib/unwinder.c                 0x00000000   Number         0  unwinder.o ABSOLUTE
-    ../../../clib/unwinder.c                 0x00000000   Number         0  unwind_activity.o ABSOLUTE
-    ../../../edgfe/lib_src/arm_exceptions.c  0x00000000   Number         0  arm_exceptions_globs.o ABSOLUTE
-    ../../../edgfe/lib_src/arm_exceptions.c  0x00000000   Number         0  arm_exceptions_terminate.o ABSOLUTE
     ../../../edgfe/lib_src/arm_exceptions.c  0x00000000   Number         0  arm_exceptions_support.o ABSOLUTE
     ../../../edgfe/lib_src/arm_exceptions.c  0x00000000   Number         0  arm_exceptions_mem.o ABSOLUTE
+    ../../../edgfe/lib_src/arm_exceptions.c  0x00000000   Number         0  arm_exceptions_terminate.o ABSOLUTE
     ../../../edgfe/lib_src/arm_exceptions.c  0x00000000   Number         0  arm_exceptions_callterm.o ABSOLUTE
+    ../../../edgfe/lib_src/arm_exceptions.c  0x00000000   Number         0  arm_exceptions_globs.o ABSOLUTE
     ../../../edgfe/lib_src/arm_noexceptions.c 0x00000000   Number         0  arm_newhandler_noexceptions.o ABSOLUTE
     ../../../edgfe/lib_src/arm_noexceptions.c 0x00000000   Number         0  arm_begincatch_noexceptions.o ABSOLUTE
     ../../../edgfe/lib_src/arm_noexceptions.c 0x00000000   Number         0  arm_callunex_noexceptions.o ABSOLUTE
     ../../../edgfe/lib_src/array_del.c       0x00000000   Number         0  array_del.o ABSOLUTE
     ../../../edgfe/lib_src/array_new.c       0x00000000   Number         0  array_new.o ABSOLUTE
-    ../../../edgfe/lib_src/bad_alloc.c       0x00000000   Number         0  bad_alloc_what.o ABSOLUTE
     ../../../edgfe/lib_src/bad_alloc.c       0x00000000   Number         0  bad_alloc_dtor.o ABSOLUTE
+    ../../../edgfe/lib_src/bad_alloc.c       0x00000000   Number         0  bad_alloc_what.o ABSOLUTE
     ../../../edgfe/lib_src/delete.c          0x00000000   Number         0  delete.o ABSOLUTE
-    ../../../edgfe/lib_src/exception.c       0x00000000   Number         0  exception_dtor.o ABSOLUTE
     ../../../edgfe/lib_src/exception.c       0x00000000   Number         0  exception_what.o ABSOLUTE
+    ../../../edgfe/lib_src/exception.c       0x00000000   Number         0  exception_dtor.o ABSOLUTE
     ../../../edgfe/lib_src/new.c             0x00000000   Number         0  new.o ABSOLUTE
     ../../../edgfe/lib_src/typeinfo.c        0x00000000   Number         0  lib_rtti_impl.o ABSOLUTE
     ../../../edgfe/lib_src/typeinfo.c        0x00000000   Number         0  type_info_dtor.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit3.o ABSOLUTE
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit1.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
     ../clib/angel/handlers.s                 0x00000000   Number         0  __scatter_zi.o ABSOLUTE
     ../clib/angel/handlers.s                 0x00000000   Number         0  __scatter_copy.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry2.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry4.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit2.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_heap_descriptor.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_heap_descriptor_intlibspace.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_raise.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_eh_globals_addr.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_eh_globals_addr_intlibspace.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry2.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry4.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr_intlibspace.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_heap_descriptor_intlibspace.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_new_handler_addr_intlibspace.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_heap_descriptor.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_eh_globals_addr.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_raise.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_new_handler_addr.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_eh_globals_addr_intlibspace.o ABSOLUTE
     ../clib/angel/scatter.s                  0x00000000   Number         0  __scatter.o ABSOLUTE
     ../clib/angel/startup.s                  0x00000000   Number         0  __main.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  indicate_semi.o ABSOLUTE
-    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  use_no_semi.o ABSOLUTE
-    ../clib/angel/sys.s                      0x00000000   Number         0  mutex_dummy.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  libspace.o ABSOLUTE
+    ../clib/angel/sys.s                      0x00000000   Number         0  mutex_dummy.o ABSOLUTE
+    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_exit.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_command.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_wrch.o ABSOLUTE
     ../clib/arm_runtime.c                    0x00000000   Number         0  init_aeabi.o ABSOLUTE
     ../clib/arm_runtime.c                    0x00000000   Number         0  init_aeabi.o ABSOLUTE
-    ../clib/armsys.c                         0x00000000   Number         0  _get_argv.o ABSOLUTE
+    ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
+    ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  no_argv.o ABSOLUTE
-    ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
-    ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  _get_argv_nomalloc.o ABSOLUTE
+    ../clib/armsys.c                         0x00000000   Number         0  _get_argv.o ABSOLUTE
     ../clib/fenv.c                           0x00000000   Number         0  _rserrno.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_alloc_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_final_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_extend_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_extend.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_final.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_init.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_init_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_free_mt.o ABSOLUTE
     ../clib/heap1.c                          0x00000000   Number         0  h1_free.o ABSOLUTE
     ../clib/heap1.c                          0x00000000   Number         0  h1_alloc.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_init_mt.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_extend_mt.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_init.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_extend.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_final_mt.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_final.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_free_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_alloc_mt.o ABSOLUTE
     ../clib/heap2.c                          0x00000000   Number         0  fdtree.o ABSOLUTE
-    ../clib/heap2.c                          0x00000000   Number         0  heap2.o ABSOLUTE
     ../clib/heap2.c                          0x00000000   Number         0  heap2mt.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  heapstubs.o ABSOLUTE
+    ../clib/heap2.c                          0x00000000   Number         0  heap2.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  init_alloc.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hguard.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  term_alloc.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  free.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hrguard.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  malloc.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  term_alloc.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  free.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  heapstubs.o ABSOLUTE
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxa.o ABSOLUTE
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libinit2.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libshutdown2.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
-    ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_v6.o ABSOLUTE
-    ../clib/memcpset.s                       0x00000000   Number         0  rt_memmove_w.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr.o ABSOLUTE
+    ../clib/memcpset.s                       0x00000000   Number         0  rt_memmove_w.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_w.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr_w.o ABSOLUTE
-    ../clib/memcpset.s                       0x00000000   Number         0  rt_memmove_v6.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  aeabi_memset.o ABSOLUTE
+    ../clib/memcpset.s                       0x00000000   Number         0  rt_memmove_v6.o ABSOLUTE
+    ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_v6.o ABSOLUTE
     ../clib/misc.s                           0x00000000   Number         0  printf_stubs.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_char.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _sputc.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_char_common.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_intcommon.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  noretval__2sprintf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_pad.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_str.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  _printf_dec.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  __printf_flags.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  __printf_ss.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  __printf_flags_ss.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_ss_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_ss_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_nopercent.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_char_common.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  noretval__2sprintf.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  __2sprintf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_str.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_char.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_ss_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _sputc.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_intcommon.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_pad.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_ss_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_nopercent.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_percent.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_s.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_d.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_percent.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_percent_end.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_outer.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_formal.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_exit.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  __raise.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_general.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_formal.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_outer.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
     ../clib/signal.s                         0x00000000   Number         0  defsig.o ABSOLUTE
     ../clib/stdlib.c                         0x00000000   Number         0  abort.o ABSOLUTE
     ../clib/stdlib.c                         0x00000000   Number         0  bsearchnoex.o ABSOLUTE
     ../clib/stdlib.c                         0x00000000   Number         0  exit.o ABSOLUTE
     ../clib/string.c                         0x00000000   Number         0  strlen.o ABSOLUTE
     ../clib/time.c                           0x00000000   Number         0  localtime.o ABSOLUTE
-    ../clib/time.c                           0x00000000   Number         0  mktime.o ABSOLUTE
     ../clib/time.c                           0x00000000   Number         0  _monlen.o ABSOLUTE
     ../clib/time.c                           0x00000000   Number         0  localtime_internal.o ABSOLUTE
+    ../clib/time.c                           0x00000000   Number         0  mktime.o ABSOLUTE
     ../fplib/d2f.s                           0x00000000   Number         0  d2f.o ABSOLUTE
     ../fplib/daddsub.s                       0x00000000   Number         0  daddsub_clz.o ABSOLUTE
     ../fplib/dcmpi.s                         0x00000000   Number         0  dcmpi.o ABSOLUTE
@@ -2447,8 +2484,8 @@ Image Symbol Table
     ../fplib/frnd.s                          0x00000000   Number         0  frnd.o ABSOLUTE
     ../fplib/usenofp.s                       0x00000000   Number         0  usenofp.o ABSOLUTE
     ../mathlib/funder.c                      0x00000000   Number         0  funder.o ABSOLUTE
-    ../mathlib/logf.c                        0x00000000   Number         0  logf_x.o ABSOLUTE
     ../mathlib/logf.c                        0x00000000   Number         0  logf.o ABSOLUTE
+    ../mathlib/logf.c                        0x00000000   Number         0  logf_x.o ABSOLUTE
     ../mathlib/rint.c                        0x00000000   Number         0  rintf.o ABSOLUTE
     ../mathlib/sqrt.c                        0x00000000   Number         0  sqrt.o ABSOLUTE
     ../mathlib/sqrt.c                        0x00000000   Number         0  sqrt_x.o ABSOLUTE
@@ -2592,8 +2629,8 @@ Image Symbol Table
     .text                                    0x0800071c   Section        0  defsig_abrt_outer.o(.text)
     .text                                    0x0800072a   Section        0  defsig_rtmem_outer.o(.text)
     .text                                    0x08000738   Section        2  use_no_semi.o(.text)
-    .text                                    0x0800073a   Section        0  defsig_exit.o(.text)
     .text                                    0x0800073a   Section        0  indicate_semi.o(.text)
+    .text                                    0x0800073a   Section        0  defsig_exit.o(.text)
     .text                                    0x08000744   Section        0  defsig_abrt_inner.o(.text)
     .text                                    0x08000774   Section        0  defsig_rtmem_inner.o(.text)
     .text                                    0x080007c4   Section        0  defsig_general.o(.text)
@@ -2614,125 +2651,80 @@ Image Symbol Table
     i.TIMER_Heat_callback                    0x080009c0   Section        0  main.o(i.TIMER_Heat_callback)
     i.USART1_IRQHandler                      0x080009c4   Section        0  gd32f3x0_it.o(i.USART1_IRQHandler)
     i.UsageFault_Handler                     0x08000a1c   Section        0  gd32f3x0_it.o(i.UsageFault_Handler)
-    i._Z10RTC_configv                        0x08000a20   Section        0  main.o(i._Z10RTC_configv)
-    i._Z10adc_configv                        0x08000a64   Section        0  main.o(i._Z10adc_configv)
-    i._Z10i2c_configv                        0x08000ac0   Section        0  main.o(i._Z10i2c_configv)
-    i._Z10rcu_configv                        0x08000af4   Section        0  main.o(i._Z10rcu_configv)
-    i._Z11gpio_configv                       0x08000b48   Section        0  main.o(i._Z11gpio_configv)
-    i._Z17pwm_config_buzzerv                 0x08000c94   Section        0  main.o(i._Z17pwm_config_buzzerv)
-    i._Z17pwm_config_lcd_blv                 0x08000d28   Section        0  main.o(i._Z17pwm_config_lcd_blv)
-    i._Z9rtc_setupv                          0x08000db4   Section        0  main.o(i._Z9rtc_setupv)
-    i._Z9spi0_initv                          0x08000df4   Section        0  main.o(i._Z9spi0_initv)
-    i._Z9uart_initv                          0x08000e30   Section        0  main.o(i._Z9uart_initv)
-    i._ZN10PixelsBase8setColorE3RGB          0x08000eb4   Section        0  inverter.o(i._ZN10PixelsBase8setColorE3RGB)
-    i._ZN10PixelsBase8setColorEhhh           0x08000ec4   Section        0  pixels.o(i._ZN10PixelsBase8setColorEhhh)
-    i._ZN10PixelsBaseC1Ett                   0x08000ee4   Section        0  pixels.o(i._ZN10PixelsBaseC1Ett)
-    i._ZN11ClickButtonC1Ehtb                 0x08000f6c   Section        0  inverter.o(i._ZN11ClickButtonC1Ehtb)
-    i._ZN3RGBC1Ehhh                          0x08000f8a   Section        0  pixels.o(i._ZN3RGBC1Ehhh)
-    i._ZdaPv                                 0x08000f92   Section        0  array_del.o(i._ZdaPv)
-    i._ZdlPv                                 0x08000f9a   Section        0  delete.o(i._ZdlPv)
-    i._Znaj                                  0x08000fa2   Section        0  array_new.o(i._Znaj)
-    i._Znwj                                  0x08000fac   Section        0  new.o(i._Znwj)
-    i.__sti___10_inverter_c_ffec7761         0x08000fd4   Section        0  inverter.o(i.__sti___10_inverter_c_ffec7761)
-    __sti___10_inverter_c_ffec7761           0x08000fd5   Thumb Code   238  inverter.o(i.__sti___10_inverter_c_ffec7761)
-    i.adc_calibration_enable                 0x080010cc   Section        0  gd32f3x0_adc.o(i.adc_calibration_enable)
-    i.adc_channel_length_config              0x080010f0   Section        0  gd32f3x0_adc.o(i.adc_channel_length_config)
-    i.adc_data_alignment_config              0x0800112c   Section        0  gd32f3x0_adc.o(i.adc_data_alignment_config)
-    i.adc_enable                             0x08001148   Section        0  gd32f3x0_adc.o(i.adc_enable)
-    i.adc_external_trigger_config            0x08001160   Section        0  gd32f3x0_adc.o(i.adc_external_trigger_config)
-    i.adc_external_trigger_source_config     0x0800119c   Section        0  gd32f3x0_adc.o(i.adc_external_trigger_source_config)
-    i.adc_regular_channel_config             0x080011c4   Section        0  gd32f3x0_adc.o(i.adc_regular_channel_config)
-    i.adc_resolution_config                  0x0800123c   Section        0  gd32f3x0_adc.o(i.adc_resolution_config)
-    i.adc_software_trigger_enable            0x08001254   Section        0  gd32f3x0_adc.o(i.adc_software_trigger_enable)
-    i.adc_special_function_config            0x08001274   Section        0  gd32f3x0_adc.o(i.adc_special_function_config)
-    i.chksum8                                0x080012d0   Section        0  wifi.o(i.chksum8)
-    i.delay_1ms                              0x080012e8   Section        0  systick.o(i.delay_1ms)
-    i.delay_decrement                        0x080012f8   Section        0  systick.o(i.delay_decrement)
-    i.gpio_af_set                            0x0800130c   Section        0  gd32f3x0_gpio.o(i.gpio_af_set)
-    i.gpio_mode_set                          0x08001370   Section        0  gd32f3x0_gpio.o(i.gpio_mode_set)
-    i.gpio_output_options_set                0x080013b4   Section        0  gd32f3x0_gpio.o(i.gpio_output_options_set)
-    i.i2c_ack_config                         0x08001424   Section        0  gd32f3x0_i2c.o(i.i2c_ack_config)
-    i.i2c_clock_config                       0x08001438   Section        0  gd32f3x0_i2c.o(i.i2c_clock_config)
-    i.i2c_enable                             0x08001534   Section        0  gd32f3x0_i2c.o(i.i2c_enable)
-    i.i2c_mode_addr_config                   0x0800153e   Section        0  gd32f3x0_i2c.o(i.i2c_mode_addr_config)
-    i.main                                   0x08001554   Section        0  main.o(i.main)
-    i.nvic_irq_enable                        0x08001590   Section        0  gd32f3x0_misc.o(i.nvic_irq_enable)
-    i.nvic_priority_group_set                0x08001618   Section        0  gd32f3x0_misc.o(i.nvic_priority_group_set)
-    i.nvic_vector_table_set                  0x0800162c   Section        0  gd32f3x0_misc.o(i.nvic_vector_table_set)
-    i.pmu_backup_write_enable                0x08001640   Section        0  gd32f3x0_pmu.o(i.pmu_backup_write_enable)
-    i.rcu_adc_clock_config                   0x08001650   Section        0  gd32f3x0_rcu.o(i.rcu_adc_clock_config)
-    i.rcu_clock_freq_get                     0x080016e0   Section        0  gd32f3x0_rcu.o(i.rcu_clock_freq_get)
-    i.rcu_flag_get                           0x0800189c   Section        0  gd32f3x0_rcu.o(i.rcu_flag_get)
-    i.rcu_osci_on                            0x080018bc   Section        0  gd32f3x0_rcu.o(i.rcu_osci_on)
-    i.rcu_osci_stab_wait                     0x080018d8   Section        0  gd32f3x0_rcu.o(i.rcu_osci_stab_wait)
-    i.rcu_periph_clock_enable                0x080019c4   Section        0  gd32f3x0_rcu.o(i.rcu_periph_clock_enable)
-    i.rcu_periph_reset_disable               0x080019e0   Section        0  gd32f3x0_rcu.o(i.rcu_periph_reset_disable)
-    i.rcu_periph_reset_enable                0x080019fc   Section        0  gd32f3x0_rcu.o(i.rcu_periph_reset_enable)
-    i.rcu_rtc_clock_config                   0x08001a18   Section        0  gd32f3x0_rcu.o(i.rcu_rtc_clock_config)
-    i.receive_uart_int                       0x08001a30   Section        0  wifi.o(i.receive_uart_int)
-    i.rtc_init                               0x08001bb0   Section        0  gd32f3x0_rtc.o(i.rtc_init)
-    i.rtc_init_mode_enter                    0x08001c4c   Section        0  gd32f3x0_rtc.o(i.rtc_init_mode_enter)
-    i.rtc_init_mode_exit                     0x08001c80   Section        0  gd32f3x0_rtc.o(i.rtc_init_mode_exit)
-    i.rtc_register_sync_wait                 0x08001c90   Section        0  gd32f3x0_rtc.o(i.rtc_register_sync_wait)
-    i.spi_dma_enable                         0x08001ce0   Section        0  gd32f3x0_spi.o(i.spi_dma_enable)
-    i.spi_enable                             0x08001cf4   Section        0  gd32f3x0_spi.o(i.spi_enable)
-    i.spi_init                               0x08001cfe   Section        0  gd32f3x0_spi.o(i.spi_init)
-    i.system_clock_84m_irc8m                 0x08001d2c   Section        0  system_gd32f3x0.o(i.system_clock_84m_irc8m)
-    system_clock_84m_irc8m                   0x08001d2d   Thumb Code    88  system_gd32f3x0.o(i.system_clock_84m_irc8m)
-    i.systick_config                         0x08001d90   Section        0  systick.o(i.systick_config)
-    i.timer_auto_reload_shadow_enable        0x08001dd0   Section        0  gd32f3x0_timer.o(i.timer_auto_reload_shadow_enable)
-    i.timer_channel_output_config            0x08001ddc   Section        0  gd32f3x0_timer.o(i.timer_channel_output_config)
-    i.timer_channel_output_mode_config       0x08001fc8   Section        0  gd32f3x0_timer.o(i.timer_channel_output_mode_config)
-    i.timer_channel_output_pulse_value_config 0x08002016   Section        0  gd32f3x0_timer.o(i.timer_channel_output_pulse_value_config)
-    i.timer_channel_output_shadow_config     0x08002034   Section        0  gd32f3x0_timer.o(i.timer_channel_output_shadow_config)
-    i.timer_deinit                           0x08002084   Section        0  gd32f3x0_timer.o(i.timer_deinit)
-    i.timer_disable                          0x080020f8   Section        0  gd32f3x0_timer.o(i.timer_disable)
-    i.timer_enable                           0x08002102   Section        0  gd32f3x0_timer.o(i.timer_enable)
-    i.timer_init                             0x0800210c   Section        0  gd32f3x0_timer.o(i.timer_init)
-    i.timer_interrupt_flag_clear             0x080021ac   Section        0  gd32f3x0_timer.o(i.timer_interrupt_flag_clear)
-    i.timer_interrupt_flag_get               0x080021b2   Section        0  gd32f3x0_timer.o(i.timer_interrupt_flag_get)
-    i.timer_primary_output_config            0x080021c6   Section        0  gd32f3x0_timer.o(i.timer_primary_output_config)
-    i.usart_baudrate_set                     0x080021dc   Section        0  gd32f3x0_usart.o(i.usart_baudrate_set)
-    i.usart_data_receive                     0x08002238   Section        0  gd32f3x0_usart.o(i.usart_data_receive)
-    i.usart_data_transmit                    0x08002240   Section        0  gd32f3x0_usart.o(i.usart_data_transmit)
-    i.usart_deinit                           0x08002248   Section        0  gd32f3x0_usart.o(i.usart_deinit)
-    i.usart_dma_receive_config               0x08002278   Section        0  gd32f3x0_usart.o(i.usart_dma_receive_config)
-    i.usart_enable                           0x08002288   Section        0  gd32f3x0_usart.o(i.usart_enable)
-    i.usart_flag_get                         0x08002292   Section        0  gd32f3x0_usart.o(i.usart_flag_get)
-    i.usart_interrupt_enable                 0x080022a8   Section        0  gd32f3x0_usart.o(i.usart_interrupt_enable)
-    i.usart_interrupt_flag_clear             0x080022bc   Section        0  gd32f3x0_usart.o(i.usart_interrupt_flag_clear)
-    i.usart_interrupt_flag_get               0x080022e4   Section        0  gd32f3x0_usart.o(i.usart_interrupt_flag_get)
-    i.usart_parity_config                    0x08002312   Section        0  gd32f3x0_usart.o(i.usart_parity_config)
-    i.usart_receive_config                   0x0800232a   Section        0  gd32f3x0_usart.o(i.usart_receive_config)
-    i.usart_stop_bit_set                     0x0800233a   Section        0  gd32f3x0_usart.o(i.usart_stop_bit_set)
-    i.usart_transmit_config                  0x08002352   Section        0  gd32f3x0_usart.o(i.usart_transmit_config)
-    i.usart_transmit_frame                   0x08002364   Section        0  wifi.o(i.usart_transmit_frame)
-    i.usart_word_length_set                  0x080023a0   Section        0  gd32f3x0_usart.o(i.usart_word_length_set)
-    x$fpl$fpinit                             0x080023b8   Section       10  fpinit.o(x$fpl$fpinit)
-    $v0                                      0x080023b8   Number         0  fpinit.o(x$fpl$fpinit)
-    .constdata__ZTV10PixelsBase              0x080023c4   Section       52  pixels.o(.constdata__ZTV10PixelsBase)
-    .constdata__ZTV6Pixels                   0x080023f8   Section       52  inverter.o(.constdata__ZTV6Pixels)
-    .init_array                              0x0800244c   Section        4  inverter.o(.init_array)
-    .init_array                              0x08002450   Section        0  init_aeabi.o(.init_array)
-    .data                                    0x20000000   Section        8  main.o(.data)
-    .data                                    0x20000008   Section        8  systick.o(.data)
-    delay                                    0x2000000c   Data           4  systick.o(.data)
-    .data                                    0x20000010   Section       97  wifi.o(.data)
-    i                                        0x20000011   Data           1  wifi.o(.data)
-    recv_counter                             0x20000012   Data           1  wifi.o(.data)
-    .data                                    0x20000074   Section        4  system_gd32f3x0.o(.data)
-    .bss                                     0x20000078   Section       20  main.o(.bss)
-    .bss                                     0x20000090   Section      368  inverter.o(.bss)
-    powerLevelColors                         0x20000090   Data          15  inverter.o(.bss)
-    modeColors                               0x2000009f   Data          12  inverter.o(.bss)
-    _settings                                0x20000190   Data          68  inverter.o(.bss)
-    .bss                                     0x20000200   Section      510  wifi.o(.bss)
-    .bss                                     0x20000400   Section       96  libspace.o(.bss)
-    HEAP                                     0x20000460   Section     5632  startup_gd32f3x0.o(HEAP)
-    Heap_Mem                                 0x20000460   Data        5632  startup_gd32f3x0.o(HEAP)
-    STACK                                    0x20001a60   Section     1024  startup_gd32f3x0.o(STACK)
-    Stack_Mem                                0x20001a60   Data        1024  startup_gd32f3x0.o(STACK)
-    __initial_sp                             0x20001e60   Data           0  startup_gd32f3x0.o(STACK)
+    i._Z10rcu_configv                        0x08000a1e   Section        0  main.o(i._Z10rcu_configv)
+    i._Z11gpio_configv                       0x08000a74   Section        0  main.o(i._Z11gpio_configv)
+    i._Z9uart_initv                          0x08000bc0   Section        0  main.o(i._Z9uart_initv)
+    i._ZN10PixelsBase8setColorE3RGB          0x08000c44   Section        0  inverter.o(i._ZN10PixelsBase8setColorE3RGB)
+    i._ZN10PixelsBase8setColorEhhh           0x08000c54   Section        0  pixels.o(i._ZN10PixelsBase8setColorEhhh)
+    i._ZN10PixelsBaseC1Ett                   0x08000c74   Section        0  pixels.o(i._ZN10PixelsBaseC1Ett)
+    i._ZN11ClickButtonC1Ehtb                 0x08000cfc   Section        0  inverter.o(i._ZN11ClickButtonC1Ehtb)
+    i._ZN3RGBC1Ehhh                          0x08000d1a   Section        0  pixels.o(i._ZN3RGBC1Ehhh)
+    i._ZdaPv                                 0x08000d22   Section        0  array_del.o(i._ZdaPv)
+    i._ZdlPv                                 0x08000d2a   Section        0  delete.o(i._ZdlPv)
+    i._Znaj                                  0x08000d32   Section        0  array_new.o(i._Znaj)
+    i._Znwj                                  0x08000d3c   Section        0  new.o(i._Znwj)
+    i.__sti___10_inverter_c_ffec7761         0x08000d64   Section        0  inverter.o(i.__sti___10_inverter_c_ffec7761)
+    __sti___10_inverter_c_ffec7761           0x08000d65   Thumb Code   238  inverter.o(i.__sti___10_inverter_c_ffec7761)
+    i.chksum8                                0x08000e5c   Section        0  wifi.o(i.chksum8)
+    i.delay_1ms                              0x08000e74   Section        0  systick.o(i.delay_1ms)
+    i.delay_decrement                        0x08000e84   Section        0  systick.o(i.delay_decrement)
+    i.gpio_af_set                            0x08000e98   Section        0  gd32f3x0_gpio.o(i.gpio_af_set)
+    i.gpio_mode_set                          0x08000efc   Section        0  gd32f3x0_gpio.o(i.gpio_mode_set)
+    i.gpio_output_options_set                0x08000f40   Section        0  gd32f3x0_gpio.o(i.gpio_output_options_set)
+    i.main                                   0x08000fb0   Section        0  main.o(i.main)
+    i.nvic_irq_enable                        0x08000fcc   Section        0  gd32f3x0_misc.o(i.nvic_irq_enable)
+    i.nvic_priority_group_set                0x08001054   Section        0  gd32f3x0_misc.o(i.nvic_priority_group_set)
+    i.nvic_vector_table_set                  0x08001068   Section        0  gd32f3x0_misc.o(i.nvic_vector_table_set)
+    i.rcu_adc_clock_config                   0x0800107c   Section        0  gd32f3x0_rcu.o(i.rcu_adc_clock_config)
+    i.rcu_clock_freq_get                     0x0800110c   Section        0  gd32f3x0_rcu.o(i.rcu_clock_freq_get)
+    i.rcu_periph_clock_enable                0x080012c8   Section        0  gd32f3x0_rcu.o(i.rcu_periph_clock_enable)
+    i.rcu_periph_reset_disable               0x080012e4   Section        0  gd32f3x0_rcu.o(i.rcu_periph_reset_disable)
+    i.rcu_periph_reset_enable                0x08001300   Section        0  gd32f3x0_rcu.o(i.rcu_periph_reset_enable)
+    i.receive_uart_int                       0x0800131c   Section        0  wifi.o(i.receive_uart_int)
+    i.system_clock_84m_irc8m                 0x0800149c   Section        0  system_gd32f3x0.o(i.system_clock_84m_irc8m)
+    system_clock_84m_irc8m                   0x0800149d   Thumb Code    88  system_gd32f3x0.o(i.system_clock_84m_irc8m)
+    i.systick_config                         0x08001500   Section        0  systick.o(i.systick_config)
+    i.timer_interrupt_flag_clear             0x08001540   Section        0  gd32f3x0_timer.o(i.timer_interrupt_flag_clear)
+    i.timer_interrupt_flag_get               0x08001546   Section        0  gd32f3x0_timer.o(i.timer_interrupt_flag_get)
+    i.usart_baudrate_set                     0x0800155c   Section        0  gd32f3x0_usart.o(i.usart_baudrate_set)
+    i.usart_data_receive                     0x080015b8   Section        0  gd32f3x0_usart.o(i.usart_data_receive)
+    i.usart_data_transmit                    0x080015c0   Section        0  gd32f3x0_usart.o(i.usart_data_transmit)
+    i.usart_deinit                           0x080015c8   Section        0  gd32f3x0_usart.o(i.usart_deinit)
+    i.usart_dma_receive_config               0x080015f8   Section        0  gd32f3x0_usart.o(i.usart_dma_receive_config)
+    i.usart_enable                           0x08001608   Section        0  gd32f3x0_usart.o(i.usart_enable)
+    i.usart_flag_get                         0x08001612   Section        0  gd32f3x0_usart.o(i.usart_flag_get)
+    i.usart_interrupt_enable                 0x08001628   Section        0  gd32f3x0_usart.o(i.usart_interrupt_enable)
+    i.usart_interrupt_flag_clear             0x0800163c   Section        0  gd32f3x0_usart.o(i.usart_interrupt_flag_clear)
+    i.usart_interrupt_flag_get               0x08001664   Section        0  gd32f3x0_usart.o(i.usart_interrupt_flag_get)
+    i.usart_parity_config                    0x08001692   Section        0  gd32f3x0_usart.o(i.usart_parity_config)
+    i.usart_receive_config                   0x080016aa   Section        0  gd32f3x0_usart.o(i.usart_receive_config)
+    i.usart_stop_bit_set                     0x080016ba   Section        0  gd32f3x0_usart.o(i.usart_stop_bit_set)
+    i.usart_transmit_config                  0x080016d2   Section        0  gd32f3x0_usart.o(i.usart_transmit_config)
+    i.usart_transmit_frame                   0x080016e4   Section        0  wifi.o(i.usart_transmit_frame)
+    i.usart_word_length_set                  0x08001720   Section        0  gd32f3x0_usart.o(i.usart_word_length_set)
+    x$fpl$fpinit                             0x08001738   Section       10  fpinit.o(x$fpl$fpinit)
+    $v0                                      0x08001738   Number         0  fpinit.o(x$fpl$fpinit)
+    .constdata__ZTV10PixelsBase              0x08001744   Section       52  pixels.o(.constdata__ZTV10PixelsBase)
+    .constdata__ZTV6Pixels                   0x08001778   Section       52  inverter.o(.constdata__ZTV6Pixels)
+    .init_array                              0x080017cc   Section        4  inverter.o(.init_array)
+    .init_array                              0x080017d0   Section        0  init_aeabi.o(.init_array)
+    .data                                    0x20000000   Section        8  systick.o(.data)
+    delay                                    0x20000004   Data           4  systick.o(.data)
+    .data                                    0x20000008   Section       97  wifi.o(.data)
+    i                                        0x20000009   Data           1  wifi.o(.data)
+    recv_counter                             0x2000000a   Data           1  wifi.o(.data)
+    .data                                    0x2000006c   Section        4  system_gd32f3x0.o(.data)
+    .bss                                     0x20000070   Section      368  inverter.o(.bss)
+    powerLevelColors                         0x20000070   Data          15  inverter.o(.bss)
+    modeColors                               0x2000007f   Data          12  inverter.o(.bss)
+    _settings                                0x20000170   Data          68  inverter.o(.bss)
+    .bss                                     0x200001e0   Section      510  wifi.o(.bss)
+    .bss                                     0x200003e0   Section       96  libspace.o(.bss)
+    HEAP                                     0x20000440   Section     5632  startup_gd32f3x0.o(HEAP)
+    Heap_Mem                                 0x20000440   Data        5632  startup_gd32f3x0.o(HEAP)
+    STACK                                    0x20001a40   Section     1024  startup_gd32f3x0.o(STACK)
+    Stack_Mem                                0x20001a40   Data        1024  startup_gd32f3x0.o(STACK)
+    __initial_sp                             0x20001e40   Data           0  startup_gd32f3x0.o(STACK)
 
     Global Symbols
 
@@ -2941,129 +2933,83 @@ Image Symbol Table
     TIMER_Heat_callback                      0x080009c1   Thumb Code     2  main.o(i.TIMER_Heat_callback)
     USART1_IRQHandler                        0x080009c5   Thumb Code    68  gd32f3x0_it.o(i.USART1_IRQHandler)
     UsageFault_Handler                       0x08000a1d   Thumb Code     2  gd32f3x0_it.o(i.UsageFault_Handler)
-    RTC_config()                             0x08000a21   Thumb Code    62  main.o(i._Z10RTC_configv)
-    adc_config()                             0x08000a65   Thumb Code    92  main.o(i._Z10adc_configv)
-    i2c_config()                             0x08000ac1   Thumb Code    44  main.o(i._Z10i2c_configv)
-    rcu_config()                             0x08000af5   Thumb Code    84  main.o(i._Z10rcu_configv)
-    gpio_config()                            0x08000b49   Thumb Code   326  main.o(i._Z11gpio_configv)
-    pwm_config_buzzer()                      0x08000c95   Thumb Code   144  main.o(i._Z17pwm_config_buzzerv)
-    pwm_config_lcd_bl()                      0x08000d29   Thumb Code   140  main.o(i._Z17pwm_config_lcd_blv)
-    rtc_setup()                              0x08000db5   Thumb Code    54  main.o(i._Z9rtc_setupv)
-    spi0_init()                              0x08000df5   Thumb Code    56  main.o(i._Z9spi0_initv)
-    uart_init()                              0x08000e31   Thumb Code   126  main.o(i._Z9uart_initv)
-    PixelsBase::setColor(RGB)                0x08000eb5   Thumb Code    16  inverter.o(i._ZN10PixelsBase8setColorE3RGB)
-    PixelsBase::setColor(unsigned char, unsigned char, unsigned char) 0x08000ec5   Thumb Code    32  pixels.o(i._ZN10PixelsBase8setColorEhhh)
-    PixelsBase::PixelsBase(unsigned short, unsigned short) 0x08000ee5   Thumb Code   122  pixels.o(i._ZN10PixelsBaseC1Ett)
-    PixelsBase::PixelsBase__sub_object(unsigned short, unsigned short) 0x08000ee5   Thumb Code     0  pixels.o(i._ZN10PixelsBaseC1Ett)
-    ClickButton::ClickButton(unsigned char, unsigned short, bool) 0x08000f6d   Thumb Code    30  inverter.o(i._ZN11ClickButtonC1Ehtb)
-    ClickButton::ClickButton__sub_object(unsigned char, unsigned short, bool) 0x08000f6d   Thumb Code     0  inverter.o(i._ZN11ClickButtonC1Ehtb)
-    RGB::RGB(unsigned char, unsigned char, unsigned char) 0x08000f8b   Thumb Code     8  pixels.o(i._ZN3RGBC1Ehhh)
-    RGB::RGB__sub_object(unsigned char, unsigned char, unsigned char) 0x08000f8b   Thumb Code     0  pixels.o(i._ZN3RGBC1Ehhh)
-    operator delete[] (void*)                0x08000f93   Thumb Code     8  array_del.o(i._ZdaPv)
-    operator delete (void*)                  0x08000f9b   Thumb Code     8  delete.o(i._ZdlPv)
-    operator new[] (unsigned)                0x08000fa3   Thumb Code     8  array_new.o(i._Znaj)
-    operator new(unsigned)                   0x08000fad   Thumb Code    34  new.o(i._Znwj)
-    adc_calibration_enable                   0x080010cd   Thumb Code    32  gd32f3x0_adc.o(i.adc_calibration_enable)
-    adc_channel_length_config                0x080010f1   Thumb Code    54  gd32f3x0_adc.o(i.adc_channel_length_config)
-    adc_data_alignment_config                0x0800112d   Thumb Code    22  gd32f3x0_adc.o(i.adc_data_alignment_config)
-    adc_enable                               0x08001149   Thumb Code    18  gd32f3x0_adc.o(i.adc_enable)
-    adc_external_trigger_config              0x08001161   Thumb Code    56  gd32f3x0_adc.o(i.adc_external_trigger_config)
-    adc_external_trigger_source_config       0x0800119d   Thumb Code    34  gd32f3x0_adc.o(i.adc_external_trigger_source_config)
-    adc_regular_channel_config               0x080011c5   Thumb Code   114  gd32f3x0_adc.o(i.adc_regular_channel_config)
-    adc_resolution_config                    0x0800123d   Thumb Code    18  gd32f3x0_adc.o(i.adc_resolution_config)
-    adc_software_trigger_enable              0x08001255   Thumb Code    28  gd32f3x0_adc.o(i.adc_software_trigger_enable)
-    adc_special_function_config              0x08001275   Thumb Code    86  gd32f3x0_adc.o(i.adc_special_function_config)
-    chksum8                                  0x080012d1   Thumb Code    22  wifi.o(i.chksum8)
-    delay_1ms                                0x080012e9   Thumb Code    12  systick.o(i.delay_1ms)
-    delay_decrement                          0x080012f9   Thumb Code    16  systick.o(i.delay_decrement)
-    gpio_af_set                              0x0800130d   Thumb Code   100  gd32f3x0_gpio.o(i.gpio_af_set)
-    gpio_mode_set                            0x08001371   Thumb Code    68  gd32f3x0_gpio.o(i.gpio_mode_set)
-    gpio_output_options_set                  0x080013b5   Thumb Code   112  gd32f3x0_gpio.o(i.gpio_output_options_set)
-    i2c_ack_config                           0x08001425   Thumb Code    20  gd32f3x0_i2c.o(i.i2c_ack_config)
-    i2c_clock_config                         0x08001439   Thumb Code   240  gd32f3x0_i2c.o(i.i2c_clock_config)
-    i2c_enable                               0x08001535   Thumb Code    10  gd32f3x0_i2c.o(i.i2c_enable)
-    i2c_mode_addr_config                     0x0800153f   Thumb Code    22  gd32f3x0_i2c.o(i.i2c_mode_addr_config)
-    main                                     0x08001555   Thumb Code    58  main.o(i.main)
-    nvic_irq_enable                          0x08001591   Thumb Code   132  gd32f3x0_misc.o(i.nvic_irq_enable)
-    nvic_priority_group_set                  0x08001619   Thumb Code    10  gd32f3x0_misc.o(i.nvic_priority_group_set)
-    nvic_vector_table_set                    0x0800162d   Thumb Code    12  gd32f3x0_misc.o(i.nvic_vector_table_set)
-    pmu_backup_write_enable                  0x08001641   Thumb Code    12  gd32f3x0_pmu.o(i.pmu_backup_write_enable)
-    rcu_adc_clock_config                     0x08001651   Thumb Code   136  gd32f3x0_rcu.o(i.rcu_adc_clock_config)
-    rcu_clock_freq_get                       0x080016e1   Thumb Code   404  gd32f3x0_rcu.o(i.rcu_clock_freq_get)
-    rcu_flag_get                             0x0800189d   Thumb Code    28  gd32f3x0_rcu.o(i.rcu_flag_get)
-    rcu_osci_on                              0x080018bd   Thumb Code    22  gd32f3x0_rcu.o(i.rcu_osci_on)
-    rcu_osci_stab_wait                       0x080018d9   Thumb Code   230  gd32f3x0_rcu.o(i.rcu_osci_stab_wait)
-    rcu_periph_clock_enable                  0x080019c5   Thumb Code    22  gd32f3x0_rcu.o(i.rcu_periph_clock_enable)
-    rcu_periph_reset_disable                 0x080019e1   Thumb Code    22  gd32f3x0_rcu.o(i.rcu_periph_reset_disable)
-    rcu_periph_reset_enable                  0x080019fd   Thumb Code    22  gd32f3x0_rcu.o(i.rcu_periph_reset_enable)
-    rcu_rtc_clock_config                     0x08001a19   Thumb Code    18  gd32f3x0_rcu.o(i.rcu_rtc_clock_config)
-    receive_uart_int                         0x08001a31   Thumb Code   370  wifi.o(i.receive_uart_int)
-    rtc_init                                 0x08001bb1   Thumb Code   150  gd32f3x0_rtc.o(i.rtc_init)
-    rtc_init_mode_enter                      0x08001c4d   Thumb Code    46  gd32f3x0_rtc.o(i.rtc_init_mode_enter)
-    rtc_init_mode_exit                       0x08001c81   Thumb Code    12  gd32f3x0_rtc.o(i.rtc_init_mode_exit)
-    rtc_register_sync_wait                   0x08001c91   Thumb Code    76  gd32f3x0_rtc.o(i.rtc_register_sync_wait)
-    spi_dma_enable                           0x08001ce1   Thumb Code    20  gd32f3x0_spi.o(i.spi_dma_enable)
-    spi_enable                               0x08001cf5   Thumb Code    10  gd32f3x0_spi.o(i.spi_enable)
-    spi_init                                 0x08001cff   Thumb Code    46  gd32f3x0_spi.o(i.spi_init)
-    systick_config                           0x08001d91   Thumb Code    60  systick.o(i.systick_config)
-    timer_auto_reload_shadow_enable          0x08001dd1   Thumb Code    10  gd32f3x0_timer.o(i.timer_auto_reload_shadow_enable)
-    timer_channel_output_config              0x08001ddd   Thumb Code   476  gd32f3x0_timer.o(i.timer_channel_output_config)
-    timer_channel_output_mode_config         0x08001fc9   Thumb Code    78  gd32f3x0_timer.o(i.timer_channel_output_mode_config)
-    timer_channel_output_pulse_value_config  0x08002017   Thumb Code    30  gd32f3x0_timer.o(i.timer_channel_output_pulse_value_config)
-    timer_channel_output_shadow_config       0x08002035   Thumb Code    78  gd32f3x0_timer.o(i.timer_channel_output_shadow_config)
-    timer_deinit                             0x08002085   Thumb Code   106  gd32f3x0_timer.o(i.timer_deinit)
-    timer_disable                            0x080020f9   Thumb Code    10  gd32f3x0_timer.o(i.timer_disable)
-    timer_enable                             0x08002103   Thumb Code    10  gd32f3x0_timer.o(i.timer_enable)
-    timer_init                               0x0800210d   Thumb Code   136  gd32f3x0_timer.o(i.timer_init)
-    timer_interrupt_flag_clear               0x080021ad   Thumb Code     6  gd32f3x0_timer.o(i.timer_interrupt_flag_clear)
-    timer_interrupt_flag_get                 0x080021b3   Thumb Code    20  gd32f3x0_timer.o(i.timer_interrupt_flag_get)
-    timer_primary_output_config              0x080021c7   Thumb Code    20  gd32f3x0_timer.o(i.timer_primary_output_config)
-    usart_baudrate_set                       0x080021dd   Thumb Code    86  gd32f3x0_usart.o(i.usart_baudrate_set)
-    usart_data_receive                       0x08002239   Thumb Code     8  gd32f3x0_usart.o(i.usart_data_receive)
-    usart_data_transmit                      0x08002241   Thumb Code     8  gd32f3x0_usart.o(i.usart_data_transmit)
-    usart_deinit                             0x08002249   Thumb Code    42  gd32f3x0_usart.o(i.usart_deinit)
-    usart_dma_receive_config                 0x08002279   Thumb Code    16  gd32f3x0_usart.o(i.usart_dma_receive_config)
-    usart_enable                             0x08002289   Thumb Code    10  gd32f3x0_usart.o(i.usart_enable)
-    usart_flag_get                           0x08002293   Thumb Code    22  gd32f3x0_usart.o(i.usart_flag_get)
-    usart_interrupt_enable                   0x080022a9   Thumb Code    20  gd32f3x0_usart.o(i.usart_interrupt_enable)
-    usart_interrupt_flag_clear               0x080022bd   Thumb Code    34  gd32f3x0_usart.o(i.usart_interrupt_flag_clear)
-    usart_interrupt_flag_get                 0x080022e5   Thumb Code    46  gd32f3x0_usart.o(i.usart_interrupt_flag_get)
-    usart_parity_config                      0x08002313   Thumb Code    24  gd32f3x0_usart.o(i.usart_parity_config)
-    usart_receive_config                     0x0800232b   Thumb Code    16  gd32f3x0_usart.o(i.usart_receive_config)
-    usart_stop_bit_set                       0x0800233b   Thumb Code    24  gd32f3x0_usart.o(i.usart_stop_bit_set)
-    usart_transmit_config                    0x08002353   Thumb Code    16  gd32f3x0_usart.o(i.usart_transmit_config)
-    usart_transmit_frame                     0x08002365   Thumb Code    54  wifi.o(i.usart_transmit_frame)
-    usart_word_length_set                    0x080023a1   Thumb Code    24  gd32f3x0_usart.o(i.usart_word_length_set)
-    _fp_init                                 0x080023b9   Thumb Code    10  fpinit.o(x$fpl$fpinit)
-    __fplib_config_fpu_vfp                   0x080023c1   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fplib_config_pureend_doubles           0x080023c1   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    vtable for PixelsBase                    0x080023c4   Data          52  pixels.o(.constdata__ZTV10PixelsBase)
-    vtable for Pixels                        0x080023f8   Data          52  inverter.o(.constdata__ZTV6Pixels)
-    Region$$Table$$Base                      0x0800242c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800244c   Number         0  anon$$obj.o(Region$$Table)
-    SHT$$INIT_ARRAY$$Base                    0x0800244c   Number         0  inverter.o(.init_array)
-    SHT$$INIT_ARRAY$$Limit                   0x08002450   Number         0  init_aeabi.o(.init_array)
-    prescaler_a                              0x20000000   Data           4  main.o(.data)
-    prescaler_s                              0x20000004   Data           4  main.o(.data)
-    uwtick                                   0x20000008   Data           4  systick.o(.data)
-    crc                                      0x20000010   Data           1  wifi.o(.data)
-    idle_flag_stat                           0x20000013   Data           1  wifi.o(.data)
-    answer_cmd                               0x20000014   Data          50  wifi.o(.data)
-    prod_info                                0x20000046   Data          43  wifi.o(.data)
-    SystemCoreClock                          0x20000074   Data           4  system_gd32f3x0.o(.data)
-    rtc_initpara                             0x20000078   Data          20  main.o(.bss)
-    _key_window                              0x200000ac   Data          28  inverter.o(.bss)
-    _key_power                               0x200000c8   Data          28  inverter.o(.bss)
-    _key_menu                                0x200000e4   Data          28  inverter.o(.bss)
-    _key_back                                0x20000100   Data          28  inverter.o(.bss)
-    _key_down                                0x2000011c   Data          28  inverter.o(.bss)
-    _key_up                                  0x20000138   Data          28  inverter.o(.bss)
-    pxs                                      0x20000158   Data          56  inverter.o(.bss)
-    _dateTime                                0x200001d4   Data          44  inverter.o(.bss)
-    recv_buffer                              0x20000200   Data         255  wifi.o(.bss)
-    recv_buffer_compl                        0x200002ff   Data         255  wifi.o(.bss)
-    __libspace_start                         0x20000400   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x20000460   Data           0  libspace.o(.bss)
+    rcu_config()                             0x08000a1f   Thumb Code    84  main.o(i._Z10rcu_configv)
+    gpio_config()                            0x08000a75   Thumb Code   326  main.o(i._Z11gpio_configv)
+    uart_init()                              0x08000bc1   Thumb Code   126  main.o(i._Z9uart_initv)
+    PixelsBase::setColor(RGB)                0x08000c45   Thumb Code    16  inverter.o(i._ZN10PixelsBase8setColorE3RGB)
+    PixelsBase::setColor(unsigned char, unsigned char, unsigned char) 0x08000c55   Thumb Code    32  pixels.o(i._ZN10PixelsBase8setColorEhhh)
+    PixelsBase::PixelsBase(unsigned short, unsigned short) 0x08000c75   Thumb Code   122  pixels.o(i._ZN10PixelsBaseC1Ett)
+    PixelsBase::PixelsBase__sub_object(unsigned short, unsigned short) 0x08000c75   Thumb Code     0  pixels.o(i._ZN10PixelsBaseC1Ett)
+    ClickButton::ClickButton(unsigned char, unsigned short, bool) 0x08000cfd   Thumb Code    30  inverter.o(i._ZN11ClickButtonC1Ehtb)
+    ClickButton::ClickButton__sub_object(unsigned char, unsigned short, bool) 0x08000cfd   Thumb Code     0  inverter.o(i._ZN11ClickButtonC1Ehtb)
+    RGB::RGB(unsigned char, unsigned char, unsigned char) 0x08000d1b   Thumb Code     8  pixels.o(i._ZN3RGBC1Ehhh)
+    RGB::RGB__sub_object(unsigned char, unsigned char, unsigned char) 0x08000d1b   Thumb Code     0  pixels.o(i._ZN3RGBC1Ehhh)
+    operator delete[] (void*)                0x08000d23   Thumb Code     8  array_del.o(i._ZdaPv)
+    operator delete (void*)                  0x08000d2b   Thumb Code     8  delete.o(i._ZdlPv)
+    operator new[] (unsigned)                0x08000d33   Thumb Code     8  array_new.o(i._Znaj)
+    operator new(unsigned)                   0x08000d3d   Thumb Code    34  new.o(i._Znwj)
+    chksum8                                  0x08000e5d   Thumb Code    22  wifi.o(i.chksum8)
+    delay_1ms                                0x08000e75   Thumb Code    12  systick.o(i.delay_1ms)
+    delay_decrement                          0x08000e85   Thumb Code    16  systick.o(i.delay_decrement)
+    gpio_af_set                              0x08000e99   Thumb Code   100  gd32f3x0_gpio.o(i.gpio_af_set)
+    gpio_mode_set                            0x08000efd   Thumb Code    68  gd32f3x0_gpio.o(i.gpio_mode_set)
+    gpio_output_options_set                  0x08000f41   Thumb Code   112  gd32f3x0_gpio.o(i.gpio_output_options_set)
+    main                                     0x08000fb1   Thumb Code    26  main.o(i.main)
+    nvic_irq_enable                          0x08000fcd   Thumb Code   132  gd32f3x0_misc.o(i.nvic_irq_enable)
+    nvic_priority_group_set                  0x08001055   Thumb Code    10  gd32f3x0_misc.o(i.nvic_priority_group_set)
+    nvic_vector_table_set                    0x08001069   Thumb Code    12  gd32f3x0_misc.o(i.nvic_vector_table_set)
+    rcu_adc_clock_config                     0x0800107d   Thumb Code   136  gd32f3x0_rcu.o(i.rcu_adc_clock_config)
+    rcu_clock_freq_get                       0x0800110d   Thumb Code   404  gd32f3x0_rcu.o(i.rcu_clock_freq_get)
+    rcu_periph_clock_enable                  0x080012c9   Thumb Code    22  gd32f3x0_rcu.o(i.rcu_periph_clock_enable)
+    rcu_periph_reset_disable                 0x080012e5   Thumb Code    22  gd32f3x0_rcu.o(i.rcu_periph_reset_disable)
+    rcu_periph_reset_enable                  0x08001301   Thumb Code    22  gd32f3x0_rcu.o(i.rcu_periph_reset_enable)
+    receive_uart_int                         0x0800131d   Thumb Code   370  wifi.o(i.receive_uart_int)
+    systick_config                           0x08001501   Thumb Code    60  systick.o(i.systick_config)
+    timer_interrupt_flag_clear               0x08001541   Thumb Code     6  gd32f3x0_timer.o(i.timer_interrupt_flag_clear)
+    timer_interrupt_flag_get                 0x08001547   Thumb Code    20  gd32f3x0_timer.o(i.timer_interrupt_flag_get)
+    usart_baudrate_set                       0x0800155d   Thumb Code    86  gd32f3x0_usart.o(i.usart_baudrate_set)
+    usart_data_receive                       0x080015b9   Thumb Code     8  gd32f3x0_usart.o(i.usart_data_receive)
+    usart_data_transmit                      0x080015c1   Thumb Code     8  gd32f3x0_usart.o(i.usart_data_transmit)
+    usart_deinit                             0x080015c9   Thumb Code    42  gd32f3x0_usart.o(i.usart_deinit)
+    usart_dma_receive_config                 0x080015f9   Thumb Code    16  gd32f3x0_usart.o(i.usart_dma_receive_config)
+    usart_enable                             0x08001609   Thumb Code    10  gd32f3x0_usart.o(i.usart_enable)
+    usart_flag_get                           0x08001613   Thumb Code    22  gd32f3x0_usart.o(i.usart_flag_get)
+    usart_interrupt_enable                   0x08001629   Thumb Code    20  gd32f3x0_usart.o(i.usart_interrupt_enable)
+    usart_interrupt_flag_clear               0x0800163d   Thumb Code    34  gd32f3x0_usart.o(i.usart_interrupt_flag_clear)
+    usart_interrupt_flag_get                 0x08001665   Thumb Code    46  gd32f3x0_usart.o(i.usart_interrupt_flag_get)
+    usart_parity_config                      0x08001693   Thumb Code    24  gd32f3x0_usart.o(i.usart_parity_config)
+    usart_receive_config                     0x080016ab   Thumb Code    16  gd32f3x0_usart.o(i.usart_receive_config)
+    usart_stop_bit_set                       0x080016bb   Thumb Code    24  gd32f3x0_usart.o(i.usart_stop_bit_set)
+    usart_transmit_config                    0x080016d3   Thumb Code    16  gd32f3x0_usart.o(i.usart_transmit_config)
+    usart_transmit_frame                     0x080016e5   Thumb Code    54  wifi.o(i.usart_transmit_frame)
+    usart_word_length_set                    0x08001721   Thumb Code    24  gd32f3x0_usart.o(i.usart_word_length_set)
+    _fp_init                                 0x08001739   Thumb Code    10  fpinit.o(x$fpl$fpinit)
+    __fplib_config_fpu_vfp                   0x08001741   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fplib_config_pureend_doubles           0x08001741   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    vtable for PixelsBase                    0x08001744   Data          52  pixels.o(.constdata__ZTV10PixelsBase)
+    vtable for Pixels                        0x08001778   Data          52  inverter.o(.constdata__ZTV6Pixels)
+    Region$$Table$$Base                      0x080017ac   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080017cc   Number         0  anon$$obj.o(Region$$Table)
+    SHT$$INIT_ARRAY$$Base                    0x080017cc   Number         0  inverter.o(.init_array)
+    SHT$$INIT_ARRAY$$Limit                   0x080017d0   Number         0  init_aeabi.o(.init_array)
+    uwtick                                   0x20000000   Data           4  systick.o(.data)
+    crc                                      0x20000008   Data           1  wifi.o(.data)
+    idle_flag_stat                           0x2000000b   Data           1  wifi.o(.data)
+    answer_cmd                               0x2000000c   Data          50  wifi.o(.data)
+    prod_info                                0x2000003e   Data          43  wifi.o(.data)
+    SystemCoreClock                          0x2000006c   Data           4  system_gd32f3x0.o(.data)
+    _key_window                              0x2000008c   Data          28  inverter.o(.bss)
+    _key_power                               0x200000a8   Data          28  inverter.o(.bss)
+    _key_menu                                0x200000c4   Data          28  inverter.o(.bss)
+    _key_back                                0x200000e0   Data          28  inverter.o(.bss)
+    _key_down                                0x200000fc   Data          28  inverter.o(.bss)
+    _key_up                                  0x20000118   Data          28  inverter.o(.bss)
+    pxs                                      0x20000138   Data          56  inverter.o(.bss)
+    _dateTime                                0x200001b4   Data          44  inverter.o(.bss)
+    recv_buffer                              0x200001e0   Data         255  wifi.o(.bss)
+    recv_buffer_compl                        0x200002df   Data         255  wifi.o(.bss)
+    __libspace_start                         0x200003e0   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x20000440   Data           0  libspace.o(.bss)
 
 
 
@@ -3073,9 +3019,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000151
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000024c8, Max: 0x00020000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00001840, Max: 0x00020000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00002450, Max: 0x00020000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000017d0, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -3183,132 +3129,84 @@ Memory Map of the image
     0x080009c2   0x080009c2   0x00000002   PAD
     0x080009c4   0x080009c4   0x00000058   Code   RO           12    i.USART1_IRQHandler  gd32f3x0_it.o
     0x08000a1c   0x08000a1c   0x00000002   Code   RO           13    i.UsageFault_Handler  gd32f3x0_it.o
-    0x08000a1e   0x08000a1e   0x00000002   PAD
-    0x08000a20   0x08000a20   0x00000044   Code   RO          180    i._Z10RTC_configv   main.o
-    0x08000a64   0x08000a64   0x0000005c   Code   RO          181    i._Z10adc_configv   main.o
-    0x08000ac0   0x08000ac0   0x00000034   Code   RO          182    i._Z10i2c_configv   main.o
-    0x08000af4   0x08000af4   0x00000054   Code   RO          183    i._Z10rcu_configv   main.o
-    0x08000b48   0x08000b48   0x0000014c   Code   RO          184    i._Z11gpio_configv  main.o
-    0x08000c94   0x08000c94   0x00000094   Code   RO          187    i._Z17pwm_config_buzzerv  main.o
-    0x08000d28   0x08000d28   0x0000008c   Code   RO          188    i._Z17pwm_config_lcd_blv  main.o
-    0x08000db4   0x08000db4   0x00000040   Code   RO          189    i._Z9rtc_setupv     main.o
-    0x08000df4   0x08000df4   0x0000003c   Code   RO          190    i._Z9spi0_initv     main.o
-    0x08000e30   0x08000e30   0x00000084   Code   RO          191    i._Z9uart_initv     main.o
-    0x08000eb4   0x08000eb4   0x00000010   Code   RO          957    i._ZN10PixelsBase8setColorE3RGB  inverter.o
-    0x08000ec4   0x08000ec4   0x00000020   Code   RO         1385    i._ZN10PixelsBase8setColorEhhh  pixels.o
-    0x08000ee4   0x08000ee4   0x00000088   Code   RO         1167    i._ZN10PixelsBaseC1Ett  pixels.o
-    0x08000f6c   0x08000f6c   0x0000001e   Code   RO          951    i._ZN11ClickButtonC1Ehtb  inverter.o
-    0x08000f8a   0x08000f8a   0x00000008   Code   RO         1171    i._ZN3RGBC1Ehhh     pixels.o
-    0x08000f92   0x08000f92   0x00000008   Code   RO         5336    i._ZdaPv            cpprt_w.l(array_del.o)
-    0x08000f9a   0x08000f9a   0x00000008   Code   RO         5581    i._ZdlPv            cpprt_w.l(delete.o)
-    0x08000fa2   0x08000fa2   0x00000008   Code   RO         5339    i._Znaj             cpprt_w.l(array_new.o)
-    0x08000faa   0x08000faa   0x00000002   PAD
-    0x08000fac   0x08000fac   0x00000028   Code   RO         5584    i._Znwj             cpprt_w.l(new.o)
-    0x08000fd4   0x08000fd4   0x000000f8   Code   RO          539    i.__sti___10_inverter_c_ffec7761  inverter.o
-    0x080010cc   0x080010cc   0x00000024   Code   RO         1603    i.adc_calibration_enable  gd32f3x0_adc.o
-    0x080010f0   0x080010f0   0x0000003c   Code   RO         1604    i.adc_channel_length_config  gd32f3x0_adc.o
-    0x0800112c   0x0800112c   0x0000001c   Code   RO         1605    i.adc_data_alignment_config  gd32f3x0_adc.o
-    0x08001148   0x08001148   0x00000018   Code   RO         1611    i.adc_enable        gd32f3x0_adc.o
-    0x08001160   0x08001160   0x0000003c   Code   RO         1612    i.adc_external_trigger_config  gd32f3x0_adc.o
-    0x0800119c   0x0800119c   0x00000028   Code   RO         1613    i.adc_external_trigger_source_config  gd32f3x0_adc.o
-    0x080011c4   0x080011c4   0x00000078   Code   RO         1626    i.adc_regular_channel_config  gd32f3x0_adc.o
-    0x0800123c   0x0800123c   0x00000018   Code   RO         1628    i.adc_resolution_config  gd32f3x0_adc.o
-    0x08001254   0x08001254   0x00000020   Code   RO         1629    i.adc_software_trigger_enable  gd32f3x0_adc.o
-    0x08001274   0x08001274   0x0000005c   Code   RO         1630    i.adc_special_function_config  gd32f3x0_adc.o
-    0x080012d0   0x080012d0   0x00000016   Code   RO         1479    i.chksum8           wifi.o
-    0x080012e6   0x080012e6   0x00000002   PAD
-    0x080012e8   0x080012e8   0x00000010   Code   RO          409    i.delay_1ms         systick.o
-    0x080012f8   0x080012f8   0x00000014   Code   RO          411    i.delay_decrement   systick.o
-    0x0800130c   0x0800130c   0x00000064   Code   RO         2797    i.gpio_af_set       gd32f3x0_gpio.o
-    0x08001370   0x08001370   0x00000044   Code   RO         2805    i.gpio_mode_set     gd32f3x0_gpio.o
-    0x080013b4   0x080013b4   0x00000070   Code   RO         2807    i.gpio_output_options_set  gd32f3x0_gpio.o
-    0x08001424   0x08001424   0x00000014   Code   RO         2904    i.i2c_ack_config    gd32f3x0_i2c.o
-    0x08001438   0x08001438   0x000000fc   Code   RO         2906    i.i2c_clock_config  gd32f3x0_i2c.o
-    0x08001534   0x08001534   0x0000000a   Code   RO         2915    i.i2c_enable        gd32f3x0_i2c.o
-    0x0800153e   0x0800153e   0x00000016   Code   RO         2923    i.i2c_mode_addr_config  gd32f3x0_i2c.o
-    0x08001554   0x08001554   0x0000003a   Code   RO          192    i.main              main.o
-    0x0800158e   0x0800158e   0x00000002   PAD
-    0x08001590   0x08001590   0x00000088   Code   RO         3108    i.nvic_irq_enable   gd32f3x0_misc.o
-    0x08001618   0x08001618   0x00000014   Code   RO         3109    i.nvic_priority_group_set  gd32f3x0_misc.o
-    0x0800162c   0x0800162c   0x00000014   Code   RO         3110    i.nvic_vector_table_set  gd32f3x0_misc.o
-    0x08001640   0x08001640   0x00000010   Code   RO         3164    i.pmu_backup_write_enable  gd32f3x0_pmu.o
-    0x08001650   0x08001650   0x00000090   Code   RO         3298    i.rcu_adc_clock_config  gd32f3x0_rcu.o
-    0x080016e0   0x080016e0   0x000001bc   Code   RO         3308    i.rcu_clock_freq_get  gd32f3x0_rcu.o
-    0x0800189c   0x0800189c   0x00000020   Code   RO         3311    i.rcu_flag_get      gd32f3x0_rcu.o
-    0x080018bc   0x080018bc   0x0000001c   Code   RO         3325    i.rcu_osci_on       gd32f3x0_rcu.o
-    0x080018d8   0x080018d8   0x000000ec   Code   RO         3326    i.rcu_osci_stab_wait  gd32f3x0_rcu.o
-    0x080019c4   0x080019c4   0x0000001c   Code   RO         3328    i.rcu_periph_clock_enable  gd32f3x0_rcu.o
-    0x080019e0   0x080019e0   0x0000001c   Code   RO         3331    i.rcu_periph_reset_disable  gd32f3x0_rcu.o
-    0x080019fc   0x080019fc   0x0000001c   Code   RO         3332    i.rcu_periph_reset_enable  gd32f3x0_rcu.o
-    0x08001a18   0x08001a18   0x00000018   Code   RO         3335    i.rcu_rtc_clock_config  gd32f3x0_rcu.o
-    0x08001a30   0x08001a30   0x00000180   Code   RO         1480    i.receive_uart_int  wifi.o
-    0x08001bb0   0x08001bb0   0x0000009c   Code   RO         3588    i.rtc_init          gd32f3x0_rtc.o
-    0x08001c4c   0x08001c4c   0x00000034   Code   RO         3589    i.rtc_init_mode_enter  gd32f3x0_rtc.o
-    0x08001c80   0x08001c80   0x00000010   Code   RO         3590    i.rtc_init_mode_exit  gd32f3x0_rtc.o
-    0x08001c90   0x08001c90   0x00000050   Code   RO         3595    i.rtc_register_sync_wait  gd32f3x0_rtc.o
-    0x08001ce0   0x08001ce0   0x00000014   Code   RO         3792    i.spi_dma_enable    gd32f3x0_spi.o
-    0x08001cf4   0x08001cf4   0x0000000a   Code   RO         3793    i.spi_enable        gd32f3x0_spi.o
-    0x08001cfe   0x08001cfe   0x0000002e   Code   RO         3802    i.spi_init          gd32f3x0_spi.o
-    0x08001d2c   0x08001d2c   0x00000064   Code   RO         1557    i.system_clock_84m_irc8m  system_gd32f3x0.o
-    0x08001d90   0x08001d90   0x00000040   Code   RO          412    i.systick_config    systick.o
-    0x08001dd0   0x08001dd0   0x0000000a   Code   RO         4090    i.timer_auto_reload_shadow_enable  gd32f3x0_timer.o
-    0x08001dda   0x08001dda   0x00000002   PAD
-    0x08001ddc   0x08001ddc   0x000001ec   Code   RO         4107    i.timer_channel_output_config  gd32f3x0_timer.o
-    0x08001fc8   0x08001fc8   0x0000004e   Code   RO         4109    i.timer_channel_output_mode_config  gd32f3x0_timer.o
-    0x08002016   0x08002016   0x0000001e   Code   RO         4111    i.timer_channel_output_pulse_value_config  gd32f3x0_timer.o
-    0x08002034   0x08002034   0x0000004e   Code   RO         4112    i.timer_channel_output_shadow_config  gd32f3x0_timer.o
-    0x08002082   0x08002082   0x00000002   PAD
-    0x08002084   0x08002084   0x00000074   Code   RO         4121    i.timer_deinit      gd32f3x0_timer.o
-    0x080020f8   0x080020f8   0x0000000a   Code   RO         4122    i.timer_disable     gd32f3x0_timer.o
-    0x08002102   0x08002102   0x0000000a   Code   RO         4126    i.timer_enable      gd32f3x0_timer.o
-    0x0800210c   0x0800210c   0x000000a0   Code   RO         4136    i.timer_init        gd32f3x0_timer.o
-    0x080021ac   0x080021ac   0x00000006   Code   RO         4144    i.timer_interrupt_flag_clear  gd32f3x0_timer.o
-    0x080021b2   0x080021b2   0x00000014   Code   RO         4145    i.timer_interrupt_flag_get  gd32f3x0_timer.o
-    0x080021c6   0x080021c6   0x00000014   Code   RO         4152    i.timer_primary_output_config  gd32f3x0_timer.o
-    0x080021da   0x080021da   0x00000002   PAD
-    0x080021dc   0x080021dc   0x0000005c   Code   RO         4772    i.usart_baudrate_set  gd32f3x0_usart.o
-    0x08002238   0x08002238   0x00000008   Code   RO         4778    i.usart_data_receive  gd32f3x0_usart.o
-    0x08002240   0x08002240   0x00000008   Code   RO         4779    i.usart_data_transmit  gd32f3x0_usart.o
-    0x08002248   0x08002248   0x00000030   Code   RO         4780    i.usart_deinit      gd32f3x0_usart.o
-    0x08002278   0x08002278   0x00000010   Code   RO         4783    i.usart_dma_receive_config  gd32f3x0_usart.o
-    0x08002288   0x08002288   0x0000000a   Code   RO         4787    i.usart_enable      gd32f3x0_usart.o
-    0x08002292   0x08002292   0x00000016   Code   RO         4789    i.usart_flag_get    gd32f3x0_usart.o
-    0x080022a8   0x080022a8   0x00000014   Code   RO         4796    i.usart_interrupt_enable  gd32f3x0_usart.o
-    0x080022bc   0x080022bc   0x00000028   Code   RO         4797    i.usart_interrupt_flag_clear  gd32f3x0_usart.o
-    0x080022e4   0x080022e4   0x0000002e   Code   RO         4798    i.usart_interrupt_flag_get  gd32f3x0_usart.o
-    0x08002312   0x08002312   0x00000018   Code   RO         4812    i.usart_parity_config  gd32f3x0_usart.o
-    0x0800232a   0x0800232a   0x00000010   Code   RO         4814    i.usart_receive_config  gd32f3x0_usart.o
-    0x0800233a   0x0800233a   0x00000018   Code   RO         4833    i.usart_stop_bit_set  gd32f3x0_usart.o
-    0x08002352   0x08002352   0x00000010   Code   RO         4835    i.usart_transmit_config  gd32f3x0_usart.o
-    0x08002362   0x08002362   0x00000002   PAD
-    0x08002364   0x08002364   0x0000003c   Code   RO         1481    i.usart_transmit_frame  wifi.o
-    0x080023a0   0x080023a0   0x00000018   Code   RO         4839    i.usart_word_length_set  gd32f3x0_usart.o
-    0x080023b8   0x080023b8   0x0000000a   Code   RO         5771    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x080023c2   0x080023c2   0x00000002   PAD
-    0x080023c4   0x080023c4   0x00000034   Data   RO         1372    .constdata__ZTV10PixelsBase  pixels.o
-    0x080023f8   0x080023f8   0x00000034   Data   RO          938    .constdata__ZTV6Pixels  inverter.o
-    0x0800242c   0x0800242c   0x00000020   Data   RO         5931    Region$$Table       anon$$obj.o
-    0x0800244c   0x0800244c   0x00000004   Data   RO          628    .init_array         inverter.o
-    0x08002450   0x0800244c   0x00000000   Data   RO         5331    .init_array         c_w.l(init_aeabi.o)
+    0x08000a1e   0x08000a1e   0x00000054   Code   RO          183    i._Z10rcu_configv   main.o
+    0x08000a72   0x08000a72   0x00000002   PAD
+    0x08000a74   0x08000a74   0x0000014c   Code   RO          184    i._Z11gpio_configv  main.o
+    0x08000bc0   0x08000bc0   0x00000084   Code   RO          191    i._Z9uart_initv     main.o
+    0x08000c44   0x08000c44   0x00000010   Code   RO          957    i._ZN10PixelsBase8setColorE3RGB  inverter.o
+    0x08000c54   0x08000c54   0x00000020   Code   RO         1385    i._ZN10PixelsBase8setColorEhhh  pixels.o
+    0x08000c74   0x08000c74   0x00000088   Code   RO         1167    i._ZN10PixelsBaseC1Ett  pixels.o
+    0x08000cfc   0x08000cfc   0x0000001e   Code   RO          951    i._ZN11ClickButtonC1Ehtb  inverter.o
+    0x08000d1a   0x08000d1a   0x00000008   Code   RO         1171    i._ZN3RGBC1Ehhh     pixels.o
+    0x08000d22   0x08000d22   0x00000008   Code   RO         5336    i._ZdaPv            cpprt_w.l(array_del.o)
+    0x08000d2a   0x08000d2a   0x00000008   Code   RO         5581    i._ZdlPv            cpprt_w.l(delete.o)
+    0x08000d32   0x08000d32   0x00000008   Code   RO         5339    i._Znaj             cpprt_w.l(array_new.o)
+    0x08000d3a   0x08000d3a   0x00000002   PAD
+    0x08000d3c   0x08000d3c   0x00000028   Code   RO         5584    i._Znwj             cpprt_w.l(new.o)
+    0x08000d64   0x08000d64   0x000000f8   Code   RO          539    i.__sti___10_inverter_c_ffec7761  inverter.o
+    0x08000e5c   0x08000e5c   0x00000016   Code   RO         1479    i.chksum8           wifi.o
+    0x08000e72   0x08000e72   0x00000002   PAD
+    0x08000e74   0x08000e74   0x00000010   Code   RO          409    i.delay_1ms         systick.o
+    0x08000e84   0x08000e84   0x00000014   Code   RO          411    i.delay_decrement   systick.o
+    0x08000e98   0x08000e98   0x00000064   Code   RO         2797    i.gpio_af_set       gd32f3x0_gpio.o
+    0x08000efc   0x08000efc   0x00000044   Code   RO         2805    i.gpio_mode_set     gd32f3x0_gpio.o
+    0x08000f40   0x08000f40   0x00000070   Code   RO         2807    i.gpio_output_options_set  gd32f3x0_gpio.o
+    0x08000fb0   0x08000fb0   0x0000001a   Code   RO          192    i.main              main.o
+    0x08000fca   0x08000fca   0x00000002   PAD
+    0x08000fcc   0x08000fcc   0x00000088   Code   RO         3108    i.nvic_irq_enable   gd32f3x0_misc.o
+    0x08001054   0x08001054   0x00000014   Code   RO         3109    i.nvic_priority_group_set  gd32f3x0_misc.o
+    0x08001068   0x08001068   0x00000014   Code   RO         3110    i.nvic_vector_table_set  gd32f3x0_misc.o
+    0x0800107c   0x0800107c   0x00000090   Code   RO         3298    i.rcu_adc_clock_config  gd32f3x0_rcu.o
+    0x0800110c   0x0800110c   0x000001bc   Code   RO         3308    i.rcu_clock_freq_get  gd32f3x0_rcu.o
+    0x080012c8   0x080012c8   0x0000001c   Code   RO         3328    i.rcu_periph_clock_enable  gd32f3x0_rcu.o
+    0x080012e4   0x080012e4   0x0000001c   Code   RO         3331    i.rcu_periph_reset_disable  gd32f3x0_rcu.o
+    0x08001300   0x08001300   0x0000001c   Code   RO         3332    i.rcu_periph_reset_enable  gd32f3x0_rcu.o
+    0x0800131c   0x0800131c   0x00000180   Code   RO         1480    i.receive_uart_int  wifi.o
+    0x0800149c   0x0800149c   0x00000064   Code   RO         1557    i.system_clock_84m_irc8m  system_gd32f3x0.o
+    0x08001500   0x08001500   0x00000040   Code   RO          412    i.systick_config    systick.o
+    0x08001540   0x08001540   0x00000006   Code   RO         4144    i.timer_interrupt_flag_clear  gd32f3x0_timer.o
+    0x08001546   0x08001546   0x00000014   Code   RO         4145    i.timer_interrupt_flag_get  gd32f3x0_timer.o
+    0x0800155a   0x0800155a   0x00000002   PAD
+    0x0800155c   0x0800155c   0x0000005c   Code   RO         4772    i.usart_baudrate_set  gd32f3x0_usart.o
+    0x080015b8   0x080015b8   0x00000008   Code   RO         4778    i.usart_data_receive  gd32f3x0_usart.o
+    0x080015c0   0x080015c0   0x00000008   Code   RO         4779    i.usart_data_transmit  gd32f3x0_usart.o
+    0x080015c8   0x080015c8   0x00000030   Code   RO         4780    i.usart_deinit      gd32f3x0_usart.o
+    0x080015f8   0x080015f8   0x00000010   Code   RO         4783    i.usart_dma_receive_config  gd32f3x0_usart.o
+    0x08001608   0x08001608   0x0000000a   Code   RO         4787    i.usart_enable      gd32f3x0_usart.o
+    0x08001612   0x08001612   0x00000016   Code   RO         4789    i.usart_flag_get    gd32f3x0_usart.o
+    0x08001628   0x08001628   0x00000014   Code   RO         4796    i.usart_interrupt_enable  gd32f3x0_usart.o
+    0x0800163c   0x0800163c   0x00000028   Code   RO         4797    i.usart_interrupt_flag_clear  gd32f3x0_usart.o
+    0x08001664   0x08001664   0x0000002e   Code   RO         4798    i.usart_interrupt_flag_get  gd32f3x0_usart.o
+    0x08001692   0x08001692   0x00000018   Code   RO         4812    i.usart_parity_config  gd32f3x0_usart.o
+    0x080016aa   0x080016aa   0x00000010   Code   RO         4814    i.usart_receive_config  gd32f3x0_usart.o
+    0x080016ba   0x080016ba   0x00000018   Code   RO         4833    i.usart_stop_bit_set  gd32f3x0_usart.o
+    0x080016d2   0x080016d2   0x00000010   Code   RO         4835    i.usart_transmit_config  gd32f3x0_usart.o
+    0x080016e2   0x080016e2   0x00000002   PAD
+    0x080016e4   0x080016e4   0x0000003c   Code   RO         1481    i.usart_transmit_frame  wifi.o
+    0x08001720   0x08001720   0x00000018   Code   RO         4839    i.usart_word_length_set  gd32f3x0_usart.o
+    0x08001738   0x08001738   0x0000000a   Code   RO         5771    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x08001742   0x08001742   0x00000002   PAD
+    0x08001744   0x08001744   0x00000034   Data   RO         1372    .constdata__ZTV10PixelsBase  pixels.o
+    0x08001778   0x08001778   0x00000034   Data   RO          938    .constdata__ZTV6Pixels  inverter.o
+    0x080017ac   0x080017ac   0x00000020   Data   RO         5931    Region$$Table       anon$$obj.o
+    0x080017cc   0x080017cc   0x00000004   Data   RO          628    .init_array         inverter.o
+    0x080017d0   0x080017cc   0x00000000   Data   RO         5331    .init_array         c_w.l(init_aeabi.o)
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08002450, Size: 0x00001e60, Max: 0x00004000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080017d0, Size: 0x00001e40, Max: 0x00004000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08002450   0x00000008   Data   RW          210    .data               main.o
-    0x20000008   0x08002458   0x00000008   Data   RW          413    .data               systick.o
-    0x20000010   0x08002460   0x00000061   Data   RW         1487    .data               wifi.o
-    0x20000071   0x080024c1   0x00000003   PAD
-    0x20000074   0x080024c4   0x00000004   Data   RW         1558    .data               system_gd32f3x0.o
-    0x20000078        -       0x00000014   Zero   RW          209    .bss                main.o
-    0x2000008c   0x080024c8   0x00000004   PAD
-    0x20000090        -       0x00000170   Zero   RW          611    .bss                inverter.o
-    0x20000200        -       0x000001fe   Zero   RW         1485    .bss                wifi.o
-    0x200003fe   0x080024c8   0x00000002   PAD
-    0x20000400        -       0x00000060   Zero   RW         5774    .bss                c_w.l(libspace.o)
-    0x20000460        -       0x00001600   Zero   RW         1595    HEAP                startup_gd32f3x0.o
-    0x20001a60        -       0x00000400   Zero   RW         1594    STACK               startup_gd32f3x0.o
+    0x20000000   0x080017d0   0x00000008   Data   RW          413    .data               systick.o
+    0x20000008   0x080017d8   0x00000061   Data   RW         1487    .data               wifi.o
+    0x20000069   0x08001839   0x00000003   PAD
+    0x2000006c   0x0800183c   0x00000004   Data   RW         1558    .data               system_gd32f3x0.o
+    0x20000070        -       0x00000170   Zero   RW          611    .bss                inverter.o
+    0x200001e0        -       0x000001fe   Zero   RW         1485    .bss                wifi.o
+    0x200003de   0x08001840   0x00000002   PAD
+    0x200003e0        -       0x00000060   Zero   RW         5774    .bss                c_w.l(libspace.o)
+    0x20000440        -       0x00001600   Zero   RW         1595    HEAP                startup_gd32f3x0.o
+    0x20001a40        -       0x00000400   Zero   RW         1594    STACK               startup_gd32f3x0.o
 
 
 ==============================================================================
@@ -3318,19 +3216,14 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       516         54          0          0          0       6830   gd32f3x0_adc.o
        280          0          0          0          0       2600   gd32f3x0_gpio.o
-       304         12          0          0          0       3108   gd32f3x0_i2c.o
        158         26          0          0          0       9931   gd32f3x0_it.o
        176         22          0          0          0       2704   gd32f3x0_misc.o
-        16          4          0          0          0        570   gd32f3x0_pmu.o
-       992        106          0          0          0      24248   gd32f3x0_rcu.o
-       304         20          0          0          0      15351   gd32f3x0_rtc.o
-        76          0          0          0          0       6621   gd32f3x0_spi.o
-      1030         50          0          0          0      25297   gd32f3x0_timer.o
+       672         84          0          0          0      21490   gd32f3x0_rcu.o
+        26          0          0          0          0       1436   gd32f3x0_timer.o
        414         18          0          0          0      19233   gd32f3x0_usart.o
        294         10         56          0        368      24275   inverter.o
-      1232         44          0          8         20      49050   main.o
+       576         12          0          0          0       8184   main.o
        176         14         52          0          0      11037   pixels.o
         64         26        336          0       6656        884   startup_gd32f3x0.o
        428         54          0          4          0       2263   system_gd32f3x0.o
@@ -3338,9 +3231,9 @@ Image component sizes
        466         20          0         97        510       5021   wifi.o
 
     ----------------------------------------------------------------------
-      7090        498        476        120       7560     240662   Object Totals
+      3890        304        476        112       7536     140697   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        16          0          0          3          6          0   (incl. Padding)
+        12          0          0          3          2          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -3421,15 +3314,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      8820        646        476        120       7656     232474   Grand Totals
-      8820        646        476        120       7656     232474   ELF Image Totals
-      8820        646        476        120          0          0   ROM Totals
+      5620        452        476        112       7632     136809   Grand Totals
+      5620        452        476        112       7632     136809   ELF Image Totals
+      5620        452        476        112          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 9296 (   9.08kB)
-    Total RW  Size (RW Data + ZI Data)              7776 (   7.59kB)
-    Total ROM Size (Code + RO Data + RW Data)       9416 (   9.20kB)
+    Total RO  Size (Code + RO Data)                 6096 (   5.95kB)
+    Total RW  Size (RW Data + ZI Data)              7744 (   7.56kB)
+    Total ROM Size (Code + RO Data + RW Data)       6208 (   6.06kB)
 
 ==============================================================================
 
