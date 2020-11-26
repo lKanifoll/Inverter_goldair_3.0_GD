@@ -38,8 +38,13 @@ OF SUCH DAMAGE.
 
 extern void TIMER_Heat_callback();
 extern void SysTick_Handler_Callback();
-extern void receive_uart_int();
+//extern void receive_uart_int();
 extern uint8_t idle_flag_stat;
+extern uint8_t recv_buffer[10];
+extern uint8_t rxcount;
+
+
+
 /*!
     \brief      this function handles NMI exception
     \param[in]  none
@@ -173,12 +178,13 @@ void USART1_IRQHandler(void)
        //if(rxcount == receivesize){
        //     usart_interrupt_disable(USART1, USART_INT_RBNE);
        //}
-			 
-			receive_uart_int();
+			 recv_buffer[rxcount++] = usart_data_receive(USART1);
+				if(rxcount==50) rxcount = 0;
+			//receive_uart_int();
 			//usart_interrupt_enable(USART1, USART_INT_IDLE);
-			return;
+			
     }
-    if((RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_IDLE)) && idle_flag_stat == 0){
+    if((RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_IDLE)) ){
         /* receive data */
        // receiver_buffer[rxcount++] = usart_data_receive(USART1);
        //if(rxcount == receivesize){
@@ -187,17 +193,10 @@ void USART1_IRQHandler(void)
        //}
 			 usart_interrupt_flag_clear(USART1, USART_INT_FLAG_IDLE);
 			 //usart_interrupt_disable(USART1, USART_INT_IDLE);
-			
+			 //rxcount = 0;
 			 idle_flag_stat = 1;
-			 receive_uart_int();
+			 //receive_uart_int();
 
     }
-    if(RESET != usart_interrupt_flag_get(USART1, USART_INT_FLAG_TBE)){
-        /* transmit data */
-        //usart_data_transmit(USART1, transmitter_buffer[txcount++]);
-        //if(txcount == transfersize){
-            //
-        //}
-       
-    }
+
 }

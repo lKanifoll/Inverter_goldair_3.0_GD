@@ -17,6 +17,7 @@
 //#include <wifi.h>
 #define RTC_CLOCK_SOURCE_IRC40K 
 #define BKP_VALUE    0x32F0
+#define SETTINGSADDR           ((uint32_t)0x0801F800U)
 uint16_t raw;
 
 /* Private variables ---------------------------------------------------------*/
@@ -165,6 +166,7 @@ bool refresh_system = false;
 uint16_t timer_time_set = 0;
 StateBrightness _stateBrightness = StateBrightness_ON;
 //Wifi _wifi;
+uint8_t wifi_status = 0;
 uint32_t nextChangeLevel = 0;
 uint32_t refrash_time = 0;
 uint8_t btn_buff[2];
@@ -177,11 +179,21 @@ ClickButton _key_down(7, 500, true);
 ClickButton _key_up(6, 500, true);
 
 Pixels pxs(240, 320);
-static struct DeviceSettings _settings;
+struct DeviceSettings _settings;
 struct tm _dateTime;
 static struct OnOffSettings _onoffSet = { 0, 0};
 static struct PresetSettings _presetSet = {0, 0};
 static struct TemperatureSettings _tempConfig;
+
+
+
+
+
+
+
+
+
+
 
 void smooth_backlight(uint8_t mode)
 {
@@ -190,8 +202,6 @@ void smooth_backlight(uint8_t mode)
 		for(uint16_t i=0;i<500;i+=4)
 		{
 			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,i);
-			//if(i>300) i+=5;
-			//i++;
 			delay_1ms(2);	
 		}	
 	}
@@ -200,15 +210,37 @@ void smooth_backlight(uint8_t mode)
 		for(uint16_t j=500;j>1;j-=1)
 		{
 			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,j);
-			//if(i>300) i+=5;
-			//i++;
-			//delay_1ms(2);	
 		}
 	}
 }
 
 void SaveFlash()
 {
+	fmc_unlock();
+
+	fmc_flag_clear(FMC_FLAG_END | FMC_FLAG_WPERR | FMC_FLAG_PGERR);
+	fmc_page_erase(SETTINGSADDR);
+	fmc_flag_clear(FMC_FLAG_END | FMC_FLAG_WPERR | FMC_FLAG_PGERR);
+	
+	
+	uint32_t Address = SETTINGSADDR;
+	uint8_t* AddressSrc = (uint8_t*)&_settings;
+	_settings.crc = crc32_1byte(AddressSrc, offsetof(DeviceSettings, crc), 0xFFFFFFFF);
+	int count = sizeof(_settings)/4 ;
+	while(count--){
+		fmc_word_program(Address, *(__IO uint32_t *)AddressSrc);
+		Address += 4U;
+		AddressSrc += 4U;
+		
+	}
+	fmc_flag_clear(FMC_FLAG_END | FMC_FLAG_WPERR | FMC_FLAG_PGERR);
+	fmc_lock();
+	
+	
+	
+	
+	
+	
 	/*
 	HAL_FLASH_Unlock();
 
@@ -1555,33 +1587,170 @@ void SysTick_Handler_Callback()
 		keyTimer = 5;
 	}*/
 }
+
+
+void I2C_ClearBusyFlagErratum()
+{
+
+	 
+  i2c_disable(I2C0);
+	
+	  gpio_mode_set(GPIOA, GPIO_MODE_OUTPUT, GPIO_PUPD_PULLUP, GPIO_PIN_9);
+    gpio_output_options_set(GPIOA, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_9);	
+		PIN_SET(GPIOA, GPIO_PIN_9);
+		gpio_mode_set(GPIOA, GPIO_MODE_OUTPUT, GPIO_PUPD_PULLUP, GPIO_PIN_10);
+    gpio_output_options_set(GPIOA, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_10);	
+		PIN_SET(GPIOA, GPIO_PIN_10);
+
+  // 3. Check SCL and SDA High level in GPIOx_IDR.
+  while (SET != gpio_output_bit_get(GPIOA, GPIO_PIN_9))
+  {
+    __asm("nop");
+  }
+
+  while (SET != gpio_output_bit_get(GPIOA, GPIO_PIN_9))
+  {
+    __asm("nop");
+  }
+
+  // 4. Configure the SDA I/O as General Purpose Output Open-Drain, Low level (Write 0 to GPIOx_ODR).
+  PIN_RESET(GPIOA, GPIO_PIN_9);
+
+  //  5. Check SDA Low level in GPIOx_IDR.
+  while (RESET != gpio_output_bit_get(GPIOA, GPIO_PIN_9))
+  {
+    __asm("nop");
+  }
+
+  // 6. Configure the SCL I/O as General Purpose Output Open-Drain, Low level (Write 0 to GPIOx_ODR).
+  PIN_RESET(GPIOA, GPIO_PIN_10);
+
+  //  7. Check SCL Low level in GPIOx_IDR.
+  while (RESET != gpio_output_bit_get(GPIOA, GPIO_PIN_10))
+  {
+    __asm("nop");
+  }
+
+  // 8. Configure the SCL I/O as General Purpose Output Open-Drain, High level (Write 1 to GPIOx_ODR).
+  PIN_SET(GPIOA, GPIO_PIN_10);
+
+  // 9. Check SCL High level in GPIOx_IDR.
+  while (SET != gpio_output_bit_get(GPIOA, GPIO_PIN_10))
+  {
+    __asm("nop");
+  }
+
+  // 10. Configure the SDA I/O as General Purpose Output Open-Drain , High level (Write 1 to GPIOx_ODR).
+  PIN_SET(GPIOA, GPIO_PIN_9);
+
+  // 11. Check SDA High level in GPIOx_IDR.
+  while (SET != gpio_output_bit_get(GPIOA, GPIO_PIN_9))
+  {
+    __asm("nop");
+  }
+
+  // 12. Configure the SCL and SDA I/Os as Alternate function Open-Drain.
+    gpio_af_set(GPIOA, GPIO_AF_4, GPIO_PIN_9);
+    gpio_af_set(GPIOA, GPIO_AF_4, GPIO_PIN_10);
+    gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE,GPIO_PIN_9);
+    gpio_output_options_set(GPIOA, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ,GPIO_PIN_9);
+    gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE,GPIO_PIN_10);
+    gpio_output_options_set(GPIOA, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ,GPIO_PIN_10);
+
+  // 13. Set SWRST bit in I2Cx_CR1 register.
+	i2c_software_reset_config(I2C0, I2C_SRESET_SET);
+
+  __asm("nop");
+
+  // 14. Clear SWRST bit in I2Cx_CR1 register.
+	i2c_software_reset_config(I2C0, I2C_SRESET_RESET);
+
+  __asm("nop");
+
+  // 15. Enable the I2C peripheral by setting the PE bit in I2Cx_CR1 register
+	i2c_enable(I2C0);
+
+  // Call initialization function.
+    i2c_clock_config(I2C0,400000,I2C_DTCY_16_9);
+    /* configure I2C address */
+    i2c_mode_addr_config(I2C0,I2C_I2CMODE_ENABLE,I2C_ADDFORMAT_7BITS,0x81);
+    /* enable I2C0 */
+    i2c_enable(I2C0);
+}
+
+
 uint16_t result;
 uint8_t p_buffer[2];
 uint8_t xw09A_read_data(uint8_t button_num)
 {  
-    while(i2c_flag_get(I2C0, I2C_FLAG_I2CBSY));
+
+		uint32_t cnt = 0;
+		
+    while(i2c_flag_get(I2C0, I2C_FLAG_I2CBSY))
+		{
+			if (cnt++ > 100000)
+			{
+				I2C_ClearBusyFlagErratum();				
+				return false;
+			}			
+		}
+		i2c_ackpos_config(I2C0,I2C_ACKPOS_NEXT);
+		i2c_ack_config(I2C0, I2C_ACK_ENABLE);		
     i2c_start_on_bus(I2C0);
 	
-    while(!i2c_flag_get(I2C0, I2C_FLAG_SBSEND));
+		cnt = 0;
+		
+		
+    while(!i2c_flag_get(I2C0, I2C_FLAG_SBSEND))
+		{
+			if (cnt++ > 100000)
+			{
+				I2C_ClearBusyFlagErratum();				
+				return false;
+			}			
+		}			
     i2c_master_addressing(I2C0, 0x81, I2C_RECEIVER);
-    i2c_ack_config(I2C0,I2C_ACK_DISABLE);
-		i2c_ackpos_config(I2C0,I2C_ACKPOS_NEXT);
-	
-    while(!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND));    
-    i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-	
-		while(!i2c_flag_get(I2C0, I2C_FLAG_BTC));
+		
+		while(!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND))
+		{
+			if (cnt++ > 100000)
+			{
+				I2C_ClearBusyFlagErratum();				
+				return false;
+			}			
+		}				
+		i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
 		i2c_stop_on_bus(I2C0);
+
+		cnt = 0;
+
+		while(!i2c_flag_get(I2C0, I2C_FLAG_RBNE))
+		{
+			if (cnt++ > 100000)
+			{
+				I2C_ClearBusyFlagErratum();				
+				return false;
+			}			
+		}		
+		p_buffer[0] = i2c_data_receive(I2C0);
+		i2c_ack_config(I2C0, I2C_ACK_DISABLE);
+	cnt = 0;
+		while(!i2c_flag_get(I2C0, I2C_FLAG_RBNE))
+		{
+			if (cnt++ > 100000)
+			{
+				I2C_ClearBusyFlagErratum();				
+				return false;
+			}			
+		}		
+		p_buffer[1] = i2c_data_receive(I2C0);		
+		i2c_stop_on_bus(I2C0);
+        	
 		//efff  f7ff
 		//fbff	fdff
 		//ff7f	ffbf
-		
-		p_buffer[0] = i2c_data_receive(I2C0);
-		p_buffer[1] = i2c_data_receive(I2C0);
+
 		result = ~(p_buffer[0] << 8 | p_buffer[1]);
-		while(I2C_CTL0(I2C0)&0x0200){};
-    i2c_ack_config(I2C0, I2C_ACK_ENABLE);
-    i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
     
 		if(result & (1 << button_num))
 			return true;
@@ -1594,10 +1763,12 @@ void beep()
 	if (_settings.soundOn)
 	{
 		//timer_primary_output_config(TIMER16,ENABLE);
-		timer_enable(TIMER16);
+		//timer_enable(TIMER16);
+		timer_channel_output_pulse_value_config(TIMER16,TIMER_CH_0,165);		
 		delay_1ms(20);
+		timer_channel_output_pulse_value_config(TIMER16,TIMER_CH_0,0);
 		//timer_primary_output_config(TIMER16,DISABLE);
-		timer_disable(TIMER16);
+		//timer_disable(TIMER16);
 	}
 }
 
@@ -1607,7 +1778,7 @@ int8_t getTemperature()
 //	HAL_ADC_PollForConversion(&hadc, 100);
 //	uint32_t raw = HAL_ADC_GetValue(&hadc);
 //	HAL_ADC_Stop(&hadc);
-	
+	return 24;
 	while(adc_flag_get(ADC_FLAG_EOC))
 	{
 		raw = adc_regular_data_read();
@@ -1663,8 +1834,8 @@ void DrawWindowOpen()
 
 
 void DrawWifi()
-{/*
-//	if (_wifi.status() == -1)
+{
+	if (wifi_status == -1)
 	{
 		if (_blink)
 		{
@@ -1677,7 +1848,7 @@ void DrawWifi()
 	if (_timerBlink < GetSystemTick())
 	{
 		_timerBlink = GetSystemTick();
-//		if (_wifi.status() == 0)
+		if (wifi_status == 2)
 		{
 			pxs.setColor(BG_COLOR);
 			if (_settings.workMode == WorkMode_Off)
@@ -1691,14 +1862,14 @@ void DrawWifi()
 			pxs.setColor(MAIN_COLOR);
 			return;
 		}
-	  else if (_wifi.status() == 1)
+	  else if (wifi_status == 0){
 			//_timerBlink += 250;
-		  _timerBlink += 500;
-		else if (_wifi.status() == 2)
-			_timerBlink += 1000;
-		else //if (_wifi.status() == 3)
+		  _timerBlink += 500;}
+		else if (wifi_status == 3)
+			_timerBlink += 500;
+		else if (wifi_status == 4)
 		{
-			//_blink = 1;
+			//_blink = 0;
 			
 			if (_blink)
 				return;
@@ -1706,7 +1877,7 @@ void DrawWifi()
 				_blink = false;
 			
 		}
-		//if (_wifi.status() != 3)
+		//if (wifi_status != 4)
 		_blink = !_blink;
 	
 		if (_settings.workMode == WorkMode_Off)
@@ -1725,7 +1896,7 @@ void DrawWifi()
 				pxs.drawCompressedBitmap(_xWifi + 6, 125, (uint8_t*)img_wifi_png_comp);
 			pxs.setColor(MAIN_COLOR);
 		}
-	}*/
+	}
 }
 
 void DrawTemperature(int8_t temp, int8_t xo, int8_t yo)
@@ -1860,14 +2031,14 @@ void DrawMainScreen(uint32_t updater)
 	}
 
 	
-//	if ((_wifi.status() == 3) && (currentMenu == NULL))
+	if ((wifi_status == 4) && (currentMenu == NULL))
 	{
 		if(_settings.workMode == WorkMode_Off)
 			pxs.drawCompressedBitmap(22, 59, (uint8_t*)img_wifi_png_comp);
-		//else
-			//pxs.drawCompressedBitmap(_xWifi + 6, 125, (uint8_t*)img_wifi_png_comp);	
+		else
+			pxs.drawCompressedBitmap(_xWifi + 6, 125, (uint8_t*)img_wifi_png_comp);	
 	}
-//	else
+	else
 	{
 		pxs.setColor(BG_COLOR);
 		if(_settings.workMode == WorkMode_Off)
@@ -2045,19 +2216,17 @@ void ResetAllSettings()
 {
 	_settings.on = 1;
 	_settings.blocked = 0;
-	_settings.tempAntifrost = 5;
 	_settings.tempComfort = 24;
 	_settings.tempEco = 4;
+	_settings.tempAntifrost = 5;
 	_settings.calendarOn = 0;
-	_settings.workMode = WorkMode_Comfort;
-	_settings.heatMode = HeatMode_Auto;
-	_settings.modeOpenWindow = 0;
-	_settings.powerLevel = 1;
-	_settings.timerOn = 0;
-	_settings.timerTime = 12 * 60; // 12:00
-	_settings.soundOn = 1;
 	_settings.brightness = 1;
+	_settings.soundOn = 1;
 	_settings.displayAutoOff = 0;
+	_settings.heatMode = HeatMode_Auto;
+	_settings.powerLevel = 1;
+	_settings.workMode = WorkMode_Comfort;
+	_settings.modeOpenWindow = 0;
 	_settings.calendar[0] = 3;
 	_settings.calendar[1] = 3;
 	_settings.calendar[2] = 3;
@@ -2066,8 +2235,11 @@ void ResetAllSettings()
 	_settings.calendar[5] = 3;
 	_settings.calendar[6] = 3;
 	memset(&_settings.custom, pEco, sizeof(_settings.custom));
+	_settings.timerOn = 0;
+	_settings.timerTime = 12 * 60; // 12:00
 	memset(&_settings.UDID, 0, sizeof(_settings.UDID));
 	
+
 	/*
 	RTC_DateTypeDef sDate;
 	sDate.WeekDay = 2;
@@ -2247,6 +2419,7 @@ void deviceON()
 
 void deviceOFF()
 {	
+	
 	_settings.timerOn = 0;
 	timer_time_set = _settings.timerTime;	
 	SetPower(0);
@@ -2259,8 +2432,8 @@ void deviceOFF()
 	smooth_backlight(0);
 	pxs.displayOff();
 	pxs.clear();
-	InitTimer();
-	_timeoutSaveFlash = GetSystemTick();
+	//InitTimer();
+	//_timeoutSaveFlash = GetSystemTick();
 }
 
 bool keyPressed()
@@ -2399,18 +2572,17 @@ void open_window_func()
 
 void loop(void)
 {
-	uint8_t* p = (uint8_t*)&_settings;
-	memcpy(p, (uint8_t*)FlashAddress, sizeof(_settings));
-//	if (_settings.crc != crc32_1byte(p, offsetof(DeviceSettings, crc), 0xFFFFFFFF)) // not valid crc
+	//uint8_t* p = (uint8_t*)&_settings;
+	//memcpy(p, (uint8_t*)SETTINGSADDR, sizeof(_settings));
+  //if (_settings.crc != crc32_1byte(p, offsetof(DeviceSettings, crc), 0xFFFFFFFF)) // not valid crc
 		ResetAllSettings();
+	
+	//while(1);
   timer_time_set = _settings.timerTime;
-//	_key_window.init();
-//	_key_power.init();
-//	_key_menu.init();
-//	_key_back.init();
-//	_key_down.init();
-//	_key_up.init();
 
+
+	
+	
 	pxs.setOrientation(LANDSCAPE);
 	pxs.enableAntialiasing(true);
 	pxs.init();
@@ -2442,8 +2614,12 @@ void loop(void)
 	if (_settings.heatMode == HeatMode_Auto)
 		SetPower(0);
 	
+
+
+	
 	while (1)
   {
+		
 		static int keyTimer = 0;
 		if (keyTimer-- <= 0)
 		{
@@ -2454,13 +2630,13 @@ void loop(void)
 			_key_down.update();
 			_key_up.update();
 
-			keyTimer = 5;
+			keyTimer = 50;
 		}
 //		LL_IWDG_ReloadCounter(IWDG);
 		//===================================================UART MAINTANCE
 //		_wifi.check(_settings, _error, _timerStart / 1000);
 		//=================================================================
-
+    receive_uart_int();
 
 		if (_key_window.getPressed()&& !_error && (currentMenu == NULL))
 		{

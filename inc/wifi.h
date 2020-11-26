@@ -17,11 +17,17 @@ extern "C" {
 #define CMD_RESET		  0x04
 #define CMD_NET_CONF	0x05	
 	
-uint8_t idle_flag_stat;	
-uint8_t recv_buffer[255];
+#define CMD_INPUT   	0x06
+#define CMD_OUTPUT  	0x07	
+	
+#define CMD_QUERY			0x08
+	
+#define ID_SWITCH			0x01
+	
+
 uint8_t recv_buffer_compl[255];
 uint8_t chksum8(const uint8_t *buff, size_t len);
-void receive_uart_int(void);
+//void receive_uart_int(void);
 void usart_transmit_frame(const uint8_t *buff, size_t len);
 	
 	

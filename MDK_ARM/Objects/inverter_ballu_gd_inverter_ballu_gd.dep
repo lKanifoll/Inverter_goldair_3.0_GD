@@ -1,5 +1,5 @@
 Dependencies for Project 'inverter_ballu_gd', Target 'inverter_ballu_gd': (DO NOT MODIFY !)
-F (..\gd32f3x0_it.c)(0x5FAADD12)(--c99 -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\gd32f3x0_it.o --omf_browse .\objects\gd32f3x0_it.crf --depend .\objects\gd32f3x0_it.d)
+F (..\gd32f3x0_it.c)(0x5FC0235B)(--c99 -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\gd32f3x0_it.o --omf_browse .\objects\gd32f3x0_it.crf --depend .\objects\gd32f3x0_it.d)
 I (..\gd32f3x0_it.h)(0x5FA7BBBB)
 I (..\SDK\CMSIS\GD\GD32F3x0\Include\gd32f3x0.h)(0x5FA7BBBB)
 I (..\SDK\CMSIS\core_cm4.h)(0x5FA7BBBB)
@@ -30,7 +30,7 @@ I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_wwdgt.h)(0x5FA7BBBB)
 I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_misc.h)(0x5FA7BBBB)
 I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_tsi.h)(0x5FA7BBBB)
 I (..\systick.h)(0x5FA80D1C)
-F (..\src\main.c)(0x5FB51F33)(--cpp -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (..\src\main.c)(0x5FC037C8)(--cpp -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (..\inc\main.h)(0x5FAA4D1A)
 I (..\SDK\CMSIS\GD\GD32F3x0\Include\gd32f3x0.h)(0x5FA7BBBB)
 I (..\SDK\CMSIS\core_cm4.h)(0x5FA7BBBB)
@@ -62,7 +62,7 @@ I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_misc.h)(0x5FA7BBBB)
 I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_tsi.h)(0x5FA7BBBB)
 I (..\systick.h)(0x5FA80D1C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588BC994)
-I (..\inc\inverter.h)(0x5FA830C8)
+I (..\inc\inverter.h)(0x5FC01338)
 I (..\inc\pixels.h)(0x5FA7BBBB)
 F (..\systick.c)(0x5FA810DA)(--c99 -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\systick.o --omf_browse .\objects\systick.crf --depend .\objects\systick.d)
 I (..\SDK\CMSIS\GD\GD32F3x0\Include\gd32f3x0.h)(0x5FA7BBBB)
@@ -94,8 +94,8 @@ I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_wwdgt.h)(0x5FA7BBBB)
 I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_misc.h)(0x5FA7BBBB)
 I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_tsi.h)(0x5FA7BBBB)
 I (..\systick.h)(0x5FA80D1C)
-F (..\src\inverter.c)(0x5FABE323)(--cpp -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\inverter.o --omf_browse .\objects\inverter.crf --depend .\objects\inverter.d)
-I (..\inc\inverter.h)(0x5FA830C8)
+F (..\src\inverter.c)(0x5FC03757)(--cpp -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\inverter.o --omf_browse .\objects\inverter.crf --depend .\objects\inverter.d)
+I (..\inc\inverter.h)(0x5FC01338)
 I (..\inc\main.h)(0x5FAA4D1A)
 I (..\SDK\CMSIS\GD\GD32F3x0\Include\gd32f3x0.h)(0x5FA7BBBB)
 I (..\SDK\CMSIS\core_cm4.h)(0x5FA7BBBB)
@@ -182,8 +182,8 @@ I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_misc.h)(0x5FA7BBBB)
 I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_tsi.h)(0x5FA7BBBB)
 I (..\systick.h)(0x5FA80D1C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588BC994)
-F (..\src\wifi.c)(0x5FB521F2)(--cpp -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\wifi.o --omf_browse .\objects\wifi.crf --depend .\objects\wifi.d)
-I (..\inc\wifi.h)(0x5FAA803E)
+F (..\src\wifi.c)(0x5FC0234E)(--cpp -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\wifi.o --omf_browse .\objects\wifi.crf --depend .\objects\wifi.d)
+I (..\inc\wifi.h)(0x5FC01515)
 I (..\inc\main.h)(0x5FAA4D1A)
 I (..\SDK\CMSIS\GD\GD32F3x0\Include\gd32f3x0.h)(0x5FA7BBBB)
 I (..\SDK\CMSIS\core_cm4.h)(0x5FA7BBBB)
@@ -216,6 +216,8 @@ I (..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_tsi.h)(0x5FA7BBBB)
 I (..\systick.h)(0x5FA80D1C)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BC994)
+I (..\inc\inverter.h)(0x5FC01338)
+I (..\inc\pixels.h)(0x5FA7BBBB)
 F (..\SDK\CMSIS\GD\GD32F3x0\Source\system_gd32f3x0.c)(0x5FA7D785)(--c99 -c --cpu Cortex-M4.fp -g -W -O3 --apcs=interwork --split_sections -I ..\ -I ..\SDK\CMSIS -I ..\SDK\CMSIS\GD\GD32F3x0\Include -I ..\SDK\GD32F3x0_standard_peripheral\Include -I ..\inc-I.\RTE\_inverter_ballu_gd-IC:\Keil_v5\ARM\PACK\GigaDevice\GD32F3x0_DFP\2.0.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DGD32F330 -DUSE_STDPERIPH_DRIVER -DGD32F330-o .\objects\system_gd32f3x0.o --omf_browse .\objects\system_gd32f3x0.crf --depend .\objects\system_gd32f3x0.d)
 I (..\SDK\CMSIS\GD\GD32F3x0\Include\gd32f3x0.h)(0x5FA7BBBB)
 I (..\SDK\CMSIS\core_cm4.h)(0x5FA7BBBB)

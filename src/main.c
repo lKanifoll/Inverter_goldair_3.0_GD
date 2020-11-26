@@ -68,19 +68,20 @@ int main(void)
 	systick_config();
 	rcu_config();
 	gpio_config();
+	i2c_config();
 	TUYA_ON;
 	uart_init();
-	//spi0_init();
-	//adc_config();
-	//i2c_config();
-	//pwm_config_buzzer();
-	//pwm_config_lcd_bl();
+	spi0_init();
+	adc_config();
 	
-	//pmu_backup_write_enable();
+	pwm_config_buzzer();
+	pwm_config_lcd_bl();
+	
+	pmu_backup_write_enable();
 	
 	
 	//RTC_config();
-	//delay_1ms(500);
+	delay_1ms(500);
 	//rtc_setup();
 	//heat_timer_config();
   //sck = rcu_clock_freq_get(CK_APB1);
@@ -90,13 +91,13 @@ int main(void)
 	//timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,50);
 	//timer_channel_output_pulse_value_config(TIMER16,TIMER_CH_0,500);
 
-	while(1)
+	//while(1)
 	{
 		//usart_data_transmit(USART1,  (uint8_t)0xff);
 		//while(RESET == usart_flag_get(USART1, USART_FLAG_TBE));
 		//delay_1ms(500);
 	}
-  //loop();
+  loop();
 }
 void TIMER_Heat_callback()
 {
@@ -107,6 +108,7 @@ void TIMER_Heat_callback()
 
 void rcu_config(void)
 {
+		rcu_periph_clock_enable(RCU_I2C0);
     // enable the GPIO clock 
 		rcu_periph_clock_enable(RCU_GPIOA);
     rcu_periph_clock_enable(RCU_GPIOB);
@@ -117,7 +119,7 @@ void rcu_config(void)
 		rcu_periph_clock_enable(RCU_TIMER16);
 	  rcu_periph_clock_enable(RCU_TIMER1);
 	  rcu_periph_clock_enable(RCU_ADC);
-	  rcu_periph_clock_enable(RCU_I2C0);
+	  
 	  rcu_periph_clock_enable(RCU_PMU);
 	 
     // ADCCLK = PCLK2/6 
@@ -150,9 +152,9 @@ void gpio_config(void)
 		// I2C pins
     gpio_af_set(GPIOA, GPIO_AF_4, GPIO_PIN_9);
     gpio_af_set(GPIOA, GPIO_AF_4, GPIO_PIN_10);
-    gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_PULLUP,GPIO_PIN_9);
+    gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE,GPIO_PIN_9);
     gpio_output_options_set(GPIOA, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ,GPIO_PIN_9);
-    gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_PULLUP,GPIO_PIN_10);
+    gpio_mode_set(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE,GPIO_PIN_10);
     gpio_output_options_set(GPIOA, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ,GPIO_PIN_10);
 	
 	  // LCD -------------
@@ -181,13 +183,13 @@ void i2c_config(void)
     /* enable I2C clock */
     
     /* configure I2C clock */
-    i2c_clock_config(I2C0,400000,I2C_DTCY_2);
+    i2c_clock_config(I2C0,400000, I2C_DTCY_2);
     /* configure I2C address */
     i2c_mode_addr_config(I2C0,I2C_I2CMODE_ENABLE,I2C_ADDFORMAT_7BITS,0x81);
     /* enable I2C0 */
     i2c_enable(I2C0);
     /* enable acknowledge */
-    i2c_ack_config(I2C0,I2C_ACK_ENABLE);
+    //i2c_ack_config(I2C0,I2C_ACK_ENABLE);
 		//i2c_ack_config(I2C0,I2C_ACK_DISABLE);
 }
 
@@ -222,8 +224,8 @@ void adc_config(void)
 void uart_init(void)
 {
     /* USART configure */
+	  
 	  nvic_irq_enable(USART1_IRQn, 0, 0);
-	
     usart_deinit(USART1);
 		usart_parity_config(USART1, USART_PM_NONE);
 		usart_word_length_set(USART1, USART_WL_8BIT);
@@ -238,9 +240,10 @@ void uart_init(void)
     
 	
     while (RESET == usart_flag_get(USART1, USART_FLAG_TC));
-    usart_interrupt_enable(USART1, USART_INT_RBNE);
-		usart_interrupt_enable(USART1, USART_INT_IDLE);
-		delay_1ms(100);
+	usart_interrupt_enable(USART1, USART_INT_RBNE);
+	usart_interrupt_enable(USART1, USART_INT_IDLE);
+	delay_1ms(100);
+
 }
 
 void spi0_init(void)
@@ -336,16 +339,16 @@ void pwm_config_buzzer(void)
     timer_ocintpara.ocnidlestate = TIMER_OCN_IDLE_STATE_LOW;
     timer_channel_output_config(TIMER16,TIMER_CH_0,&timer_ocintpara);
 
-    timer_channel_output_pulse_value_config(TIMER16,TIMER_CH_0,165);
+    timer_channel_output_pulse_value_config(TIMER16,TIMER_CH_0,0);
     timer_channel_output_mode_config(TIMER16,TIMER_CH_0,TIMER_OC_MODE_PWM0);
     timer_channel_output_shadow_config(TIMER16,TIMER_CH_0,TIMER_OC_SHADOW_DISABLE);
 
     timer_primary_output_config(TIMER16,ENABLE);
     /* auto-reload preload enable */
-    //timer_auto_reload_shadow_enable(TIMER16);
+    timer_auto_reload_shadow_enable(TIMER16);
     timer_enable(TIMER16);
-		delay_1ms(1);
-    timer_disable(TIMER16);
+		//delay_1ms(10);
+    //timer_disable(TIMER16);
 		
 }
 

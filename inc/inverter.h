@@ -179,7 +179,7 @@ void SysTick_Handler_Callback();
 void smooth_backlight(uint8_t mode);
 
 
-
+extern void receive_uart_int(void);
 #ifdef __cplusplus
 }
 #endif
