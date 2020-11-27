@@ -23,7 +23,10 @@ extern "C" {
 #define CMD_QUERY			0x08
 	
 #define ID_SWITCH			0x01
-	
+#define ID_WORKMODE		0x04
+#define ID_CURPOWER		0x0C
+#define ID_COMFORT		0x65
+
 
 uint8_t recv_buffer_compl[255];
 uint8_t chksum8(const uint8_t *buff, size_t len);

@@ -12,6 +12,7 @@ extern void deviceON();
 extern uint32_t __SaveFlash;
 extern bool refresh_system;
 extern struct DeviceSettings _settings;
+extern uint8_t power_level_auto;	
 uint8_t rxcount = 0;
 uint8_t idle_count = 0;
 uint8_t crc = 0;
@@ -101,7 +102,51 @@ void receive_uart_int()
 						answer_cmd[7] = chksum8(answer_cmd, 7);
 						usart_transmit_frame(answer_cmd, 8);
 						
+						answer_cmd[3] = CMD_OUTPUT;
+						answer_cmd[4] = 0x00;
+						answer_cmd[5] = 0x22;	
 						
+						answer_cmd[6] = 0x01;
+						answer_cmd[7] = 0x01;
+						answer_cmd[8] = 0x00;
+						answer_cmd[9] = 0x01;
+						answer_cmd[10] = _settings.on;
+						
+						answer_cmd[11] = 0x03;
+						answer_cmd[12] = 0x02;
+						answer_cmd[13] = 0x00;
+						answer_cmd[14] = 0x04;
+						answer_cmd[15] = 0x00;
+						answer_cmd[16] = 0x00;
+						answer_cmd[17] = 0x00;
+						answer_cmd[18] = getTemperature();
+						
+						answer_cmd[19] = 0x04;
+						answer_cmd[20] = 0x04;
+						answer_cmd[21] = 0x00;
+						answer_cmd[22] = 0x01;
+						answer_cmd[23] = _settings.workMode;
+						
+						answer_cmd[24] = 0x0C;
+						answer_cmd[25] = 0x02;
+						answer_cmd[26] = 0x00;
+						answer_cmd[27] = 0x04;
+						answer_cmd[28] = 0x00;
+						answer_cmd[29] = 0x00;
+						answer_cmd[30] = 0x00;
+						answer_cmd[31] = power_level_auto;	
+
+						answer_cmd[32] = 0x65;
+						answer_cmd[33] = 0x02;
+						answer_cmd[34] = 0x00;
+						answer_cmd[35] = 0x04;
+						answer_cmd[36] = 0x00;
+						answer_cmd[37] = 0x00;
+						answer_cmd[38] = 0x00;
+						answer_cmd[39] = _settings.tempComfort;
+						
+						answer_cmd[40] = chksum8(answer_cmd, 40);
+						usart_transmit_frame(answer_cmd, 41);		
 					}
 					if(frame_cmd == CMD_INFO)
 					{
@@ -133,7 +178,7 @@ void receive_uart_int()
 						//answer_cmd[6] = 0x00;
 						answer_cmd[6] = chksum8(answer_cmd, 6);
 						usart_transmit_frame(answer_cmd, 7);
-						/*
+/*
 						answer_cmd[3] = CMD_NET_CONF;
 						answer_cmd[4] = 0x00;
 						answer_cmd[5] = 0x01;
@@ -148,20 +193,55 @@ void receive_uart_int()
 						//memmove(answer_cmd+6, prod_info, 0x2A);
 						//answer_cmd[6] = 0x00;
 						answer_cmd[6] = chksum8(answer_cmd, 6);
-						usart_transmit_frame(answer_cmd, 7);		*/			
+						usart_transmit_frame(answer_cmd, 7);			*/	
 					}			
 					if(frame_cmd == CMD_QUERY)
 					{ 
 						answer_cmd[3] = CMD_OUTPUT;
 						answer_cmd[4] = 0x00;
-						answer_cmd[5] = 0x05;		
-						answer_cmd[6] = _settings.on;
-						answer_cmd[7] = 0;
-						answer_cmd[8] = 0;
-						answer_cmd[9] = 0;
-						answer_cmd[10] = 23;
-						answer_cmd[11] = chksum8(answer_cmd, 11);
-						usart_transmit_frame(answer_cmd, 12);
+						answer_cmd[5] = 0x22;	
+						
+						answer_cmd[6] = 0x01;
+						answer_cmd[7] = 0x01;
+						answer_cmd[8] = 0x00;
+						answer_cmd[9] = 0x01;
+						answer_cmd[10] = _settings.on;
+						
+						answer_cmd[11] = 0x03;
+						answer_cmd[12] = 0x02;
+						answer_cmd[13] = 0x00;
+						answer_cmd[14] = 0x04;
+						answer_cmd[15] = 0x00;
+						answer_cmd[16] = 0x00;
+						answer_cmd[17] = 0x00;
+						answer_cmd[18] = getTemperature();
+						
+						answer_cmd[19] = 0x04;
+						answer_cmd[20] = 0x04;
+						answer_cmd[21] = 0x00;
+						answer_cmd[22] = 0x01;
+						answer_cmd[23] = _settings.workMode;
+						
+						answer_cmd[24] = 0x0C;
+						answer_cmd[25] = 0x02;
+						answer_cmd[26] = 0x00;
+						answer_cmd[27] = 0x04;
+						answer_cmd[28] = 0x00;
+						answer_cmd[29] = 0x00;
+						answer_cmd[30] = 0x00;
+						answer_cmd[31] = power_level_auto;	
+
+						answer_cmd[32] = 0x65;
+						answer_cmd[33] = 0x02;
+						answer_cmd[34] = 0x00;
+						answer_cmd[35] = 0x04;
+						answer_cmd[36] = 0x00;
+						answer_cmd[37] = 0x00;
+						answer_cmd[38] = 0x00;
+						answer_cmd[39] = _settings.tempComfort;
+						
+						answer_cmd[40] = chksum8(answer_cmd, 40);
+						usart_transmit_frame(answer_cmd, 41);
 					}
 					
 					if(frame_cmd == CMD_INPUT)
@@ -194,6 +274,41 @@ void receive_uart_int()
 							//refresh_system = true;
 							//__SaveFlash = GetSystemTick() + 5000;
 						}
+						if(device_cmd == ID_WORKMODE)
+						{
+							answer_cmd[3] = CMD_OUTPUT;
+							answer_cmd[4] = 0x00;
+							answer_cmd[5] = 0x05;
+							answer_cmd[6] = ID_WORKMODE;
+							answer_cmd[7] = 0x04;
+							answer_cmd[8] = 0x00;
+							answer_cmd[9] = 0x01;
+							answer_cmd[10] = frame[10];
+							answer_cmd[11] = chksum8(answer_cmd,11);
+							usart_transmit_frame(answer_cmd, 12);	
+							_settings.workMode = (WorkMode)frame[10];
+							DrawMainScreen();
+							refresh_system = true;
+						}			
+						if(device_cmd == ID_COMFORT)
+						{
+							answer_cmd[3] = CMD_OUTPUT;
+							answer_cmd[4] = 0x00;
+							answer_cmd[5] = 0x08;
+							answer_cmd[6] = ID_COMFORT;
+							answer_cmd[7] = 0x02;
+							answer_cmd[8] = 0x00;
+							answer_cmd[9] = 0x04;
+							answer_cmd[10] = 0x00;
+							answer_cmd[11] = 0x00;
+							answer_cmd[12] = 0x00;
+							answer_cmd[13] = frame[13];
+							answer_cmd[14] = chksum8(answer_cmd,14);
+							usart_transmit_frame(answer_cmd, 15);	
+							_settings.tempComfort = frame[13];
+							DrawMainScreen(1);
+							refresh_system = true;
+						}						
 					}
 				}
 				

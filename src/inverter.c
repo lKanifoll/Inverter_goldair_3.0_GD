@@ -1778,7 +1778,7 @@ int8_t getTemperature()
 //	HAL_ADC_PollForConversion(&hadc, 100);
 //	uint32_t raw = HAL_ADC_GetValue(&hadc);
 //	HAL_ADC_Stop(&hadc);
-	return 24;
+	
 	while(adc_flag_get(ADC_FLAG_EOC))
 	{
 		raw = adc_regular_data_read();
