@@ -45,3 +45,4 @@
 .\objects\inverter.o: ..\inc\Pixels_PPI16.h
 .\objects\inverter.o: ..\inc\Pixels_ILI9341.h
 .\objects\inverter.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\inverter.o: ..\inc\wifi.h

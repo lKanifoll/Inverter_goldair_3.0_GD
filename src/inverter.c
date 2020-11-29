@@ -14,7 +14,7 @@
 #include <Pixels_ILI9341.h> 
 #include <stddef.h>     /* offsetof */
 //#include <OpenWindowControl.h>
-//#include <wifi.h>
+#include <wifi.h>
 #define RTC_CLOCK_SOURCE_IRC40K 
 #define BKP_VALUE    0x32F0
 #define SETTINGSADDR           ((uint32_t)0x0801F800U)
@@ -2227,6 +2227,7 @@ void ResetAllSettings()
 	_settings.powerLevel = 1;
 	_settings.workMode = WorkMode_Comfort;
 	_settings.modeOpenWindow = 0;
+	
 	_settings.calendar[0] = 3;
 	_settings.calendar[1] = 3;
 	_settings.calendar[2] = 3;
@@ -2680,6 +2681,7 @@ void loop(void)
 				_timeoutSaveFlash = 0;
 				SaveFlash();
 				//_wifi.sendChanged(_settings, _error, _timerStart / 1000);
+				query_settings();
 			}
 			if (__SaveFlash != 0 && GetSystemTick() >= __SaveFlash)
 			{
