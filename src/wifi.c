@@ -423,6 +423,21 @@ void receive_uart_int()
 	}
 }
 
+void reset_wifi_state()
+{
+		answer_frame.clear();
+		answer_frame.reset();
+		answer_frame.put(HEADER_1B);
+		answer_frame.put(HEADER_2B);
+		answer_frame.put(HEADER_VER);
+		answer_frame.put(CMD_RESET);
+		answer_frame.put(0x00);
+		answer_frame.put(0x00);
+		answer_frame.put(chksum8(answer_frame.sptr(), 6));
+		usart_transmit_frame(answer_frame.sptr(), 7);
+}
+
+
 void query_settings()
 {
 	answer_frame.clear();

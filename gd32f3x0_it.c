@@ -42,7 +42,7 @@ extern void SysTick_Handler_Callback();
 extern uint8_t idle_flag_stat;
 extern uint8_t recv_buffer[10];
 extern uint8_t rxcount;
-
+extern void rtc_alarm_callback();
 
 
 /*!
@@ -147,6 +147,14 @@ void SysTick_Handler(void)
 		
 }
 
+
+void RTC_IRQHandler(void)
+{
+    if(RESET != rtc_flag_get(RTC_STAT_ALRM0F)){
+        rtc_flag_clear(RTC_STAT_ALRM0F);
+				rtc_alarm_callback();
+    } 
+}
 
 /*!
     \brief      this function handles external lines 0 to 1 interrupt request

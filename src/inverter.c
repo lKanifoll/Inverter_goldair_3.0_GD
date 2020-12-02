@@ -84,6 +84,7 @@ static MenuItem_t _displayMenu[] = {
 static MenuItem_t _serviceMenu[] = {
 	{441, 0, NULL, 					On, Off, NULL }, // Reset
 	{442, 0, NULL, 					NULL, NULL, MenuBack }, // Info
+	{443, 0, NULL, 					NULL, NULL, NULL }, // Wifi
 };
 
 // Settings menu
@@ -91,7 +92,7 @@ static MenuItem_t _settingsMenu[] = {
 	{41, 2, _datetimeMenu, 	NULL, NULL, NULL }, // Date&time
 	{42, 2, _displayMenu, 	NULL, NULL, NULL }, // Display
 	{43, 0, NULL, 					On, Off, NULL }, 		// Sound
-	{44, 2, _serviceMenu, 	NULL, NULL, NULL }, // Service
+	{44, 3, _serviceMenu, 	NULL, NULL, NULL }, // Service
 };
 
 static MenuItem_t _presetMenu = 
@@ -126,7 +127,7 @@ static MenuItem_t _menu =
 MenuItem_t* currentMenu = NULL;
 uint32_t idleTimeout = 0; // время бездействия
 uint8_t _currentPower = 0;
-
+uint8_t semistor_power = 0;
 int8_t temp_current	= 0;
 uint8_t power_level_auto = 0;	
 uint8_t powerback_flag = 0;
@@ -171,6 +172,9 @@ uint32_t nextChangeLevel = 0;
 uint32_t refrash_time = 0;
 uint8_t btn_buff[2];
 
+rtc_parameter_struct rtc_initpara;
+rtc_alarm_struct  rtc_alarm;
+
 ClickButton _key_window(12);
 ClickButton _key_power(11);
 ClickButton _key_menu(10);
@@ -188,9 +192,56 @@ static struct TemperatureSettings _tempConfig;
 
 
 
+void rtc_setup(void)
+{
+    /* setup RTC time value */
+    //uint32_t tmp_hh = 0xFF, tmp_mm = 0xFF, tmp_ss = 0xFF;
+	
+		rtc_deinit();
+    rtc_initpara.rtc_factor_asyn = 0x7FU;
+    rtc_initpara.rtc_factor_syn = 0xFFU;
+    rtc_initpara.rtc_year = 0x20;
+    rtc_initpara.rtc_day_of_week = RTC_WEDSDAY;
+    rtc_initpara.rtc_month = RTC_NOV;
+    rtc_initpara.rtc_date = 0x11;
+    rtc_initpara.rtc_display_format = RTC_24HOUR;
+    rtc_initpara.rtc_am_pm = 0;
 
+    rtc_initpara.rtc_hour = 0x00;
+       
+    rtc_initpara.rtc_minute = 0x00;
 
+    rtc_initpara.rtc_second = 0x00;
 
+    /* RTC current time configuration */
+    if(ERROR == rtc_init(&rtc_initpara)){    
+			while(1);
+		}
+
+}
+
+void alarm_set(uint8_t minutes)
+{
+	  rtc_alarm_disable();
+
+    rtc_alarm.rtc_alarm_mask = RTC_ALARM_HOUR_MASK;//RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK;//RTC_ALARM_HOUR_MASK;
+    rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
+    rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
+    //rtc_alarm.rtc_am_pm = RTC_AM;
+
+    /* RTC alarm input */
+    rtc_alarm.rtc_alarm_hour = 0x00;
+
+    rtc_alarm.rtc_alarm_minute = minutes;
+
+    rtc_alarm.rtc_alarm_second = 0x00;
+    
+    /* RTC alarm configuration */
+    rtc_alarm_config(&rtc_alarm);
+    rtc_flag_clear(RTC_STAT_ALRM0F);
+    //rtc_interrupt_enable(RTC_INT_ALARM);  
+    rtc_alarm_enable();  
+}
 
 
 
@@ -782,6 +833,11 @@ void DrawEditParameter()
 			width = pxs.getTextWidth(buffer);
 			DrawTextAligment(0, 115, 320, 60, buffer, false);		
 			break;
+		case 443: // wifi
+			pxs.setFont(ElectroluxSansRegular24a);
+			DrawTextAligment(0, 70, 320, 60, "Find me in tuya app", false);
+			break;		
+		
 		case 51:
 			
 //			RTC_TimeTypeDef sTime;
@@ -938,19 +994,17 @@ void PrepareEditParameter()
 			_onoffSet.parameter = _settings.soundOn;
 			break;
 		case 411: // set date
-//			HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-//			HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-//			_dateTime.tm_mday = sDate.Date;
-//			_dateTime.tm_mon = sDate.Month;
-//			_dateTime.tm_year = sDate.Year < 19 ? 2019 : sDate.Year + 2000;
+			rtc_current_time_get(&rtc_initpara); 
+			_dateTime.tm_mday = bcdToDec(rtc_initpara.rtc_date);
+			_dateTime.tm_mon = bcdToDec(rtc_initpara.rtc_month);
+			_dateTime.tm_year = (bcdToDec(rtc_initpara.rtc_year)) < 19 ? 2019 : (bcdToDec(rtc_initpara.rtc_year)) + 2000;
 			currentMenu->selected = 0;
 			break;
 		case 412: // set time
-//			HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-//			HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-//			_dateTime.tm_hour = sTime.Hours;
-//			_dateTime.tm_min = sTime.Minutes;
-//			_dateTime.tm_sec = sTime.Seconds;
+			rtc_current_time_get(&rtc_initpara); 
+			_dateTime.tm_hour = bcdToDec(rtc_initpara.rtc_hour);
+			_dateTime.tm_min  = bcdToDec(rtc_initpara.rtc_minute);
+			_dateTime.tm_sec  = bcdToDec(rtc_initpara.rtc_second);
 			currentMenu->selected = 0;
 			break;
 		case 52: // calendar on/off
@@ -979,6 +1033,262 @@ void PrepareEditParameter()
 			_onoffSet.current = _onoffSet.current;
 			_onoffSet.parameter = _onoffSet.parameter;
 			break;
+	}
+}
+
+
+rtc_parameter_struct rtc_init_param;
+
+void AcceptParameter()
+{
+		#ifdef DEBUG
+	printf("AcceptParameter %d\n", currentMenu->ID);
+	#endif
+	
+	
+	switch (currentMenu->ID)
+	{
+		case 11: // comform
+			_settings.tempComfort = _tempConfig.desired;
+			GoOK();
+			break;
+		case 12: // eco
+			_settings.tempEco = _tempConfig.desired;
+			GoOK();
+			break;
+		case 13: // anti
+			_settings.tempAntifrost = _tempConfig.desired;
+			GoOK();
+			break;
+		case 21: // power auto
+			_settings.heatMode = HeatMode_Auto;
+		  power_limit = 20;
+			GoOK(2);
+			break;
+		case 22: // power custom
+			_settings.heatMode = HeatMode_User;
+			_settings.powerLevel = currentMenu->selected + 1;
+			GoOK(2);
+			break;
+		case 31:
+			_settings.timerOn = _onoffSet.parameter;
+		  if(_settings.timerOn)
+			{
+				if((getCalendarMode() == WorkMode_Off))
+				{
+					_settings.workMode = WorkMode_Comfort;
+				}
+				_settings.calendarOn = 0;
+				_eventTimer = 0;
+				InitTimer();
+		  }
+			GoOK();
+			break;
+		case 32:
+			currentMenu->selected++;
+			if ((currentMenu->selected > 0) && (currentMenu->selected < 2))
+			{		
+				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
+				timer_time_set = _settings.timerTime;
+				pxs.clear();
+				int16_t width, height;
+				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
+				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+				delay_1ms(1000);
+				pxs.clear();
+				_timeoutSaveFlash = GetSystemTick();
+				idleTimeout = GetSystemTick();	
+				InitTimer();				
+			}		
+			if (currentMenu->selected == 2)
+			{
+				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
+				timer_time_set = _settings.timerTime;
+				GoOK();
+				InitTimer();
+			}	
+
+			break;
+		case 43:
+			_settings.soundOn = _onoffSet.parameter;
+			GoOK();
+			break;
+		case 411: // date
+			currentMenu->selected++;
+					if ((currentMenu->selected > 0) && (currentMenu->selected < 3))
+					{
+						if (isValidDate(_dateTime.tm_mday, _dateTime.tm_mon, _dateTime.tm_year))
+				    {
+							_dateTime.tm_mon--;
+							_dateTime.tm_year -= 1900;
+
+							time_t time_temp = mktime(&_dateTime);
+							const struct tm* time_out = localtime(&time_temp);
+							
+							
+							rtc_init_param.rtc_day_of_week = time_out->tm_wday == 0 ? RTC_SUNDAY : time_out->tm_wday;
+							rtc_init_param.rtc_year = decToBcd(_dateTime.tm_year - 100);
+							rtc_init_param.rtc_month = decToBcd(_dateTime.tm_mon + 1);
+							rtc_init_param.rtc_date = decToBcd(_dateTime.tm_mday);
+							//rtc_init(&rtc_init_param);
+							
+							_dateTime.tm_mon++;
+					    _dateTime.tm_year += 1900;
+						}
+						pxs.clear();
+						int16_t width, height;
+						pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
+						pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+						delay_1ms(1000);
+						pxs.clear();
+						//_timeoutSaveFlash = GetSystemTick();
+						//idleTimeout = GetSystemTick();
+					}
+					
+			if (currentMenu->selected == 3)
+			{
+				if (isValidDate(_dateTime.tm_mday, _dateTime.tm_mon, _dateTime.tm_year))
+				{
+					_dateTime.tm_mon--;
+					_dateTime.tm_year -= 1900;
+
+					time_t time_temp = mktime(&_dateTime);
+					const struct tm* time_out = localtime(&time_temp);
+					
+					rtc_parameter_struct rtc_init_param;
+					rtc_init_param.rtc_day_of_week = time_out->tm_wday == 0 ? RTC_SUNDAY : time_out->tm_wday;
+					rtc_init_param.rtc_year = decToBcd(_dateTime.tm_year - 100);
+					rtc_init_param.rtc_month = decToBcd(_dateTime.tm_mon + 1);
+					rtc_init_param.rtc_date = decToBcd(_dateTime.tm_mday);
+					//rtc_init(&rtc_init_param);
+					
+					GoOK();
+				}
+				else
+				{
+					currentMenu->selected = 0;
+				}
+			}
+			break;
+		case 412: // time
+			currentMenu->selected++;
+			if ((currentMenu->selected > 0) && (currentMenu->selected < 2))
+			{		
+				rtc_parameter_struct rtc_init_param;
+				rtc_init_param.rtc_hour = decToBcd(_dateTime.tm_hour);
+				rtc_init_param.rtc_minute = decToBcd(_dateTime.tm_min);
+				rtc_init_param.rtc_second = decToBcd(_dateTime.tm_sec);
+        rtc_init_param.rtc_factor_asyn = 0x7FU;
+        rtc_init_param.rtc_factor_syn = 0xFFU;
+				rtc_init(&rtc_init_param);
+				pxs.clear();
+				int16_t width, height;
+				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
+				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+				delay_1ms(1000);
+				pxs.clear();
+				_timeoutSaveFlash = GetSystemTick();
+				idleTimeout = GetSystemTick();				
+			}
+			if (currentMenu->selected == 2)
+			{
+				rtc_parameter_struct rtc_init_param;
+				rtc_init_param.rtc_hour = decToBcd(_dateTime.tm_hour);
+				rtc_init_param.rtc_minute = decToBcd(_dateTime.tm_min);
+				rtc_init_param.rtc_second = decToBcd(_dateTime.tm_sec);
+        rtc_init_param.rtc_factor_asyn = 0x7FU;
+        rtc_init_param.rtc_factor_syn = 0xFFU;
+				rtc_init(&rtc_init_param);
+				GoOK();				
+			}
+			break;
+		case 52: // calendar
+			_settings.calendarOn = _onoffSet.parameter;		
+		  if(_settings.calendarOn)
+			{
+				_settings.heatMode = HeatMode_Auto;
+				_settings.timerOn = 0;
+				_eventTimer = 0;
+				InitTimer();
+		  }		
+			GoOK();	
+			break;
+		case 53: // custom day
+			uint8_t select = currentMenu->selected;
+			_selectModeMenu.parent = currentMenu;
+			currentMenu = &_selectModeMenu;
+			currentMenu->selected = _settings.custom.hour[select];
+			break;
+		case 530: // custom day
+			_settings.custom.hour[currentMenu->parent->selected] = currentMenu->selected;
+			GoOK();
+			break;
+		case 51: // presets
+			_presetSet.week = currentMenu->selected;
+			_presetSet.preset = _settings.calendar[_presetSet.week];
+			_presetMenu.parent = currentMenu;
+			currentMenu = &_presetMenu;
+			currentMenu->selected = 0;
+			break;
+		case 510: // presets
+			_presetSet.preset = currentMenu->selected;
+			_presetViewMenu.parent = currentMenu;
+			currentMenu = &_presetViewMenu;
+			currentMenu->selected = 0;
+			break;
+		case 511: // presets
+			_settings.calendar[_presetSet.week] = _presetSet.preset;
+			GoOK();
+			break;
+		case 421:
+			/*_settings.brightness = !_onoffSet.parameter;
+			if (_settings.brightness)
+				LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
+			GoOK();*/
+		
+			_settings.brightness = !_onoffSet.parameter;
+			if (_settings.brightness)
+			{
+				//LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
+				_stateBrightness = StateBrightness_ON;
+			}
+			else
+			{
+				_stateBrightness = StateBrightness_LOW;
+			}
+			GoOK();
+					
+			break;
+		case 422:
+			_settings.displayAutoOff = _onoffSet.parameter;
+			GoOK();
+			
+			break;
+		case 441: // reset
+			if (!_onoffSet.parameter)
+			{
+				MenuBack();
+				break;
+			}
+			
+			currentMenu->selected++;
+			if (currentMenu->selected == 1)
+				_onoffSet.current = _onoffSet.parameter = 1;
+			else if (currentMenu->selected == 2)
+			{
+				ResetAllSettings();
+				//GoOK();
+				SaveFlash();
+				NVIC_SystemReset();
+			}
+			break;
+		case 443: // wifi
+			
+			reset_wifi_state();
+		
+			GoOK();
+
+			break;			
 	}
 }
 
@@ -1213,251 +1523,6 @@ bool isValidDate(int d, int m, int y)
     return true; 
 } 
 
-void AcceptParameter()
-{
-		#ifdef DEBUG
-	printf("AcceptParameter %d\n", currentMenu->ID);
-	#endif
-	
-	
-	switch (currentMenu->ID)
-	{
-		case 11: // comform
-			_settings.tempComfort = _tempConfig.desired;
-			GoOK();
-			break;
-		case 12: // eco
-			_settings.tempEco = _tempConfig.desired;
-			GoOK();
-			break;
-		case 13: // anti
-			_settings.tempAntifrost = _tempConfig.desired;
-			GoOK();
-			break;
-		case 21: // power auto
-			_settings.heatMode = HeatMode_Auto;
-		  power_limit = 20;
-			GoOK(2);
-			break;
-		case 22: // power custom
-			_settings.heatMode = HeatMode_User;
-			_settings.powerLevel = currentMenu->selected + 1;
-			GoOK(2);
-			break;
-		case 31:
-			_settings.timerOn = _onoffSet.parameter;
-		  if(_settings.timerOn)
-			{
-				if((getCalendarMode() == WorkMode_Off))
-				{
-					_settings.workMode = WorkMode_Comfort;
-				}
-				_settings.calendarOn = 0;
-				_eventTimer = 0;
-				InitTimer();
-		  }
-			GoOK();
-			break;
-		case 32:
-			currentMenu->selected++;
-			if ((currentMenu->selected > 0) && (currentMenu->selected < 2))
-			{		
-				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
-				timer_time_set = _settings.timerTime;
-				pxs.clear();
-				int16_t width, height;
-				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
-				delay_1ms(1000);
-				pxs.clear();
-				_timeoutSaveFlash = GetSystemTick();
-				idleTimeout = GetSystemTick();	
-				InitTimer();				
-			}		
-			if (currentMenu->selected == 2)
-			{
-				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
-				timer_time_set = _settings.timerTime;
-				GoOK();
-				InitTimer();
-			}	
-
-			break;
-		case 43:
-			_settings.soundOn = _onoffSet.parameter;
-			GoOK();
-			break;
-		case 411: // date
-			currentMenu->selected++;
-					if ((currentMenu->selected > 0) && (currentMenu->selected < 3))
-					{
-						if (isValidDate(_dateTime.tm_mday, _dateTime.tm_mon, _dateTime.tm_year))
-				    {
-							_dateTime.tm_mon--;
-							_dateTime.tm_year -= 1900;
-
-							time_t time_temp = mktime(&_dateTime);
-							const struct tm* time_out = localtime(&time_temp);
-							//printf("week: %d\n",  time_out->tm_wday);
-							
-							//RTC_DateTypeDef sDate;
-							//sDate.WeekDay = time_out->tm_wday == 0 ? RTC_WEEKDAY_SUNDAY : time_out->tm_wday;
-							//sDate.Year = _dateTime.tm_year - 100;
-							//sDate.Month = _dateTime.tm_mon + 1;
-							//sDate.Date = _dateTime.tm_mday;
-							//HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);	
-							
-							_dateTime.tm_mon++;
-					    _dateTime.tm_year += 1900;
-						}
-						pxs.clear();
-						int16_t width, height;
-						pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-						pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
-						delay_1ms(1000);
-						pxs.clear();
-						_timeoutSaveFlash = GetSystemTick();
-						idleTimeout = GetSystemTick();
-					}
-			if (currentMenu->selected == 3)
-			{
-				if (isValidDate(_dateTime.tm_mday, _dateTime.tm_mon, _dateTime.tm_year))
-				{
-					_dateTime.tm_mon--;
-					_dateTime.tm_year -= 1900;
-
-					time_t time_temp = mktime(&_dateTime);
-					const struct tm* time_out = localtime(&time_temp);
-					//printf("week: %d\n",  time_out->tm_wday);
-					
-//					RTC_DateTypeDef sDate;
-//					sDate.WeekDay = time_out->tm_wday == 0 ? RTC_WEEKDAY_SUNDAY : time_out->tm_wday;
-//					sDate.Year = _dateTime.tm_year - 100;
-//					sDate.Month = _dateTime.tm_mon + 1;
-//					sDate.Date = _dateTime.tm_mday;
-//					HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);	
-					GoOK();
-				}
-				else
-				{
-					currentMenu->selected = 0;
-				}
-			}
-			break;
-		case 412: // time
-			currentMenu->selected++;
-			if ((currentMenu->selected > 0) && (currentMenu->selected < 2))
-			{		/*
-				RTC_TimeTypeDef sTime;
-				sTime.Hours = _dateTime.tm_hour;
-				sTime.Minutes = _dateTime.tm_min;
-				sTime.Seconds = 0; 
-				sTime.StoreOperation = RTC_STOREOPERATION_RESET;
-				sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-				HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-				pxs.clear();
-				int16_t width, height;
-				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
-				delay_1ms(1000);
-				pxs.clear();
-				_timeoutSaveFlash = GetSystemTick();
-				idleTimeout = GetSystemTick();				
-			}
-			if (currentMenu->selected == 2)
-			{
-				RTC_TimeTypeDef sTime;
-				sTime.Hours = _dateTime.tm_hour;
-				sTime.Minutes = _dateTime.tm_min;
-				sTime.Seconds = 0; 
-				sTime.StoreOperation = RTC_STOREOPERATION_RESET;
-				sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-				HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-				GoOK();				*/
-			}
-			break;
-		case 52: // calendar
-			_settings.calendarOn = _onoffSet.parameter;		
-		  if(_settings.calendarOn)
-			{
-				_settings.heatMode = HeatMode_Auto;
-				_settings.timerOn = 0;
-				_eventTimer = 0;
-				InitTimer();
-		  }		
-			GoOK();	
-			break;
-		case 53: // custom day
-			uint8_t select = currentMenu->selected;
-			_selectModeMenu.parent = currentMenu;
-			currentMenu = &_selectModeMenu;
-			currentMenu->selected = _settings.custom.hour[select];
-			break;
-		case 530: // custom day
-			_settings.custom.hour[currentMenu->parent->selected] = currentMenu->selected;
-			GoOK();
-			break;
-		case 51: // presets
-			_presetSet.week = currentMenu->selected;
-			_presetSet.preset = _settings.calendar[_presetSet.week];
-			_presetMenu.parent = currentMenu;
-			currentMenu = &_presetMenu;
-			currentMenu->selected = 0;
-			break;
-		case 510: // presets
-			_presetSet.preset = currentMenu->selected;
-			_presetViewMenu.parent = currentMenu;
-			currentMenu = &_presetViewMenu;
-			currentMenu->selected = 0;
-			break;
-		case 511: // presets
-			_settings.calendar[_presetSet.week] = _presetSet.preset;
-			GoOK();
-			break;
-		case 421:
-			/*_settings.brightness = !_onoffSet.parameter;
-			if (_settings.brightness)
-				LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
-			GoOK();*/
-		
-			_settings.brightness = !_onoffSet.parameter;
-			if (_settings.brightness)
-			{
-				//LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
-				_stateBrightness = StateBrightness_ON;
-			}
-			else
-			{
-				_stateBrightness = StateBrightness_LOW;
-			}
-			GoOK();
-					
-			break;
-		case 422:
-			_settings.displayAutoOff = _onoffSet.parameter;
-			GoOK();
-			
-			break;
-		case 441: // reset
-			if (!_onoffSet.parameter)
-			{
-				MenuBack();
-				break;
-			}
-			
-			currentMenu->selected++;
-			if (currentMenu->selected == 1)
-				_onoffSet.current = _onoffSet.parameter = 1;
-			else if (currentMenu->selected == 2)
-			{
-				ResetAllSettings();
-				//GoOK();
-				SaveFlash();
-				NVIC_SystemReset();
-			}
-			break;
-	}
-}
 
 void EnterMenu()
 {
@@ -1476,30 +1541,59 @@ void SetPower(int8_t value)
 	if (value > 20)
 		value = 20;
 	
-		#ifdef DEBUG
-	printf("SetPower %d\n", value);
-	#endif
+	_currentPower = value;
 	
-	
-	if (value > 10) // max power
+	if(_settings.half_power)
 	{
-		_currentPower = value;
-		delay_1ms(100);
-//		LL_GPIO_SetOutputPin(CH1_GPIO_Port, CH1_Pin);
+		if (gpio_input_bit_get(GPIOB, GPIO_PIN_5))
+		{
+			LL_GPIO_ResetOutputPin(GPIOB, GPIO_PIN_5);
+			delay_1ms(100);
+			
+		}
+		semistor_power = value;
 	}
 	else
 	{
-//		if (LL_GPIO_ReadOutputPort(CH1_GPIO_Port) & CH1_Pin)
+		if (value > 10)
 		{
-//			LL_GPIO_ResetOutputPin(CH1_GPIO_Port, CH1_Pin);
+			LL_GPIO_SetOutputPin(GPIOB, GPIO_PIN_5);
 			delay_1ms(100);
+			semistor_power = value*2 - 20;
 		}
-		_currentPower = value;
+		else
+		{
+			if (gpio_input_bit_get(GPIOB, GPIO_PIN_5))
+			{
+				LL_GPIO_ResetOutputPin(GPIOB, GPIO_PIN_5);
+				delay_1ms(100);
+				
+			}
+			semistor_power = value*2;
+		}		
 	}
 }
 	
-/*
-extern "C" void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc1)
+void TIMER_Heat_callback()
+{
+		_currentPowerTicks--;
+
+		if (semistor_power > _currentPowerTicks)
+		{
+			LL_GPIO_SetOutputPin(GPIOB, GPIO_PIN_8);
+		}
+		else
+		{
+			LL_GPIO_ResetOutputPin(GPIOB, GPIO_PIN_8);
+		}
+
+		if (_currentPowerTicks == 0)
+			_currentPowerTicks = 20;
+}
+
+
+
+void rtc_alarm_callback()
 {
 	if (_settings.timerOn)
 	{
@@ -1520,53 +1614,7 @@ extern "C" void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc1)
 	}
 }
 
-extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	if(htim->Instance == TIM6)
-	{
-		_currentPowerTicks--;
 
-		if (_currentPower > _currentPowerTicks)
-			LL_GPIO_SetOutputPin(CH2_GPIO_Port, CH2_Pin);
-		else
-			LL_GPIO_ResetOutputPin(CH2_GPIO_Port, CH2_Pin);
-
-		if (_currentPowerTicks == 0)
-			_currentPowerTicks = 20;
-		
-	}
-	
-	if(htim->Instance == TIM14)
-	{	
-		if (_settings.on && (_stateBrightness == StateBrightness_LOW) && (_backLight>80))
-		{
-			_backLight--;	
-		}	
-		else if (_settings.on && (_stateBrightness == StateBrightness_ON)&& (_backLight>0))
-		{		
-			_backLight--;	
-		}
-	}		
-	if(_settings.on && htim->Instance == TIM7)
-	{		
-			_backLight_div++;
-
-			if(_backLight_div>_backLight)		
-			{
-				LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
-			}
-			else
-			{
-				LL_GPIO_ResetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);			
-			}
-			
-			if(_backLight_div == 100)
-			{
-				_backLight_div = 0;
-			}
-	}
-}
-*/
 
 void SysTick_Handler_Callback()
 {
@@ -2223,6 +2271,7 @@ void ResetAllSettings()
 	_settings.brightness = 1;
 	_settings.soundOn = 1;
 	_settings.displayAutoOff = 0;
+	_settings.half_power = 0;
 	_settings.heatMode = HeatMode_Auto;
 	_settings.powerLevel = 1;
 	_settings.workMode = WorkMode_Comfort;
@@ -2239,24 +2288,26 @@ void ResetAllSettings()
 	_settings.timerOn = 0;
 	_settings.timerTime = 12 * 60; // 12:00
 	memset(&_settings.UDID, 0, sizeof(_settings.UDID));
-	
 
-	/*
-	RTC_DateTypeDef sDate;
-	sDate.WeekDay = 2;
-	sDate.Year = 19;
-	sDate.Month = 1;
-	sDate.Date = 1;
-	HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);	
+	rtc_deinit();
+	rtc_initpara.rtc_factor_asyn = 0x7F;
+	rtc_initpara.rtc_factor_syn = 0xFF;
+	rtc_initpara.rtc_year = 0x20;
+	rtc_initpara.rtc_day_of_week = RTC_WEDSDAY;
+	rtc_initpara.rtc_month = RTC_JAN;
+	rtc_initpara.rtc_date = 0x01;
+	rtc_initpara.rtc_display_format = RTC_24HOUR;
+	rtc_initpara.rtc_am_pm = 0;
 
-	RTC_TimeTypeDef sTime;
-	sTime.Hours = 0;
-	sTime.Minutes = 0;
-	sTime.Seconds = 0; 
-	sTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-	HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-*/
+	rtc_initpara.rtc_hour = 0x12;
+		 
+	rtc_initpara.rtc_minute = 0x00;
+
+	rtc_initpara.rtc_second = 0x00;
+
+	if(ERROR == rtc_init(&rtc_initpara)){    
+		while(1);
+	}
 }
 
 void blocked()
@@ -2489,6 +2540,16 @@ bool keyPressed()
 	
 }
 
+
+uint8_t bcdToDec(uint8_t val)
+{
+  return( (val/16*10) + (val%16) );
+}
+
+uint8_t decToBcd(uint8_t val)
+{
+  return( (val/10*16) + (val%10) );
+}
 
 bool f_open_window (int8_t temp_current, uint8_t power_current)
 {

@@ -98,7 +98,7 @@ extern "C" {
 
 
 /* USER CODE BEGIN EFP */
-void TIMER_Heat_callback();
+
 
 uint8_t spi_write_byte(uint32_t spi_periph,uint8_t byte);
 /* USER CODE END EFP */

@@ -46,7 +46,7 @@ uint8_t chksum8(const uint8_t *buff, size_t len);
 //void receive_uart_int(void);
 void usart_transmit_frame(const uint8_t *buff, size_t len);
 void query_settings();	
-	
+void reset_wifi_state();
 	
 	
 	

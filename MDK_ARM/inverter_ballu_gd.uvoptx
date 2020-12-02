@@ -151,37 +151,27 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>uwtick,0x0A</ItemText>
+          <ItemText>power_current</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>recv_buffer</ItemText>
+          <ItemText>_currentPowerTicks</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>idle_count</ItemText>
+          <ItemText>semistor_power</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>crc</ItemText>
+          <ItemText>_dateTime</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>payload_len</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>frame</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>str_len_info</ItemText>
+          <ItemText>rtc_init_param</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

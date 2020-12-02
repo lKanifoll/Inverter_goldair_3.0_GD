@@ -130,6 +130,7 @@ struct DeviceSettings
 	uint8_t brightness;
 	uint8_t soundOn;
 	uint8_t displayAutoOff;
+	uint8_t half_power;
 	HeatMode heatMode;
 	uint8_t powerLevel;
 	WorkMode workMode;
@@ -177,9 +178,14 @@ WorkMode getCalendarMode();
 uint8_t xw09A_read_data(uint8_t button_num);
 void SysTick_Handler_Callback();
 void smooth_backlight(uint8_t mode);
+void TIMER_Heat_callback();
+void rtc_setup(void);
+void alarm_set(uint8_t minutes);
+void rtc_alarm_callback();
+void receive_uart_int(void);
+uint8_t bcdToDec(uint8_t val);
+uint8_t decToBcd(uint8_t val);
 
-
-extern void receive_uart_int(void);
 #ifdef __cplusplus
 }
 #endif
