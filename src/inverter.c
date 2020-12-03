@@ -205,7 +205,7 @@ void rtc_setup(void)
     rtc_initpara.rtc_month = RTC_NOV;
     rtc_initpara.rtc_date = 0x11;
     rtc_initpara.rtc_display_format = RTC_24HOUR;
-    rtc_initpara.rtc_am_pm = 0;
+    //rtc_initpara.rtc_am_pm = 0;
 
     rtc_initpara.rtc_hour = 0x00;
        
@@ -1037,8 +1037,8 @@ void PrepareEditParameter()
 }
 
 
-rtc_parameter_struct rtc_init_param;
 
+rtc_parameter_struct rtc_init_param;
 void AcceptParameter()
 {
 		#ifdef DEBUG
@@ -1115,35 +1115,41 @@ void AcceptParameter()
 			break;
 		case 411: // date
 			currentMenu->selected++;
-					if ((currentMenu->selected > 0) && (currentMenu->selected < 3))
-					{
-						if (isValidDate(_dateTime.tm_mday, _dateTime.tm_mon, _dateTime.tm_year))
-				    {
-							_dateTime.tm_mon--;
-							_dateTime.tm_year -= 1900;
+		  
+			if ((currentMenu->selected > 0) && (currentMenu->selected < 3))
+			{
+				if (isValidDate(_dateTime.tm_mday, _dateTime.tm_mon, _dateTime.tm_year))
+				{
+					_dateTime.tm_mon--;
+					_dateTime.tm_year -= 1900;
 
-							time_t time_temp = mktime(&_dateTime);
-							const struct tm* time_out = localtime(&time_temp);
-							
-							
-							rtc_init_param.rtc_day_of_week = time_out->tm_wday == 0 ? RTC_SUNDAY : time_out->tm_wday;
-							rtc_init_param.rtc_year = decToBcd(_dateTime.tm_year - 100);
-							rtc_init_param.rtc_month = decToBcd(_dateTime.tm_mon + 1);
-							rtc_init_param.rtc_date = decToBcd(_dateTime.tm_mday);
-							//rtc_init(&rtc_init_param);
-							
-							_dateTime.tm_mon++;
-					    _dateTime.tm_year += 1900;
-						}
-						pxs.clear();
-						int16_t width, height;
-						pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-						pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
-						delay_1ms(1000);
-						pxs.clear();
-						//_timeoutSaveFlash = GetSystemTick();
-						//idleTimeout = GetSystemTick();
-					}
+					time_t time_temp = mktime(&_dateTime);
+					const struct tm* time_out = localtime(&time_temp);
+					
+					rtc_deinit();
+					rtc_init_param.rtc_day_of_week = time_out->tm_wday == 0 ? RTC_SUNDAY : time_out->tm_wday;
+					rtc_init_param.rtc_year = decToBcd(_dateTime.tm_year - 100);
+					rtc_init_param.rtc_month = decToBcd(_dateTime.tm_mon + 1);
+					rtc_init_param.rtc_date = decToBcd(_dateTime.tm_mday);
+					
+					rtc_init_param.rtc_factor_asyn = 0x7FU;
+					rtc_init_param.rtc_factor_syn = 0xFFU;
+					rtc_initpara.rtc_display_format = RTC_24HOUR;					
+					
+					rtc_init(&rtc_init_param);
+					
+					_dateTime.tm_mon++;
+					_dateTime.tm_year += 1900;
+				}
+				pxs.clear();
+				int16_t width, height;
+				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
+				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+				delay_1ms(1000);
+				pxs.clear();
+				//_timeoutSaveFlash = GetSystemTick();
+				//idleTimeout = GetSystemTick();
+			}
 					
 			if (currentMenu->selected == 3)
 			{
@@ -1155,12 +1161,16 @@ void AcceptParameter()
 					time_t time_temp = mktime(&_dateTime);
 					const struct tm* time_out = localtime(&time_temp);
 					
-					rtc_parameter_struct rtc_init_param;
+					//rtc_parameter_struct rtc_init_param;
+					rtc_deinit();
 					rtc_init_param.rtc_day_of_week = time_out->tm_wday == 0 ? RTC_SUNDAY : time_out->tm_wday;
 					rtc_init_param.rtc_year = decToBcd(_dateTime.tm_year - 100);
 					rtc_init_param.rtc_month = decToBcd(_dateTime.tm_mon + 1);
 					rtc_init_param.rtc_date = decToBcd(_dateTime.tm_mday);
-					//rtc_init(&rtc_init_param);
+					rtc_init_param.rtc_factor_asyn = 0x7FU;
+					rtc_init_param.rtc_factor_syn = 0xFFU;
+					rtc_initpara.rtc_display_format = RTC_24HOUR;		
+					rtc_init(&rtc_init_param);
 					
 					GoOK();
 				}

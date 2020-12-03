@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\inverter_ballu_gd.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\inverter_ballu_gd.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Dec 01 18:01:20 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Dec 03 16:59:11 2020
 <BR><P>
 <H3>Maximum Stack Usage =        840 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -380,13 +380,13 @@ Global Symbols
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
 <P><STRONG><a name="[72]"></a>_printf_pre_padding</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, _printf_pad.o(.text))
@@ -434,13 +434,13 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strlen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
 </UL>
 
 <P><STRONG><a name="[78]"></a>__aeabi_memset</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, aeabi_memset.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
+<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
 </UL>
 
 <P><STRONG><a name="[142]"></a>__aeabi_memclr</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text))
@@ -787,28 +787,29 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__default_signal_display
 </UL>
 
-<P><STRONG><a name="[9c]"></a>AcceptParameter</STRONG> (Thumb, 1124 bytes, Stack size 72 bytes, inverter.o(i.AcceptParameter))
+<P><STRONG><a name="[9c]"></a>AcceptParameter</STRONG> (Thumb, 1194 bytes, Stack size 72 bytes, inverter.o(i.AcceptParameter))
 <BR><BR>[Stack]<UL><LI>Max Depth = 752 + Unknown Stack Size
 <LI>Call Chain = AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_1ms
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
-<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_deinit
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isValidDate
-<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;decToBcd
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;decToBcd
+<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
-<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuBack
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mktime
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;localtime
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuOK()
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
 </UL>
 
 <P><STRONG><a name="[1e]"></a>BusFault_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, gd32f3x0_it.o(i.BusFault_Handler))
@@ -822,7 +823,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = CustomNext &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
@@ -830,7 +831,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = CustomPrev &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
@@ -839,7 +840,7 @@ Global Symbols
 <LI>Call Chain = DateMinus &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isValidDate
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
@@ -848,34 +849,34 @@ Global Symbols
 <LI>Call Chain = DatePlus &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isValidDate
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
 <P><STRONG><a name="[21]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, gd32f3x0_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
-<P><STRONG><a name="[aa]"></a>DrawEditParameter</STRONG> (Thumb, 3140 bytes, Stack size 200 bytes, inverter.o(i.DrawEditParameter))
+<P><STRONG><a name="[ab]"></a>DrawEditParameter</STRONG> (Thumb, 3140 bytes, Stack size 200 bytes, inverter.o(i.DrawEditParameter))
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TimePlus
@@ -884,26 +885,26 @@ Global Symbols
 <LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TempMinus
 <LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;On
 <LI><a href="#[15]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Off
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DatePlus
 <LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DateMinus
 </UL>
 
-<P><STRONG><a name="[b8]"></a>DrawMainScreen</STRONG> (Thumb, 812 bytes, Stack size 64 bytes, inverter.o(i.DrawMainScreen))
+<P><STRONG><a name="[b9]"></a>DrawMainScreen</STRONG> (Thumb, 812 bytes, Stack size 64 bytes, inverter.o(i.DrawMainScreen))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408 + Unknown Stack Size
 <LI>Call Chain = DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getModeTemperature
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getModeTemperature
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
@@ -913,22 +914,22 @@ Global Symbols
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_open_window(signed char, unsigned char)
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;keyPressed()
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainScreen()
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainScreen()
 </UL>
 
-<P><STRONG><a name="[bc]"></a>DrawMenu</STRONG> (Thumb, 532 bytes, Stack size 48 bytes, inverter.o(i.DrawMenu))
+<P><STRONG><a name="[bd]"></a>DrawMenu</STRONG> (Thumb, 532 bytes, Stack size 48 bytes, inverter.o(i.DrawMenu))
 <BR><BR>[Stack]<UL><LI>Max Depth = 672 + Unknown Stack Size
 <LI>Call Chain = DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnterMenu()
@@ -938,108 +939,108 @@ Global Symbols
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuBack
 </UL>
 
-<P><STRONG><a name="[b1]"></a>DrawMenuText</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, inverter.o(i.DrawMenuText))
+<P><STRONG><a name="[b2]"></a>DrawMenuText</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, inverter.o(i.DrawMenuText))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = DrawMenuText &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[b2]"></a>DrawMenuTitle</STRONG> (Thumb, 86 bytes, Stack size 24 bytes, inverter.o(i.DrawMenuTitle))
+<P><STRONG><a name="[b3]"></a>DrawMenuTitle</STRONG> (Thumb, 86 bytes, Stack size 24 bytes, inverter.o(i.DrawMenuTitle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 272<LI>Call Chain = DrawMenuTitle &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[af]"></a>DrawMenuTitle2</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, inverter.o(i.DrawMenuTitle2))
+<P><STRONG><a name="[b0]"></a>DrawMenuTitle2</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, inverter.o(i.DrawMenuTitle2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = DrawMenuTitle2 &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[b0]"></a>DrawTemperature</STRONG> (Thumb, 138 bytes, Stack size 48 bytes, inverter.o(i.DrawTemperature))
+<P><STRONG><a name="[b1]"></a>DrawTemperature</STRONG> (Thumb, 138 bytes, Stack size 48 bytes, inverter.o(i.DrawTemperature))
 <BR><BR>[Stack]<UL><LI>Max Depth = 296 + Unknown Stack Size
 <LI>Call Chain = DrawTemperature &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[b4]"></a>DrawTextAligment</STRONG> (Thumb, 294 bytes, Stack size 96 bytes, inverter.o(i.DrawTextAligment))
+<P><STRONG><a name="[b5]"></a>DrawTextAligment</STRONG> (Thumb, 294 bytes, Stack size 96 bytes, inverter.o(i.DrawTextAligment))
 <BR><BR>[Stack]<UL><LI>Max Depth = 344<LI>Call Chain = DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawRectangle(short, short, short, short)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawRectangle(short, short, short, short)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[bd]"></a>DrawTextSelected</STRONG> (Thumb, 270 bytes, Stack size 64 bytes, inverter.o(i.DrawTextSelected))
+<P><STRONG><a name="[be]"></a>DrawTextSelected</STRONG> (Thumb, 270 bytes, Stack size 64 bytes, inverter.o(i.DrawTextSelected))
 <BR><BR>[Stack]<UL><LI>Max Depth = 312<LI>Call Chain = DrawTextSelected &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 </UL>
 
-<P><STRONG><a name="[c1]"></a>DrawWifi</STRONG> (Thumb, 310 bytes, Stack size 24 bytes, inverter.o(i.DrawWifi))
+<P><STRONG><a name="[c2]"></a>DrawWifi</STRONG> (Thumb, 310 bytes, Stack size 24 bytes, inverter.o(i.DrawWifi))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = DrawWifi &rArr; PixelsBase::drawCompressedBitmap(short, short, const unsigned char*) &rArr; operator new[] (unsigned) &rArr; operator new(unsigned) &rArr; malloc &rArr; __Heap_Full &rArr; __Heap_ProvideMemory &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
 
-<P><STRONG><a name="[c2]"></a>DrawWindowOpen</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, inverter.o(i.DrawWindowOpen))
+<P><STRONG><a name="[c3]"></a>DrawWindowOpen</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, inverter.o(i.DrawWindowOpen))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = DrawWindowOpen &rArr; PixelsBase::drawCompressedBitmap(short, short, const unsigned char*) &rArr; operator new[] (unsigned) &rArr; operator new(unsigned) &rArr; malloc &rArr; __Heap_Full &rArr; __Heap_ProvideMemory &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
@@ -1056,8 +1057,8 @@ Global Symbols
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_open_window(signed char, unsigned char)
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;keyPressed()
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
@@ -1079,9 +1080,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 680 + Unknown Stack Size
 <LI>Call Chain = MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainScreen()
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainScreen()
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
@@ -1096,7 +1097,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = Off &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 4]<UL><LI> inverter.o(.data)
 <LI> inverter.o(.data)
@@ -1107,7 +1108,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = On &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 4]<UL><LI> inverter.o(.data)
 <LI> inverter.o(.data)
@@ -1117,12 +1118,12 @@ Global Symbols
 <P><STRONG><a name="[22]"></a>PendSV_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, gd32f3x0_it.o(i.PendSV_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
-<P><STRONG><a name="[c4]"></a>PrepareEditParameter</STRONG> (Thumb, 336 bytes, Stack size 24 bytes, inverter.o(i.PrepareEditParameter))
+<P><STRONG><a name="[c5]"></a>PrepareEditParameter</STRONG> (Thumb, 336 bytes, Stack size 24 bytes, inverter.o(i.PrepareEditParameter))
 <BR><BR>[Stack]<UL><LI>Max Depth = 776 + Unknown Stack Size
 <LI>Call Chain = PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_current_time_get
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bcdToDec
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_current_time_get
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bcdToDec
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuOK()
@@ -1131,18 +1132,18 @@ Global Symbols
 <P><STRONG><a name="[26]"></a>RTC_IRQHandler</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, gd32f3x0_it.o(i.RTC_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RTC_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_get
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_clear
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_alarm_callback
+<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_get
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_clear
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_alarm_callback
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
-<P><STRONG><a name="[a6]"></a>ResetAllSettings</STRONG> (Thumb, 146 bytes, Stack size 24 bytes, inverter.o(i.ResetAllSettings))
+<P><STRONG><a name="[a7]"></a>ResetAllSettings</STRONG> (Thumb, 146 bytes, Stack size 24 bytes, inverter.o(i.ResetAllSettings))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56 + Unknown Stack Size
 <LI>Call Chain = ResetAllSettings &rArr; rtc_init &rArr; rtc_register_sync_wait
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_deinit
+<BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_deinit
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
@@ -1189,7 +1190,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = TempMinus &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
@@ -1197,7 +1198,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 624 + Unknown Stack Size
 <LI>Call Chain = TempPlus &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
@@ -1205,7 +1206,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
 <LI>Call Chain = TimeMinus &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 2]<UL><LI> inverter.o(.data)
 <LI> inverter.o(.data)
@@ -1214,7 +1215,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 640 + Unknown Stack Size
 <LI>Call Chain = TimePlus &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 <BR>[Address Reference Count : 2]<UL><LI> inverter.o(.data)
 <LI> inverter.o(.data)
@@ -1235,11 +1236,11 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
-<P><STRONG><a name="[c3]"></a>MainScreen()</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, inverter.o(i._Z10MainScreenv))
+<P><STRONG><a name="[c4]"></a>MainScreen()</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, inverter.o(i._Z10MainScreenv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408 + Unknown Stack Size
 <LI>Call Chain = MainScreen() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuBack
@@ -1294,7 +1295,7 @@ Global Symbols
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOn()
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;beep()
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
@@ -1311,7 +1312,7 @@ Global Symbols
 <P><STRONG><a name="[116]"></a>crc32_1byte(const void*, int, unsigned)</STRONG> (Thumb, 32 bytes, Stack size 12 bytes, crc32.o(i._Z11crc32_1bytePKvij))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = crc32_1byte(const void*, int, unsigned)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 </UL>
 
 <P><STRONG><a name="[f1]"></a>gpio_config()</STRONG> (Thumb, 354 bytes, Stack size 24 bytes, main.o(i._Z11gpio_configv))
@@ -1329,82 +1330,82 @@ Global Symbols
 <LI>Call Chain = startScreen() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_1ms
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTemperature
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOn()
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetPower(signed char)
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceON()
 </UL>
 
-<P><STRONG><a name="[b5]"></a>DrawDateEdit()</STRONG> (Thumb, 596 bytes, Stack size 72 bytes, inverter.o(i._Z12DrawDateEditv))
+<P><STRONG><a name="[b6]"></a>DrawDateEdit()</STRONG> (Thumb, 596 bytes, Stack size 72 bytes, inverter.o(i._Z12DrawDateEditv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = DrawDateEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[b6]"></a>DrawTimeEdit()</STRONG> (Thumb, 536 bytes, Stack size 72 bytes, inverter.o(i._Z12DrawTimeEditv))
+<P><STRONG><a name="[b7]"></a>DrawTimeEdit()</STRONG> (Thumb, 536 bytes, Stack size 72 bytes, inverter.o(i._Z12DrawTimeEditv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416 + Unknown Stack Size
 <LI>Call Chain = DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextLineHeight()
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[a9]"></a>DrawCustomDay(int)</STRONG> (Thumb, 280 bytes, Stack size 80 bytes, inverter.o(i._Z13DrawCustomDayi))
+<P><STRONG><a name="[aa]"></a>DrawCustomDay(int)</STRONG> (Thumb, 280 bytes, Stack size 80 bytes, inverter.o(i._Z13DrawCustomDayi))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CustomPrev
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CustomNext
 </UL>
 
-<P><STRONG><a name="[ae]"></a>DrawLeftRight()</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, inverter.o(i._Z13DrawLeftRightv))
+<P><STRONG><a name="[af]"></a>DrawLeftRight()</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, inverter.o(i._Z13DrawLeftRightv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = DrawLeftRight() &rArr; PixelsBase::drawCompressedBitmap(short, short, const unsigned char*) &rArr; operator new[] (unsigned) &rArr; operator new(unsigned) &rArr; malloc &rArr; __Heap_Full &rArr; __Heap_ProvideMemory &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
 <P><STRONG><a name="[f8]"></a>f_open_window(signed char, unsigned char)</STRONG> (Thumb, 148 bytes, Stack size 16 bytes, inverter.o(i._Z13f_open_windowah))
@@ -1412,8 +1413,8 @@ Global Symbols
 <LI>Call Chain = f_open_window(signed char, unsigned char) &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getModeTemperature
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getModeTemperature
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
@@ -1489,7 +1490,7 @@ Global Symbols
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
@@ -1508,9 +1509,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 784 + Unknown Stack Size
 <LI>Call Chain = MenuOK() &rArr; PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
@@ -1525,14 +1526,14 @@ Global Symbols
 <LI>Call Chain = blocked() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_1ms
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOff()
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;keyPressed()
@@ -1542,8 +1543,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 680 + Unknown Stack Size
 <LI>Call Chain = MenuNext() &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
@@ -1552,8 +1553,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 680 + Unknown Stack Size
 <LI>Call Chain = MenuPrev() &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
@@ -1586,13 +1587,13 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 680 + Unknown Stack Size
 <LI>Call Chain = EnterMenu() &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawCustomDay(int) &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
 
-<P><STRONG><a name="[a7]"></a>SaveFlash()</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, inverter.o(i._Z9SaveFlashv))
+<P><STRONG><a name="[a8]"></a>SaveFlash()</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, inverter.o(i._Z9SaveFlashv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = SaveFlash() &rArr; fmc_word_program &rArr; fmc_ready_wait
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fmc_word_program
@@ -1610,7 +1611,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = deviceOFF() &rArr; PixelsBase::clear() &rArr; PixelsBase::fillRectangle(short, short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOff()
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetPower(signed char)
 </UL>
@@ -1653,14 +1654,14 @@ Global Symbols
 <LI>Call Chain = unblocked() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_1ms
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOff()
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setBackground(RGB)
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
@@ -1673,48 +1674,48 @@ Global Symbols
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::vLine(short, short, short)
 <LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::hLine(short, short, short)
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::computeColor(RGB, unsigned char)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
 </UL>
 
 <P><STRONG><a name="[12e]"></a>PixelsBase::computeColor(RGB, unsigned char)</STRONG> (Thumb, 106 bytes, Stack size 32 bytes, pixels.o(i._ZN10PixelsBase12computeColorE3RGBh))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = PixelsBase::computeColor(RGB, unsigned char)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
 </UL>
 
-<P><STRONG><a name="[b7]"></a>PixelsBase::getTextWidth(char*, signed char*)</STRONG> (Thumb, 176 bytes, Stack size 48 bytes, pixels.o(i._ZN10PixelsBase12getTextWidthEPcPa))
+<P><STRONG><a name="[b8]"></a>PixelsBase::getTextWidth(char*, signed char*)</STRONG> (Thumb, 176 bytes, Stack size 48 bytes, pixels.o(i._ZN10PixelsBase12getTextWidthEPcPa))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = PixelsBase::getTextWidth(char*, signed char*) &rArr; strlen
 </UL>
 <BR>[Calls]<UL><LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[bf]"></a>PixelsBase::drawRectangle(short, short, short, short)</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, pixels.o(i._ZN10PixelsBase13drawRectangleEssss))
+<P><STRONG><a name="[c0]"></a>PixelsBase::drawRectangle(short, short, short, short)</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, pixels.o(i._ZN10PixelsBase13drawRectangleEssss))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = PixelsBase::drawRectangle(short, short, short, short) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::vLine(short, short, short)
 <LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::hLine(short, short, short)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
 </UL>
 
-<P><STRONG><a name="[ad]"></a>PixelsBase::fillRectangle(short, short, short, short)</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, pixels.o(i._ZN10PixelsBase13fillRectangleEssss))
+<P><STRONG><a name="[ae]"></a>PixelsBase::fillRectangle(short, short, short, short)</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, pixels.o(i._ZN10PixelsBase13fillRectangleEssss))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = PixelsBase::fillRectangle(short, short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::convertTo565()
@@ -1723,23 +1724,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[c0]"></a>PixelsBase::setBackground(RGB)</STRONG> (Thumb, 18 bytes, Stack size 12 bytes, inverter.o(i._ZN10PixelsBase13setBackgroundE3RGB))
+<P><STRONG><a name="[c1]"></a>PixelsBase::setBackground(RGB)</STRONG> (Thumb, 18 bytes, Stack size 12 bytes, inverter.o(i._ZN10PixelsBase13setBackgroundE3RGB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = PixelsBase::setBackground(RGB)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
 </UL>
 
 <P><STRONG><a name="[15c]"></a>PixelsBase::setOrientation(unsigned char)</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, pixels.o(i._ZN10PixelsBase14setOrientationEh))
@@ -1763,11 +1764,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 </UL>
 
-<P><STRONG><a name="[be]"></a>PixelsBase::getTextLineHeight()</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, pixels.o(i._ZN10PixelsBase17getTextLineHeightEv))
-<BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<P><STRONG><a name="[bf]"></a>PixelsBase::getTextLineHeight()</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, pixels.o(i._ZN10PixelsBase17getTextLineHeightEv))
+<BR><BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
 </UL>
 
 <P><STRONG><a name="[a0]"></a>PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)</STRONG> (Thumb, 728 bytes, Stack size 136 bytes, pixels.o(i._ZN10PixelsBase20drawCompressedBitmapEssPKh))
@@ -1785,13 +1786,13 @@ Global Symbols
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
-<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
@@ -1802,8 +1803,8 @@ Global Symbols
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
@@ -1812,14 +1813,14 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::vLine(short, short, short)
 <LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::hLine(short, short, short)
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
 </UL>
 
 <P><STRONG><a name="[9e]"></a>PixelsBase::clear()</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, pixels.o(i._ZN10PixelsBase5clearEv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = PixelsBase::clear() &rArr; PixelsBase::fillRectangle(short, short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
@@ -1827,10 +1828,10 @@ Global Symbols
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
@@ -1841,22 +1842,22 @@ Global Symbols
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawRectangle(short, short, short, short)
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawRectangle(short, short, short, short)
 </UL>
 
-<P><STRONG><a name="[bb]"></a>PixelsBase::print(short, short, char*, signed char*)</STRONG> (Thumb, 16 bytes, Stack size 24 bytes, pixels.o(i._ZN10PixelsBase5printEssPcPa))
+<P><STRONG><a name="[bc]"></a>PixelsBase::print(short, short, char*, signed char*)</STRONG> (Thumb, 16 bytes, Stack size 24 bytes, pixels.o(i._ZN10PixelsBase5printEssPcPa))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 
 <P><STRONG><a name="[12d]"></a>PixelsBase::vLine(short, short, short)</STRONG> (Thumb, 32 bytes, Stack size 24 bytes, pixels.o(i._ZN10PixelsBase5vLineEsss))
@@ -1866,27 +1867,27 @@ Global Symbols
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawRectangle(short, short, short, short)
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawRectangle(short, short, short, short)
 </UL>
 
-<P><STRONG><a name="[b3]"></a>PixelsBase::setFont(const unsigned char*)</STRONG> (Thumb, 40 bytes, Stack size 12 bytes, pixels.o(i._ZN10PixelsBase7setFontEPKh))
+<P><STRONG><a name="[b4]"></a>PixelsBase::setFont(const unsigned char*)</STRONG> (Thumb, 40 bytes, Stack size 12 bytes, pixels.o(i._ZN10PixelsBase7setFontEPKh))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = PixelsBase::setFont(const unsigned char*)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
-<P><STRONG><a name="[ac]"></a>PixelsBase::setColor(RGB)</STRONG> (Thumb, 16 bytes, Stack size 12 bytes, inverter.o(i._ZN10PixelsBase8setColorE3RGB))
+<P><STRONG><a name="[ad]"></a>PixelsBase::setColor(RGB)</STRONG> (Thumb, 16 bytes, Stack size 12 bytes, inverter.o(i._ZN10PixelsBase8setColorE3RGB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = PixelsBase::setColor(RGB)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
@@ -1896,25 +1897,25 @@ Global Symbols
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
 <P><STRONG><a name="[12c]"></a>PixelsBase::setColor(unsigned char, unsigned char, unsigned char)</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, pixels.o(i._ZN10PixelsBase8setColorEhhh))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = PixelsBase::setColor(unsigned char, unsigned char, unsigned char) &rArr; PixelsBase::setColor(RGB)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::PixelsBase(unsigned short, unsigned short)
@@ -1938,7 +1939,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = PixelsBase::PixelsBase(unsigned short, unsigned short) &rArr; PixelsBase::setColor(unsigned char, unsigned char, unsigned char) &rArr; PixelsBase::setColor(RGB)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sti___10_inverter_c_ffec7761
 </UL>
@@ -1974,10 +1975,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::vLine(short, short, short)
 <LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::hLine(short, short, short)
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setCurrentPixel(RGB)
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
 </UL>
 
-<P><STRONG><a name="[ab]"></a>RGB::RGB(unsigned char, unsigned char, unsigned char)</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, pixels.o(i._ZN3RGBC1Ehhh))
+<P><STRONG><a name="[ac]"></a>RGB::RGB(unsigned char, unsigned char, unsigned char)</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, pixels.o(i._ZN3RGBC1Ehhh))
 <BR><BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sti___10_inverter_c_ffec7761
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(unsigned char, unsigned char, unsigned char)
@@ -1986,19 +1987,19 @@ Global Symbols
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle2
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuTitle
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenuText
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
 
 <P><STRONG><a name="[1b9]"></a>RGB::RGB__sub_object(unsigned char, unsigned char, unsigned char)</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, pixels.o(i._ZN3RGBC1Ehhh), UNUSED)
@@ -2083,7 +2084,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.constdata__ZTV6Pixels)
 </UL>
 <P><STRONG><a name="[164]"></a>Stream::put(unsigned char)</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, wifi.o(i._ZN6Stream3putEh))
-<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
+<BR><BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
 </UL>
@@ -2244,17 +2245,17 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc_config()
 </UL>
 
-<P><STRONG><a name="[c6]"></a>bcdToDec</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, inverter.o(i.bcdToDec))
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
+<P><STRONG><a name="[c7]"></a>bcdToDec</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, inverter.o(i.bcdToDec))
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
 </UL>
 
 <P><STRONG><a name="[165]"></a>chksum8</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, wifi.o(i.chksum8))
-<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
+<BR><BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
 </UL>
 
-<P><STRONG><a name="[a4]"></a>decToBcd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, inverter.o(i.decToBcd))
+<P><STRONG><a name="[a5]"></a>decToBcd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, inverter.o(i.decToBcd))
 <BR><BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
@@ -2262,7 +2263,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init()
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc_config()
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTemperature
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::init()
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
@@ -2279,11 +2280,11 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[114]"></a>fmc_flag_clear</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, gd32f3x0_fmc.o(i.fmc_flag_clear))
-<BR><BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 </UL>
 
 <P><STRONG><a name="[118]"></a>fmc_lock</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, gd32f3x0_fmc.o(i.fmc_lock))
-<BR><BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 </UL>
 
 <P><STRONG><a name="[115]"></a>fmc_page_erase</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, gd32f3x0_fmc.o(i.fmc_page_erase))
@@ -2291,7 +2292,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fmc_ready_wait
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 </UL>
 
 <P><STRONG><a name="[14d]"></a>fmc_ready_wait</STRONG> (Thumb, 22 bytes, Stack size 4 bytes, gd32f3x0_fmc.o(i.fmc_ready_wait))
@@ -2308,7 +2309,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[113]"></a>fmc_unlock</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, gd32f3x0_fmc.o(i.fmc_unlock))
-<BR><BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<BR><BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 </UL>
 
 <P><STRONG><a name="[117]"></a>fmc_word_program</STRONG> (Thumb, 48 bytes, Stack size 20 bytes, gd32f3x0_fmc.o(i.fmc_word_program))
@@ -2316,13 +2317,13 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fmc_ready_wait
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 </UL>
 
-<P><STRONG><a name="[ba]"></a>getModeTemperature</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, inverter.o(i.getModeTemperature))
+<P><STRONG><a name="[bb]"></a>getModeTemperature</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, inverter.o(i.getModeTemperature))
 <BR><BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_open_window(signed char, unsigned char)
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 
 <P><STRONG><a name="[f6]"></a>getTemperature</STRONG> (Thumb, 230 bytes, Stack size 8 bytes, inverter.o(i.getTemperature))
@@ -2454,25 +2455,25 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setOrientation(unsigned char)
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTemperature
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getModeTemperature
+<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getModeTemperature
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOn()
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::init()
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOff()
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::update()
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::getLongPressed()
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::getPressed()
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceOFF()
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
+<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SaveFlash()
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnterMenu()
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceON()
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetPower(signed char)
@@ -2484,13 +2485,13 @@ Global Symbols
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_open_window(signed char, unsigned char)
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;keyPressed()
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainScreen()
-<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainScreen()
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuBack
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -2539,11 +2540,11 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 424 + Unknown Stack Size
 <LI>Call Chain = open_window_func &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRectangle(short, short, short, short)
+<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
@@ -2622,14 +2623,14 @@ Global Symbols
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceOFF()
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceON()
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;operator new[] (unsigned)
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;operator delete[] (void*)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
 
-<P><STRONG><a name="[a8]"></a>reset_wifi_state</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, wifi.o(i.reset_wifi_state))
+<P><STRONG><a name="[a9]"></a>reset_wifi_state</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, wifi.o(i.reset_wifi_state))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = reset_wifi_state &rArr; usart_transmit_frame
 </UL>
 <BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_transmit_frame
@@ -2639,62 +2640,63 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
-<P><STRONG><a name="[c9]"></a>rtc_alarm_callback</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, inverter.o(i.rtc_alarm_callback))
+<P><STRONG><a name="[ca]"></a>rtc_alarm_callback</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, inverter.o(i.rtc_alarm_callback))
 <BR><BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_IRQHandler
 </UL>
 
-<P><STRONG><a name="[c5]"></a>rtc_current_time_get</STRONG> (Thumb, 88 bytes, Stack size 12 bytes, gd32f3x0_rtc.o(i.rtc_current_time_get))
+<P><STRONG><a name="[c6]"></a>rtc_current_time_get</STRONG> (Thumb, 88 bytes, Stack size 12 bytes, gd32f3x0_rtc.o(i.rtc_current_time_get))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = rtc_current_time_get
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
+<BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PrepareEditParameter
 </UL>
 
-<P><STRONG><a name="[ca]"></a>rtc_deinit</STRONG> (Thumb, 98 bytes, Stack size 12 bytes, gd32f3x0_rtc.o(i.rtc_deinit))
+<P><STRONG><a name="[a4]"></a>rtc_deinit</STRONG> (Thumb, 98 bytes, Stack size 12 bytes, gd32f3x0_rtc.o(i.rtc_deinit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = rtc_deinit &rArr; rtc_register_sync_wait
 </UL>
 <BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_register_sync_wait
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init_mode_enter
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
+<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
-<P><STRONG><a name="[c8]"></a>rtc_flag_clear</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, gd32f3x0_rtc.o(i.rtc_flag_clear))
+<P><STRONG><a name="[c9]"></a>rtc_flag_clear</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, gd32f3x0_rtc.o(i.rtc_flag_clear))
 <BR><BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_IRQHandler
 </UL>
 
-<P><STRONG><a name="[c7]"></a>rtc_flag_get</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, gd32f3x0_rtc.o(i.rtc_flag_get))
+<P><STRONG><a name="[c8]"></a>rtc_flag_get</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, gd32f3x0_rtc.o(i.rtc_flag_get))
 <BR><BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_IRQHandler
 </UL>
 
-<P><STRONG><a name="[a5]"></a>rtc_init</STRONG> (Thumb, 150 bytes, Stack size 20 bytes, gd32f3x0_rtc.o(i.rtc_init))
+<P><STRONG><a name="[a6]"></a>rtc_init</STRONG> (Thumb, 150 bytes, Stack size 20 bytes, gd32f3x0_rtc.o(i.rtc_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = rtc_init &rArr; rtc_register_sync_wait
 </UL>
 <BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_register_sync_wait
 <LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init_mode_exit
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init_mode_enter
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
+<BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
 <P><STRONG><a name="[168]"></a>rtc_init_mode_enter</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, gd32f3x0_rtc.o(i.rtc_init_mode_enter))
-<BR><BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_deinit
+<BR><BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_deinit
 </UL>
 
 <P><STRONG><a name="[169]"></a>rtc_init_mode_exit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, gd32f3x0_rtc.o(i.rtc_init_mode_exit))
-<BR><BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
+<BR><BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
 </UL>
 
 <P><STRONG><a name="[db]"></a>rtc_register_sync_wait</STRONG> (Thumb, 76 bytes, Stack size 12 bytes, gd32f3x0_rtc.o(i.rtc_register_sync_wait))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = rtc_register_sync_wait
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_config()
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_deinit
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_deinit
 </UL>
 
-<P><STRONG><a name="[b9]"></a>smooth_backlight</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, inverter.o(i.smooth_backlight))
+<P><STRONG><a name="[ba]"></a>smooth_backlight</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, inverter.o(i.smooth_backlight))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = smooth_backlight
 </UL>
 <BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_channel_output_pulse_value_config
@@ -2708,7 +2710,7 @@ Global Symbols
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuBack
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
+<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
 
 <P><STRONG><a name="[11c]"></a>spi_dma_enable</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, gd32f3x0_spi.o(i.spi_dma_enable))
@@ -2760,7 +2762,7 @@ Global Symbols
 <P><STRONG><a name="[102]"></a>timer_channel_output_pulse_value_config</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, gd32f3x0_timer.o(i.timer_channel_output_pulse_value_config))
 <BR><BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_config_lcd_bl()
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_config_buzzer()
-<LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;beep()
 </UL>
 
@@ -2890,7 +2892,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flag_get
 <LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_data_transmit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
+<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
 </UL>
@@ -3040,7 +3042,7 @@ Local Symbols
 <P><STRONG><a name="[54]"></a>__sti___10_inverter_c_ffec7761</STRONG> (Thumb, 238 bytes, Stack size 8 bytes, inverter.o(i.__sti___10_inverter_c_ffec7761))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = __sti___10_inverter_c_ffec7761 &rArr; PixelsBase::PixelsBase(unsigned short, unsigned short) &rArr; PixelsBase::setColor(unsigned char, unsigned char, unsigned char) &rArr; PixelsBase::setColor(RGB)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::PixelsBase(unsigned short, unsigned short)
 <LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::ClickButton(unsigned char, unsigned short, bool)
 </UL>
