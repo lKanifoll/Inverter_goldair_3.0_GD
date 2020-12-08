@@ -32,7 +32,7 @@
 .\objects\inverter.o: ..\SDK\GD32F3x0_standard_peripheral\Include\gd32f3x0_tsi.h
 .\objects\inverter.o: ..\systick.h
 .\objects\inverter.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\inverter.o: ..\inc\pixels.h
+.\objects\inverter.o: ..\inc\Pixels.h
 .\objects\inverter.o: ..\inc\ClickButton.h
 .\objects\inverter.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\inverter.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

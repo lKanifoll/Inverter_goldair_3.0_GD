@@ -17,7 +17,7 @@ class ClickButton
 			_lastBounceTime = 0;
 			_lastState = false;
 			_btnState = false;
-			_debounceTime = 100;
+			_debounceTime = 50;
 			_longClickTime = longClickTime;
 			_action = 0;
 

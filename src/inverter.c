@@ -224,9 +224,9 @@ void alarm_set(uint8_t minutes)
 {
 	  rtc_alarm_disable();
 
-    rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK;// | RTC_ALARM_SECOND_MASK | RTC_ALARM_HOUR_MASK;// | RTC_ALARM_SECOND_MASK;//RTC_ALARM_HOUR_MASK;
+    rtc_alarm.rtc_alarm_mask = RTC_ALARM_DATE_MASK | RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK;// | RTC_ALARM_SECOND_MASK | RTC_ALARM_HOUR_MASK;// | RTC_ALARM_SECOND_MASK;//RTC_ALARM_HOUR_MASK;
     rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
-    rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
+    rtc_alarm.rtc_alarm_day = RTC_MONDAY | RTC_TUESDAY | RTC_WEDSDAY | RTC_THURSDAY | RTC_FRIDAY | RTC_SATURDAY | RTC_SUNDAY;
     //rtc_alarm.rtc_am_pm = RTC_AM;
 
     /* RTC alarm input */
@@ -238,9 +238,11 @@ void alarm_set(uint8_t minutes)
     
     /* RTC alarm configuration */
     rtc_alarm_config(&rtc_alarm);
-    rtc_flag_clear(RTC_STAT_ALRM0F);
+    
     //rtc_interrupt_enable(RTC_INT_ALARM);  
-    rtc_alarm_enable();  
+    rtc_alarm_enable(); 
+	  rtc_flag_clear(RTC_STAT_ALRM0F);
+		delay_1ms(100);
 }
 
 
@@ -1019,9 +1021,6 @@ void PrepareEditParameter()
 rtc_parameter_struct rtc_init_param;
 void AcceptParameter()
 {
-
-	
-	
 	switch (currentMenu->ID)
 	{
 		case 11: // comform
@@ -1091,7 +1090,7 @@ void AcceptParameter()
 			break;
 		case 411: // date
 			currentMenu->selected++;
-		  
+		  rtc_current_time_get(&rtc_init_param); 
 			if ((currentMenu->selected > 0) && (currentMenu->selected < 3))
 			{
 				if (isValidDate(_dateTime.tm_mday, _dateTime.tm_mon, _dateTime.tm_year))
@@ -1102,18 +1101,18 @@ void AcceptParameter()
 					time_t time_temp = mktime(&_dateTime);
 					const struct tm* time_out = localtime(&time_temp);
 					
-					rtc_deinit();
+					//rtc_deinit();
 					rtc_init_param.rtc_day_of_week = time_out->tm_wday == 0 ? RTC_SUNDAY : time_out->tm_wday;
 					rtc_init_param.rtc_year = decToBcd(_dateTime.tm_year - 100);
 					rtc_init_param.rtc_month = decToBcd(_dateTime.tm_mon + 1);
 					rtc_init_param.rtc_date = decToBcd(_dateTime.tm_mday);
 					
-					rtc_init_param.rtc_factor_asyn = 0x7FU;
-					rtc_init_param.rtc_factor_syn = 0xFFU;
-					rtc_initpara.rtc_display_format = RTC_24HOUR;					
+					//rtc_init_param.rtc_factor_asyn = 0x7FU;
+					//rtc_init_param.rtc_factor_syn = 0xFFU;
+					//rtc_initpara.rtc_display_format = RTC_24HOUR;					
 					
 					rtc_init(&rtc_init_param);
-					
+	
 					_dateTime.tm_mon++;
 					_dateTime.tm_year += 1900;
 				}
@@ -1138,16 +1137,16 @@ void AcceptParameter()
 					const struct tm* time_out = localtime(&time_temp);
 					
 					//rtc_parameter_struct rtc_init_param;
-					rtc_deinit();
+					//rtc_deinit();
 					rtc_init_param.rtc_day_of_week = time_out->tm_wday == 0 ? RTC_SUNDAY : time_out->tm_wday;
 					rtc_init_param.rtc_year = decToBcd(_dateTime.tm_year - 100);
 					rtc_init_param.rtc_month = decToBcd(_dateTime.tm_mon + 1);
 					rtc_init_param.rtc_date = decToBcd(_dateTime.tm_mday);
-					rtc_init_param.rtc_factor_asyn = 0x7FU;
-					rtc_init_param.rtc_factor_syn = 0xFFU;
-					rtc_initpara.rtc_display_format = RTC_24HOUR;		
+					//rtc_init_param.rtc_factor_asyn = 0x7FU;
+					//rtc_init_param.rtc_factor_syn = 0xFFU;
+					//rtc_initpara.rtc_display_format = RTC_24HOUR;		
 					rtc_init(&rtc_init_param);
-					
+	
 					GoOK();
 				}
 				else
@@ -1158,14 +1157,15 @@ void AcceptParameter()
 			break;
 		case 412: // time
 			currentMenu->selected++;
+			rtc_current_time_get(&rtc_init_param); 
 			if ((currentMenu->selected > 0) && (currentMenu->selected < 2))
 			{		
 				
 				rtc_init_param.rtc_hour = decToBcd(_dateTime.tm_hour);
 				rtc_init_param.rtc_minute = decToBcd(_dateTime.tm_min);
 				rtc_init_param.rtc_second = 0x00;
-        rtc_init_param.rtc_factor_asyn = 0x7FU;
-        rtc_init_param.rtc_factor_syn = 0xFFU;
+        //rtc_init_param.rtc_factor_asyn = 0x7FU;
+        //rtc_init_param.rtc_factor_syn = 0xFFU;
 				rtc_init(&rtc_init_param);
 				pxs.clear();
 				int16_t width, height;
@@ -1182,8 +1182,8 @@ void AcceptParameter()
 				rtc_init_param.rtc_hour = decToBcd(_dateTime.tm_hour);
 				rtc_init_param.rtc_minute = decToBcd(_dateTime.tm_min);
 				rtc_init_param.rtc_second = 0x00;
-        rtc_init_param.rtc_factor_asyn = 0x7FU;
-        rtc_init_param.rtc_factor_syn = 0xFFU;
+        //rtc_init_param.rtc_factor_asyn = 0x7FU;
+        //rtc_init_param.rtc_factor_syn = 0xFFU;
 				rtc_init(&rtc_init_param);
 				GoOK();				
 			}
@@ -2216,7 +2216,14 @@ void InitTimer()
     rtc_alarm.rtc_alarm_hour = 0x00;
     rtc_alarm.rtc_alarm_minute = 0x00;
     rtc_alarm.rtc_alarm_second = rtc_initpara.rtc_second;
-		rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK;
+		rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_DATE_MASK;
+		
+		rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
+		rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
+		rtc_alarm_config(&rtc_alarm);
+		rtc_flag_clear(RTC_STAT_ALRM0F);
+		//rtc_interrupt_enable(RTC_INT_ALARM);  
+		rtc_alarm_enable();		
 	}
 	else if (_settings.calendarOn == 1)
 	{
@@ -2224,17 +2231,20 @@ void InitTimer()
     rtc_alarm.rtc_alarm_hour = 0x00;
     rtc_alarm.rtc_alarm_minute = 0x00;
     rtc_alarm.rtc_alarm_second = 0x00;
-		rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK;
+		rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK | RTC_ALARM_DATE_MASK;
 		
 		_settings.workMode = getCalendarMode();
+		rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
+		rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
+		rtc_alarm_config(&rtc_alarm);
+		rtc_flag_clear(RTC_STAT_ALRM0F);
+		//rtc_interrupt_enable(RTC_INT_ALARM);  
+		rtc_alarm_enable();
+		
+		//alarm_set(0);
 	}	
 	   
-	rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
-	rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
-	rtc_alarm_config(&rtc_alarm);
-	rtc_flag_clear(RTC_STAT_ALRM0F);
-	//rtc_interrupt_enable(RTC_INT_ALARM);  
-	rtc_alarm_enable();  
+  
 
 }
 
@@ -2277,9 +2287,9 @@ void ResetAllSettings()
 	rtc_initpara.rtc_display_format = RTC_24HOUR;
 	rtc_initpara.rtc_am_pm = 0;
 
-	rtc_initpara.rtc_hour = 0x12;
+	rtc_initpara.rtc_hour = 0x11;
 		 
-	rtc_initpara.rtc_minute = 0x00;
+	rtc_initpara.rtc_minute = 0x58;
 
 	rtc_initpara.rtc_second = 0x00;
 
@@ -2347,6 +2357,7 @@ void startScreen()
 	smooth_backlight(0);
 	if (pxs.sizeCompressedBitmap(width, height, img_logo_png_comp) == 0)
 		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2-10, img_logo_png_comp);
+	pxs.fillRoundRectangle(50,50,20,20,7);
 	smooth_backlight(1);
 	delay_1ms(2000);
 	smooth_backlight(0);
@@ -2651,7 +2662,7 @@ void loop(void)
 	}
 	
 	InitTimer();
-	
+	//alarm_set(0);
 	
 	
 	
@@ -2692,10 +2703,7 @@ void loop(void)
 
 			keyTimer = 5;
 		}*/
-//		LL_IWDG_ReloadCounter(IWDG);
-		//===================================================UART MAINTANCE
-//		_wifi.check(_settings, _error, _timerStart / 1000);
-		//=================================================================
+
     receive_uart_int();
 
 		if (_key_window.getPressed()&& !_error && (currentMenu == NULL))
@@ -2712,6 +2720,7 @@ void loop(void)
 				_settings.modeOpenWindow = !_settings.modeOpenWindow;
 				_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 			}
+			
 			open_window_func();
 		}
 		

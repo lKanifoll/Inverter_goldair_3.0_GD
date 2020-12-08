@@ -32,4 +32,4 @@
 .\objects\main.o: ..\systick.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: ..\inc\inverter.h
-.\objects\main.o: ..\inc\pixels.h
+.\objects\main.o: ..\inc\Pixels.h

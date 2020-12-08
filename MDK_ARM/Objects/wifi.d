@@ -34,5 +34,5 @@
 .\objects\wifi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\wifi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\wifi.o: ..\inc\inverter.h
-.\objects\wifi.o: ..\inc\pixels.h
+.\objects\wifi.o: ..\inc\Pixels.h
 .\objects\wifi.o: ..\inc\stream.h

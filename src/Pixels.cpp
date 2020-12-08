@@ -1116,6 +1116,128 @@ void PixelsBase::drawFatLineAntialiased(int16_t x1, int16_t y1, int16_t x2, int1
 }
 
 #define myround(x) (int)((x)+0.5)
+	
+void PixelsBase::drawRectangle(int16_t x, int16_t y, int16_t width, int16_t height) {
+    hLine(x, y, x+width-2);
+    vLine(x+width-1, y, y+height-2);
+    hLine(x+1, y+height-1, x+width-1);
+    vLine(x, y+1, y+height-1);
+}
+void PixelsBase::drawRoundRectangle(int16_t x, int16_t y, int16_t width, int16_t height, int16_t radius) {
+
+    if ( radius < 1 ) {
+        drawRectangle(x, y, width, height);
+        return;
+    }
+
+    if ( radius > height >> 2 ) {
+        radius = height >> 2;
+    }
+    if ( radius > width >> 1 ) {
+        radius = width >> 1;
+    }
+
+    if ( antialiasing ) {
+        drawRoundRectangleAntialiased(x, y, width, height, radius, radius, 0);
+    } else {
+        height--;
+        width--;
+
+        hLine(x + radius, y + height, x + width - radius);
+        hLine(x + radius, y, x + width - radius );
+        vLine(x + width, y + radius, y + height - radius);
+        vLine(x, y + radius, y + height - radius);
+
+        int16_t shiftX = width - (radius << 1);
+        int16_t shiftY = height - (radius << 1);
+        int16_t f = 1 - radius;
+        int16_t ddF_x = 1;
+        int16_t ddF_y = - (radius << 1);
+        int16_t x1 = 0;
+        int16_t y1 = radius;
+
+        int16_t xx = x + radius;
+        int16_t yy = y + radius;
+
+        while (x1 < y1) {
+            if (f >= 0) {
+                y1--;
+                ddF_y += 2;
+                f += ddF_y;
+            }
+            x1++;
+            ddF_x += 2;
+            f += ddF_x;
+
+            drawPixel(xx + x1 + shiftX, yy + y1 + shiftY);
+            drawPixel(xx - x1, yy + y1 + shiftY);
+            drawPixel(xx + x1 + shiftX, yy - y1);
+            drawPixel(xx - x1, yy - y1);
+            drawPixel(xx + y1 + shiftX, yy + x1 + shiftY);
+            drawPixel(xx - y1, yy + x1 + shiftY);
+            drawPixel(xx + y1 + shiftX, yy - x1);
+            drawPixel(xx - y1, yy - x1);
+        }
+    }
+}
+
+void PixelsBase::fillRoundRectangle(int16_t x, int16_t y, int16_t width, int16_t height, int16_t radius) {
+
+    if ( radius < 1 ) {
+        fillRectangle(x, y, width, height);
+        return;
+    }
+
+    if ( radius > height >> 1 ) {
+        radius = height >> 1;
+    }
+    if ( radius > width >> 1 ) {
+        radius = width >> 1;
+    }
+
+    if ( antialiasing ) {
+        drawRoundRectangleAntialiased(x, y, width-1, height-1, radius, radius, true);
+    }
+
+    fillRectangle(x + radius, y + height - radius, width - (radius << 1), radius);
+    fillRectangle(x, y + radius, width, height - (radius << 1));
+    fillRectangle(x + radius, y, width - (radius << 1), radius);
+
+    height--;
+    width--;
+
+    int16_t shiftX = width - (radius << 1);
+    int16_t shiftY = height - (radius << 1);
+    int16_t f = 1 - radius;
+    int16_t ddF_x = 1;
+    int16_t ddF_y = -(radius << 1);
+    int16_t x1 = 0;
+    int16_t y1 = radius;
+
+    int16_t xx = x + radius;
+    int16_t yy = y + radius;
+
+    while (x1 < y1) {
+        if (f >= 0) {
+            y1--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        x1++;
+        ddF_x += 2;
+        f += ddF_x;
+
+        hLine(xx + shiftX, yy - y1, xx + shiftX + x1);
+        hLine(xx - x1, yy - y1, xx);
+        hLine(xx + shiftX, yy - x1, xx + shiftX + y1);
+        hLine(xx - y1, yy - x1, xx);
+
+        hLine(xx + shiftX, yy + y1 + shiftY,  xx + x1 + shiftX);
+        hLine(xx + shiftX, yy + x1 + shiftY, xx + shiftX + y1);
+        hLine(xx - x1, yy + y1 + shiftY, xx);
+        hLine(xx - y1, yy + x1 + shiftY, xx);
+    }
+}
 
 void PixelsBase::drawRoundRectangleAntialiased(int16_t x, int16_t y, int16_t width, int16_t height, int16_t rx, int16_t ry, bool bordermode) {
 
@@ -1286,10 +1408,5 @@ void PixelsBase::drawCircleAntialiaced( int16_t x, int16_t y, int16_t radius, bo
     drawRoundRectangleAntialiased(x-radius, y-radius, radius<<1, radius<<1, radius, radius, bordermode);
 }
 
-void PixelsBase::drawRectangle(int16_t x, int16_t y, int16_t width, int16_t height) {
-    hLine(x, y, x+width-2);
-    vLine(x+width-1, y, y+height-2);
-    hLine(x+1, y+height-1, x+width-1);
-    vLine(x, y+1, y+height-1);
-}
+
 
