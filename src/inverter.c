@@ -196,7 +196,7 @@ void rtc_setup(void)
 {
     /* setup RTC time value */
     //uint32_t tmp_hh = 0xFF, tmp_mm = 0xFF, tmp_ss = 0xFF;
-	
+		
 		rtc_deinit();
     rtc_initpara.rtc_factor_asyn = 0x7FU;
     rtc_initpara.rtc_factor_syn = 0xFFU;
@@ -224,7 +224,7 @@ void alarm_set(uint8_t minutes)
 {
 	  rtc_alarm_disable();
 
-    rtc_alarm.rtc_alarm_mask = RTC_ALARM_HOUR_MASK;//RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK;//RTC_ALARM_HOUR_MASK;
+    rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK;// | RTC_ALARM_SECOND_MASK | RTC_ALARM_HOUR_MASK;// | RTC_ALARM_SECOND_MASK;//RTC_ALARM_HOUR_MASK;
     rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
     rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
     //rtc_alarm.rtc_am_pm = RTC_AM;
@@ -232,7 +232,7 @@ void alarm_set(uint8_t minutes)
     /* RTC alarm input */
     rtc_alarm.rtc_alarm_hour = 0x00;
 
-    rtc_alarm.rtc_alarm_minute = minutes;
+    rtc_alarm.rtc_alarm_minute = 0x00;
 
     rtc_alarm.rtc_alarm_second = 0x00;
     
@@ -575,13 +575,6 @@ void MenuPrev()
 
 void MenuOK()
 {
-	_backLight = 130;
-	#ifdef DEBUG
-	printf("***\n");
-	printf("MenuOK current id:%d, counts: %d, items: %s\n", currentMenu->ID, currentMenu->counts, currentMenu->items != NULL ? "yes" : "no");
-	#endif
-
-
 	if (currentMenu->enter != NULL)
 	{
 		currentMenu->enter();
@@ -590,7 +583,6 @@ void MenuOK()
 	
 	MenuItem_t* oldMenu = currentMenu;
 	
-	// переходим во вложенное меню
 	if (currentMenu->items != NULL && currentMenu->counts > 0)
 	{
 		MenuItem_t* nextMenu = &currentMenu->items[currentMenu->selected];
@@ -604,16 +596,8 @@ void MenuOK()
 	
 	if (currentMenu->ID == 5)
 	{
-//		RTC_TimeTypeDef sTime;
-//		RTC_DateTypeDef sDate;
-//		HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-//		HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-		
-		#ifdef DEBUG
-		printf("year: %d\n", sDate.Year);
-		#endif
-
-		//if ((sDate.Year <= 19) && (sDate.Month < 12))
+		rtc_current_time_get(&rtc_initpara); 
+		if ((bcdToDec(rtc_initpara.rtc_year) <= 19) && (bcdToDec(rtc_initpara.rtc_month) < 12))
 		{
 			old = currentMenu->parent;
 			currentMenu = &_settingsMenu[0];
@@ -621,12 +605,6 @@ void MenuOK()
 		}
 	}
 
-	#ifdef DEBUG
-	printf("MenuOK new id:%d, counts: %d, items: %s\n", currentMenu->ID, currentMenu->counts, currentMenu->items != NULL ? "yes" : "no");
-	printf("***\n");
-	#endif
-
-	
 	// first enter from tree menu to edit parameter
 	if (oldMenu->items != NULL && currentMenu->items == NULL)
 		PrepareEditParameter();
@@ -844,7 +822,7 @@ void DrawEditParameter()
 //	    RTC_DateTypeDef sDate;
 //	    HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
 //	    HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);		
-		
+		  rtc_current_time_get(&rtc_initpara);
 			for (int i = 0; i < 7; i++)
 			{
 				if (_settings.calendar[i] > 7) _settings.calendar[i] = 0;
@@ -852,8 +830,8 @@ void DrawEditParameter()
 				pxs.setFont(ElectroluxSansRegular20a);
 				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y, 50, 30, (char*)_calendarInfo[i].week, false, false, 0);
 				pxs.setFont(MyriadPro_Regular22a);
-//				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y + 30, 50, 50, (char*)_calendarPresetName[_settings.calendar[i]], (currentMenu->selected == i), i == (sDate.WeekDay -1) ? 1 : 0 , 2, 
-//					                currentMenu->selected == i ? GREEN_COLOR : MAIN_COLOR, currentMenu->selected == i ? MAIN_COLOR : BG_COLOR );
+				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y + 30, 50, 50, (char*)_calendarPresetName[_settings.calendar[i]], (currentMenu->selected == i), i == (rtc_initpara.rtc_day_of_week -1) ? 1 : 0 , 2, 
+					                currentMenu->selected == i ? GREEN_COLOR : MAIN_COLOR, currentMenu->selected == i ? MAIN_COLOR : BG_COLOR );
 			}
 			break;
 		case 510:
@@ -1041,9 +1019,7 @@ void PrepareEditParameter()
 rtc_parameter_struct rtc_init_param;
 void AcceptParameter()
 {
-		#ifdef DEBUG
-	printf("AcceptParameter %d\n", currentMenu->ID);
-	#endif
+
 	
 	
 	switch (currentMenu->ID)
@@ -1147,8 +1123,8 @@ void AcceptParameter()
 				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
 				delay_1ms(1000);
 				pxs.clear();
-				//_timeoutSaveFlash = GetSystemTick();
-				//idleTimeout = GetSystemTick();
+				_timeoutSaveFlash = GetSystemTick();
+				idleTimeout = GetSystemTick();
 			}
 					
 			if (currentMenu->selected == 3)
@@ -1184,10 +1160,10 @@ void AcceptParameter()
 			currentMenu->selected++;
 			if ((currentMenu->selected > 0) && (currentMenu->selected < 2))
 			{		
-				rtc_parameter_struct rtc_init_param;
+				
 				rtc_init_param.rtc_hour = decToBcd(_dateTime.tm_hour);
 				rtc_init_param.rtc_minute = decToBcd(_dateTime.tm_min);
-				rtc_init_param.rtc_second = decToBcd(_dateTime.tm_sec);
+				rtc_init_param.rtc_second = 0x00;
         rtc_init_param.rtc_factor_asyn = 0x7FU;
         rtc_init_param.rtc_factor_syn = 0xFFU;
 				rtc_init(&rtc_init_param);
@@ -1202,10 +1178,10 @@ void AcceptParameter()
 			}
 			if (currentMenu->selected == 2)
 			{
-				rtc_parameter_struct rtc_init_param;
+				
 				rtc_init_param.rtc_hour = decToBcd(_dateTime.tm_hour);
 				rtc_init_param.rtc_minute = decToBcd(_dateTime.tm_min);
-				rtc_init_param.rtc_second = decToBcd(_dateTime.tm_sec);
+				rtc_init_param.rtc_second = 0x00;
         rtc_init_param.rtc_factor_asyn = 0x7FU;
         rtc_init_param.rtc_factor_syn = 0xFFU;
 				rtc_init(&rtc_init_param);
@@ -1603,8 +1579,12 @@ void TIMER_Heat_callback()
 
 
 
+
+uint32_t ioio=0;
+
 void rtc_alarm_callback()
 {
+	ioio++;
 	if (_settings.timerOn)
 	{
 		if (timer_time_set > 0)
@@ -2204,70 +2184,58 @@ WorkMode getCalendarMode()
 
 //	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
 //	HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-	
-//	struct Presets* _pr = (_settings.calendar[sDate.WeekDay - 1] < 7) ? (struct Presets*)&_presets[_settings.calendar[sDate.WeekDay - 1]] : &_settings.custom;
-//	return (WorkMode)_pr->hour[sTime.Hours];
+	rtc_current_time_get(&rtc_initpara); 
+	struct Presets* _pr = (_settings.calendar[rtc_initpara.rtc_day_of_week - 1] < 7) ? (struct Presets*)&_presets[_settings.calendar[rtc_initpara.rtc_day_of_week - 1]] : &_settings.custom;
+	return (WorkMode)_pr->hour[bcdToDec(rtc_initpara.rtc_hour)];
 }
 
 
 void InitTimer()
-{/*
+{
 	if (_settings.on == 0 || (_settings.timerOn == 0 && _settings.calendarOn == 0))
 	{
-		HAL_RTC_DeactivateAlarm(&hrtc, RTC_ALARM_A);
+		rtc_alarm_disable();
 		return;
 	}
+	rtc_current_time_get(&rtc_initpara); 
 	
-	RTC_TimeTypeDef sTime;
-	RTC_DateTypeDef sDate;
-	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-	HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-	
-	// if date is not set
-	if (sDate.Year < 19 && _settings.calendarOn)
+	if (bcdToDec(rtc_initpara.rtc_year) < 19 && _settings.calendarOn)
 	{
 		// disable timer and calendar
 		_settings.timerOn = 0;
 		_settings.calendarOn = 0;
 		_settings.workMode = WorkMode_Comfort;
-		HAL_RTC_DeactivateAlarm(&hrtc, RTC_ALARM_A);
+		rtc_alarm_disable();
 		return;
-	}
+	}	
 	
-	RTC_AlarmTypeDef sAlarm = {0};
+	rtc_alarm_disable(); 
+//-----------------------------------------------------	
 	if (_settings.timerOn == 1)
 	{
-		
-		sAlarm.AlarmTime.Hours = 0;
-		sAlarm.AlarmTime.Minutes = 0;
-		sAlarm.AlarmTime.Seconds = sTime.Seconds;
-		sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS | RTC_ALARMMASK_MINUTES;
+    rtc_alarm.rtc_alarm_hour = 0x00;
+    rtc_alarm.rtc_alarm_minute = 0x00;
+    rtc_alarm.rtc_alarm_second = rtc_initpara.rtc_second;
+		rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK;
 	}
 	else if (_settings.calendarOn == 1)
 	{
 		
-		sAlarm.AlarmTime.Hours = 0;
-		sAlarm.AlarmTime.Minutes = 0;
-		sAlarm.AlarmTime.Seconds = 0;
-		sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS | RTC_ALARMMASK_MINUTES | RTC_ALARMMASK_SECONDS;
+    rtc_alarm.rtc_alarm_hour = 0x00;
+    rtc_alarm.rtc_alarm_minute = 0x00;
+    rtc_alarm.rtc_alarm_second = 0x00;
+		rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK;
 		
 		_settings.workMode = getCalendarMode();
-	}
+	}	
+	   
+	rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
+	rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
+	rtc_alarm_config(&rtc_alarm);
+	rtc_flag_clear(RTC_STAT_ALRM0F);
+	//rtc_interrupt_enable(RTC_INT_ALARM);  
+	rtc_alarm_enable();  
 
-
-	sAlarm.AlarmTime.SubSeconds = 0x0;
-	sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-	sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
-	sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
-	sAlarm.AlarmDateWeekDay = 0x1;
-	sAlarm.AlarmTime.TimeFormat = RTC_HOURFORMAT_24;
-	sAlarm.Alarm = RTC_ALARM_A;
-	
-	if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN) != HAL_OK)
-	{
-		Error_Handler();
-	}*/
 }
 
 void ResetAllSettings()
@@ -2682,7 +2650,11 @@ void loop(void)
 		pxs.displayOff();
 	}
 	
-	//InitTimer();
+	InitTimer();
+	
+	
+	
+	
 	if (_settings.heatMode == HeatMode_Auto)
 		SetPower(0);
 	
@@ -2692,6 +2664,22 @@ void loop(void)
 	while (1)
   {
 		
+			_key_window.update();
+			_key_power.update();
+			_key_menu.update();
+			_key_back.update();
+			_key_down.update();
+			_key_up.update();
+		
+		
+		if(RESET != rtc_flag_get(RTC_STAT_ALRM0F))
+		{
+			rtc_flag_clear(RTC_STAT_ALRM0F);
+			rtc_alarm_callback();
+		}
+		
+		
+		/*
 		static int keyTimer = 0;
 		if (keyTimer-- <= 0)
 		{
@@ -2702,8 +2690,8 @@ void loop(void)
 			_key_down.update();
 			_key_up.update();
 
-			keyTimer = 50;
-		}
+			keyTimer = 5;
+		}*/
 //		LL_IWDG_ReloadCounter(IWDG);
 		//===================================================UART MAINTANCE
 //		_wifi.check(_settings, _error, _timerStart / 1000);
@@ -2776,6 +2764,7 @@ void loop(void)
 					else
 						unblocked();
           _timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;				  
+
 					_key_down.getPressed();
 					_key_up.getPressed();
 					_key_down.getLongPressed();

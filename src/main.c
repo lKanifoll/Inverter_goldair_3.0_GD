@@ -78,7 +78,8 @@ int main(void)
 	pwm_config_lcd_bl();
 	heat_timer_config();
 	pmu_backup_write_enable();
-	
+	exti_init(EXTI_17,EXTI_INTERRUPT,EXTI_TRIG_RISING);
+  nvic_irq_enable(RTC_IRQn,0,0);
 	
 	RTC_config();
 	delay_1ms(500);
@@ -392,5 +393,6 @@ void RTC_config(void)
 		rcu_rtc_clock_config(RCU_RTCSRC_LXTAL);
     rcu_periph_clock_enable(RCU_RTC);
     rtc_register_sync_wait();
+	  
 }
 
