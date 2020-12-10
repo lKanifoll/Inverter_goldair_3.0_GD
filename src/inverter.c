@@ -44,8 +44,8 @@ typedef struct MenuItem
 	struct MenuItem* parent;
 } MenuItem_t;
 
-static const RGB powerLevelColors[] = { RGB(255,255,255), RGB(255,242,90), RGB(235,147,79), RGB(227,109,79), RGB(224,86,74) };
-static const RGB modeColors[] = {RGB(255,237,0), RGB(255,255,255), RGB(14,117,188), RGB(0,0,0) };
+static const RGB powerLevelColors[] = { RGB(255,255,255), RGB(255,70,70), RGB(255,0,0), RGB(200,0,0), RGB(160,0,0) };//{ RGB(255,255,255), RGB(255,242,90), RGB(235,147,79), RGB(227,109,79), RGB(224,86,74) };
+static const RGB modeColors[] = {RGB(255,237,0), RGB(255,255,255), RGB(14,117,188), RGB(0,0,0)};
 
 static MenuItem_t _modeOK = {999, 0, NULL, NULL, NULL, MenuBack }; // OK
 
@@ -125,7 +125,8 @@ static MenuItem_t _menu =
 
 	struct MenuItem* old;
 MenuItem_t* currentMenu = NULL;
-uint32_t idleTimeout = 0; // время бездействия
+uint32_t idleTimeout = 0; 
+
 uint8_t _currentPower = 0;
 uint8_t semistor_power = 0;
 int8_t temp_current	= 0;
@@ -134,8 +135,8 @@ uint8_t powerback_flag = 0;
 uint8_t _currentPowerTicks = 20;
 uint8_t temp_prev = 0;
 uint8_t mode_prev = 0;
-uint16_t _backLight = 0;
-uint16_t _backLight_div = 0;
+
+
 uint8_t _eventTimer = 0;
 uint8_t _blocked = 0;
 uint32_t _durationClick = 0;
@@ -191,6 +192,15 @@ static struct TemperatureSettings _tempConfig;
 
 
 
+void drawRoundRect(int16_t x, int16_t y, int16_t width, int16_t height, int16_t radius, int16_t thikness)
+{
+	pxs.fillRoundRectangle(320/2 - (x)/2, 240/2 - (y)/2, (width), (height), 12);
+	pxs.setColor(BG_COLOR);
+	pxs.setBackground(MAIN_COLOR);
+	pxs.fillRoundRectangle(320/2 - (x-thikness)/2, 240/2 - (y-thikness)/2, (width-thikness), (height-thikness), 10);
+  pxs.setColor(MAIN_COLOR);
+	pxs.setBackground(BG_COLOR);
+}
 
 void rtc_setup(void)
 {
@@ -358,11 +368,19 @@ void DrawMenu()
 	switch (currentMenu->items[currentMenu->selected].ID)
 	{
 		case 1:
-			icon = img_menu_heatmode_icon_png_comp;
+			drawRoundRect(92,84,92,84,14,6);
+			pxs.setColor(MAIN_COLOR);
+			pxs.setFont(FuturaBookC20a);
+			int16_t width = pxs.getTextWidth("MODE");
+			pxs.print(320 / 2 - width / 2-1, 240/2 - 10, "MODE");		
 			text = "Heat mode";
 			break;
 		case 2:
-			icon = img_menu_power_icon_png_comp;
+		  drawRoundRect(92,84,92,84,12,6);
+			pxs.fillRectangle(131,120,10,30);
+			pxs.fillRectangle(147,112,10,38);
+		  pxs.fillRectangle(163,104,10,46);
+			pxs.fillRectangle(179,96 ,10,54);
 			text = "Power";
 			break;
 		case 3:
@@ -382,7 +400,16 @@ void DrawMenu()
 			text = "Comfort";
 			break;
 		case 12:
-			icon = img_menu_mode_eco_png_comp;
+			pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
+			pxs.fillOval(320/2-78/2,240/2-78/2,78,78);
+			pxs.setColor(BG_COLOR);
+			pxs.setBackground(MAIN_COLOR);
+		  pxs.fillOval(320/2-10,240/2-50,60,60);
+			pxs.fillRectangle(320/2, 70, 60,50);
+			pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
+			//icon = img_menu_mode_eco_png_comp;
 			text = "Eco";
 			break;
 		case 13:
@@ -390,11 +417,19 @@ void DrawMenu()
 			text = "Anti-frost";
 			break;
 		case 21:
-			icon = img_menu_power_auto_icon_png_comp;
+			drawRoundRect(92,84,92,84,12,6);
+			pxs.setColor(MAIN_COLOR);
+			pxs.setFont(FuturaMediumC53a);
+			width = pxs.getTextWidth("A");
+			pxs.print(320 / 2 - width / 2, 240/2 - 27, "A");		
 			text = "Auto";
 			break;
 		case 22:
-			icon = img_menu_power_custom_icon_png_comp;
+			drawRoundRect(92,84,92,84,12,6);
+			pxs.setColor(MAIN_COLOR);
+			pxs.setFont(FuturaMediumC53a);
+			width = pxs.getTextWidth("C");
+			pxs.print(320 / 2 - width / 2, 240/2 - 27, "C");
 			text = "Custom";
 			break;
 		case 31:
@@ -402,7 +437,8 @@ void DrawMenu()
 			text = _settings.timerOn ? "Timer is on" : "Timer is off";
 			break;
 		case 32:
-			icon = img_menu_settimer_png_comp;
+			drawRoundRect(133,84,133,84,12,6);
+			//icon = 1;
 			text = "Set timer";
 			break;
 		case 51:
@@ -422,6 +458,7 @@ void DrawMenu()
 			text = "Date & time";
 			break;
 		case 42:
+			drawRoundRect(92,84,92,84,12,6);
 			icon = img_menu_display_png_comp;
 			text = "Display";
 			break;
@@ -438,6 +475,7 @@ void DrawMenu()
 			text = "Reset";
 			break;
 		case 442:
+			drawRoundRect(92,84,92,84,12,6);
 			icon = img_menu_setting_info_png_comp ;
 			text = "Information";
 			break;
@@ -454,6 +492,7 @@ void DrawMenu()
 			text = "Brightness";
 			break;
 		case 422:
+			drawRoundRect(92,84,92,84,12,6);
 			icon = img_menu_display_auto_png_comp;
 			text = "Auto switch off";
 			break;
@@ -466,14 +505,16 @@ void DrawMenu()
 		{
 			pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, icon);
 		}
-		
+	}
+	else
+	{
 		if(currentMenu->items[currentMenu->selected].ID == 32)
 		{
-			pxs.setFont(ElectroluxSansRegular36a);
+			pxs.setFont(FuturaBookC36a);
 			char buf[6];
 			sprintf(buf, "%02d:%02d", (timer_time_set / 60), (timer_time_set % 60));
 			DrawTextSelected(SW / 2 - pxs.getTextWidth(buf)/2, 103, buf, false, false, 0,0);
-		}		
+		}				
 	}
 	
 	if (text != NULL)
@@ -491,7 +532,7 @@ void MainScreen()
 void DrawCustomDay(int _old = -1)
 {
 	struct Presets* _pr = NULL;
-	pxs.setFont(ElectroluxSansRegular20a); // 18?
+	pxs.setFont(FuturaBookC20a); // 18?
 	_pr = &_settings.custom;
 	for (int iy = 0; iy < 4; iy++)
 	{
@@ -596,6 +637,12 @@ void MenuOK()
 			//currentMenu->selected = 1;
 	}
 	
+	if((currentMenu->ID == 11 || currentMenu->ID == 12 || currentMenu->ID == 13))
+	{
+		pxs.setColor(BG_COLOR);
+		pxs.fillRectangle(70, 70, 200, 200);		
+	}
+	
 	if (currentMenu->ID == 5)
 	{
 		rtc_current_time_get(&rtc_initpara); 
@@ -628,9 +675,16 @@ void GoOK(int step = 1)
 		currentMenu->parent = _modeOK.parent;
 		smooth_backlight(0);
 		pxs.clear();
-		int16_t width, height;
-		pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-		pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+			pxs.setColor(MAIN_COLOR);
+			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+			pxs.setFont(FuturaBookC36a);
+			pxs.setColor(BG_COLOR);
+			pxs.setBackground(MAIN_COLOR);	
+			int16_t width = pxs.getTextWidth("OK");
+			int16_t height = pxs.getTextLineHeight();
+		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		  pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
 		smooth_backlight(1);
 		delay_1ms(2000);
 		
@@ -642,9 +696,16 @@ void GoOK(int step = 1)
 		currentMenu->parent = old;
 		smooth_backlight(0);
 		pxs.clear();
-		int16_t width, height;
-		pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-	  pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+			pxs.setColor(MAIN_COLOR);
+			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+			pxs.setFont(FuturaBookC36a);
+			pxs.setColor(BG_COLOR);
+			pxs.setBackground(MAIN_COLOR);	
+			int16_t width = pxs.getTextWidth("OK");
+			int16_t height = pxs.getTextLineHeight();
+		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		  pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
 		smooth_backlight(1);
 		delay_1ms(2000);
 	}		
@@ -667,7 +728,7 @@ void DrawDateEdit()
 	sprintf(buf_month, "%02d", _dateTime.tm_mon);
 	sprintf(buf_year, "%04d", _dateTime.tm_year);
 	
-	pxs.setFont(ElectroluxSansRegular36a);
+	pxs.setFont(FuturaBookC36a);
 	int16_t y = 240 / 2 - pxs.getTextLineHeight();
 
 	//DrawTextSelected(30, y, buf_year, (currentMenu->selected == 0), false, 5, 15);
@@ -691,7 +752,7 @@ void DrawDateEdit()
 void DrawTimeEdit()
 {
 	char buf[10];
-	pxs.setFont(ElectroluxSansRegular36a);
+	pxs.setFont(FuturaBookC36a);
 	int16_t y = 240 / 2 - pxs.getTextLineHeight() ;
 
 	//sprintf(buf, "%02d", _dateTime.tm_hour);
@@ -725,15 +786,23 @@ void DrawEditParameter()
 		pxs.clear();
 	else
 	{
-		pxs.setColor(BG_COLOR);
-		pxs.fillRectangle(70, 70, 200, 200);
+		//pxs.setColor(BG_COLOR);
+		//pxs.fillRectangle(70, 70, 200, 200);
 	}
 	
 	switch (currentMenu->ID)
 	{
 		case 999:
-			pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-			pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_ok_png_comp);
+			pxs.setColor(MAIN_COLOR);
+			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+			pxs.setFont(FuturaBookC36a);
+			pxs.setColor(BG_COLOR);
+			pxs.setBackground(MAIN_COLOR);	
+			int16_t width = pxs.getTextWidth("OK");
+			int16_t height = pxs.getTextLineHeight();
+		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		  pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
 			break;
 		case 12: // eco
 			DrawLeftRight();
@@ -754,23 +823,24 @@ void DrawEditParameter()
 				pxs.setColor(powerLevelColors[i]);
 				pxs.fillRectangle(320 / 2 - width / 2 + i * 12 + i * 20, 75, 12, 90);
 			}
+			pxs.setColor(MAIN_COLOR);
 			DrawLeftRight();
 			break;
 		case 52:
 			DrawMenuTitle("Programme");
-			pxs.setFont(ElectroluxSansRegular36a);
+			pxs.setFont(FuturaBookC36a);
 			DrawTextAligment(20, 100, 100, 100,"ON", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
 			DrawTextAligment(200, 100, 100, 100,"OFF", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
 			break;
 		case 31:
 		case 43:
 		case 422:
-			pxs.setFont(ElectroluxSansRegular36a);
+			pxs.setFont(FuturaBookC36a);
 			DrawTextAligment( 20, 70, 100, 100,  "ON", _onoffSet.parameter,_onoffSet.current,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
 			DrawTextAligment(200, 70, 100, 100, "OFF", !_onoffSet.parameter,!_onoffSet.current,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
 			break;
 		case 421:
-			pxs.setFont(ElectroluxSansRegular36a);
+			pxs.setFont(FuturaBookC36a);
 			DrawTextAligment(20, 60, 120, 120,"50%", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
 			DrawTextAligment(180, 60, 120, 120,"100%", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
 			break;
@@ -784,7 +854,7 @@ void DrawEditParameter()
 			DrawTimeEdit();
 			break;
 		case 441: // reset
-			pxs.setFont(ElectroluxSansRegular24a);
+			pxs.setFont(FuturaBookC29a);
 			if (currentMenu->selected == 0)
 			{
 				DrawTextAligment(0, 0, 320, 60, "Reset all device", false);
@@ -795,7 +865,7 @@ void DrawEditParameter()
 				DrawTextAligment(0, 0, 320, 60, "Are you sure?", false);
 			}
 			
-			pxs.setFont(ElectroluxSansRegular24a);
+			pxs.setFont(FuturaBookC29a);
 			DrawTextAligment(20, 115, 90, 90,"Yes", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
 			DrawTextAligment(210, 115, 90, 90,"No", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
 			
@@ -803,7 +873,7 @@ void DrawEditParameter()
 			//DrawTextAligment(210, 115, 90, 90,"No", _onoffSet.parameter,0,0, _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );				
 			break;
 		case 442: // info
-			pxs.setFont(ElectroluxSansRegular24a);
+			pxs.setFont(FuturaBookC29a);
 			DrawTextAligment(0, 70, 320, 60, "Current firmware", false);
 			//DrawTextAligment(0, 115, 320, 60, "version: 12.3.3", false);
 		
@@ -814,7 +884,7 @@ void DrawEditParameter()
 			DrawTextAligment(0, 115, 320, 60, buffer, false);		
 			break;
 		case 443: // wifi
-			pxs.setFont(ElectroluxSansRegular24a);
+			pxs.setFont(FuturaBookC29a);
 			DrawTextAligment(0, 70, 320, 60, "Find me in tuya app", false);
 			break;		
 		
@@ -829,9 +899,9 @@ void DrawEditParameter()
 			{
 				if (_settings.calendar[i] > 7) _settings.calendar[i] = 0;
 				pxs.setColor(MAIN_COLOR);
-				pxs.setFont(ElectroluxSansRegular20a);
+				pxs.setFont(FuturaBookC20a);
 				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y, 50, 30, (char*)_calendarInfo[i].week, false, false, 0);
-				pxs.setFont(MyriadPro_Regular22a);
+				pxs.setFont(FuturaMediumC22a);
 				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y + 30, 50, 50, (char*)_calendarPresetName[_settings.calendar[i]], (currentMenu->selected == i), i == (rtc_initpara.rtc_day_of_week -1) ? 1 : 0 , 2, 
 					                currentMenu->selected == i ? GREEN_COLOR : MAIN_COLOR, currentMenu->selected == i ? MAIN_COLOR : BG_COLOR );
 			}
@@ -848,7 +918,7 @@ void DrawEditParameter()
 				case 6: DrawMenuTitle("Sunday"); 		break;
 			}
 			
-			pxs.setFont(MyriadPro_Regular22a);
+			pxs.setFont(FuturaMediumC22a);
 			for (int iy = 0; iy < 2; iy++)
 			{
 				for (int ix = 0; ix < 4; ix++)
@@ -874,7 +944,7 @@ void DrawEditParameter()
 				case 7: DrawMenuTitle("CUSTOM", -5); 		break;
 			}
 
-			pxs.setFont(ElectroluxSansRegular20a); // 18?
+			pxs.setFont(FuturaBookC20a); // 18?
 			_pr = (_presetSet.preset < 7) ? (struct Presets*)&_presets[_presetSet.preset] : &_settings.custom;
 
 			for (int iy = 0; iy < 4; iy++)
@@ -1066,9 +1136,16 @@ void AcceptParameter()
 				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
 				timer_time_set = _settings.timerTime;
 				pxs.clear();
-				int16_t width, height;
-				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+			pxs.setColor(MAIN_COLOR);
+			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+			pxs.setFont(FuturaBookC36a);
+			pxs.setColor(BG_COLOR);
+			pxs.setBackground(MAIN_COLOR);	
+			int16_t width = pxs.getTextWidth("OK");
+			int16_t height = pxs.getTextLineHeight();
+		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		  pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
 				delay_1ms(1000);
 				pxs.clear();
 				_timeoutSaveFlash = GetSystemTick();
@@ -1117,9 +1194,16 @@ void AcceptParameter()
 					_dateTime.tm_year += 1900;
 				}
 				pxs.clear();
-				int16_t width, height;
-				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+			pxs.setColor(MAIN_COLOR);
+			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+			pxs.setFont(FuturaBookC36a);
+			pxs.setColor(BG_COLOR);
+			pxs.setBackground(MAIN_COLOR);	
+			int16_t width = pxs.getTextWidth("OK");
+			int16_t height = pxs.getTextLineHeight();
+		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		  pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
 				delay_1ms(1000);
 				pxs.clear();
 				_timeoutSaveFlash = GetSystemTick();
@@ -1168,9 +1252,16 @@ void AcceptParameter()
         //rtc_init_param.rtc_factor_syn = 0xFFU;
 				rtc_init(&rtc_init_param);
 				pxs.clear();
-				int16_t width, height;
-				pxs.sizeCompressedBitmap(width, height, img_ok_png_comp);
-				pxs.drawCompressedBitmap(SW / 2 - width / 2, SH / 2 - height / 2, img_ok_png_comp);
+			pxs.setColor(MAIN_COLOR);
+			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+			pxs.setFont(FuturaBookC36a);
+			pxs.setColor(BG_COLOR);
+			pxs.setBackground(MAIN_COLOR);	
+			int16_t width = pxs.getTextWidth("OK");
+			int16_t height = pxs.getTextLineHeight();
+		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		  pxs.setColor(MAIN_COLOR);
+			pxs.setBackground(BG_COLOR);
 				delay_1ms(1000);
 				pxs.clear();
 				_timeoutSaveFlash = GetSystemTick();
@@ -1280,10 +1371,7 @@ void AcceptParameter()
 
 void TempMinus()
 {
-		#ifdef DEBUG
-	printf("TempMinus\n");
-	#endif
-	
+	CleanTemperature(_tempConfig.desired,-25, 15);
 	_tempConfig.desired--;
 	if (_tempConfig.desired < _tempConfig.min)
 			_tempConfig.desired = _tempConfig.max;
@@ -1293,10 +1381,7 @@ void TempMinus()
 
 void TempPlus()
 {
-		#ifdef DEBUG
-	printf("TempPlus\n");
-	#endif
-	
+	CleanTemperature(_tempConfig.desired,-25, 15);
 	_tempConfig.desired++;
 	if (_tempConfig.desired > _tempConfig.max)
 			_tempConfig.desired = _tempConfig.min;
@@ -1895,7 +1980,7 @@ void DrawWifi()
 			}
 			else
 			{
-				pxs.fillRectangle(_xWifi + 6, 125, 43, 26);
+				pxs.fillRectangle(_xWifi + 11, 137, 43, 26);
 			}
 			pxs.setColor(MAIN_COLOR);
 			return;
@@ -1929,9 +2014,9 @@ void DrawWifi()
 		else
 		{
 			pxs.setColor(BG_COLOR);
-			pxs.fillRectangle(_xWifi + 6, 125, 43, 26);
+			pxs.fillRectangle(_xWifi + 12, 137, 43, 26);
 			if (_blink)
-				pxs.drawCompressedBitmap(_xWifi + 6, 125, (uint8_t*)img_wifi_png_comp);
+				pxs.drawCompressedBitmap(_xWifi + 12, 137, (uint8_t*)img_wifi_png_comp);
 			pxs.setColor(MAIN_COLOR);
 		}
 	}
@@ -1942,12 +2027,28 @@ void DrawTemperature(int8_t temp, int8_t xo, int8_t yo)
 	pxs.setColor(MAIN_COLOR);
 	char buffer[20];
 	sprintf(buffer, "%d", temp);
-	pxs.setFont(ElectroluxSansLight80a);
+	pxs.setFont(FuturaBookC90a);
 	int widthX = pxs.getTextWidth(buffer);
 	int cX = 165 - widthX / 2 + xo;
 	pxs.print(cX, 60 + yo, buffer);
-	pxs.setFont(ElectroluxSansLight32a);
-	pxs.print(cX + widthX, 60 + yo, "\xB0\x43");
+	pxs.setFont(FuturaBookC42a);
+	int8_t kerning[] = {-7,-100};
+	pxs.print(cX + widthX, 63 + yo, "\xB0\x43", kerning);
+	_xWifi = cX + widthX;
+}
+
+void CleanTemperature(int8_t temp, int8_t xo, int8_t yo)
+{
+	pxs.setColor(MAIN_COLOR);
+	char buffer[20];
+	sprintf(buffer, "%d", temp);
+	pxs.setFont(FuturaBookC90a);
+	int widthX = pxs.getTextWidth(buffer);
+	int cX = 165 - widthX / 2 + xo;
+	pxs.cleanText(cX, 60 + yo, buffer);
+	pxs.setFont(FuturaBookC42a);
+	int8_t kerning[] = {-7,-100};
+	pxs.cleanText(cX + widthX, 63 + yo, "\xB0\x43", kerning);
 	_xWifi = cX + widthX;
 }
 
@@ -1955,7 +2056,7 @@ void DrawTemperature(int8_t temp, int8_t xo, int8_t yo)
 void DrawMenuText(const char *text)
 {
 	pxs.setColor(MAIN_COLOR);
-	pxs.setFont(ElectroluxSansRegular24a);
+	pxs.setFont(FuturaBookC29a);
 	int16_t width = pxs.getTextWidth((char*)text);
 	pxs.print(320 / 2 - width / 2, 185, (char*)text);
 }
@@ -1963,7 +2064,7 @@ void DrawMenuText(const char *text)
 void DrawMenuTitle(const char *text, int8_t yo)
 {
 	pxs.setColor(MAIN_COLOR);
-	pxs.setFont(ElectroluxSansRegular24a);
+	pxs.setFont(FuturaBookC29a);
 	int16_t width = pxs.getTextWidth((char*)text);
 	pxs.print(320 / 2 - width / 2, 26 + yo, (char*)text);
 }
@@ -1971,7 +2072,7 @@ void DrawMenuTitle(const char *text, int8_t yo)
 void DrawMenuTitle2(const char *text)
 {
 	pxs.setColor(MAIN_COLOR);
-	pxs.setFont(ElectroluxSansRegular20a);
+	pxs.setFont(FuturaBookC20a);
 	int16_t width = pxs.getTextWidth((char*)text);
 	pxs.print(320 / 2 - width / 2, 16, (char*)text);
 }
@@ -2034,8 +2135,8 @@ void DrawMainScreen(uint32_t updater)
 
 	if (updater == 0x01)
 	{
-		pxs.setColor(BG_COLOR);
-		pxs.fillRectangle(100, 60, 200, 95);
+		//pxs.setColor(BG_COLOR);
+		//pxs.fillRectangle(100, 60, 200, 95);
 		//pxs.fillRectangle(200, 70, 80, 35);
 	}
 	else                                                                                            
@@ -2050,21 +2151,21 @@ void DrawMainScreen(uint32_t updater)
 	switch (_settings.workMode)
 	{
 		case WorkMode_Comfort:
-			DrawTemperature(getModeTemperature());
-			pxs.drawCompressedBitmap(22, 15, (uint8_t*)img_icon_comfort_png_comp);
+			DrawTemperature(getModeTemperature(),0,15);
+			pxs.drawCompressedBitmap(12, 15, (uint8_t*)img_icon_comfort_png_comp);
 			break;
 		case WorkMode_Eco:
-			DrawTemperature(getModeTemperature());
-			pxs.drawCompressedBitmap(22, 15, (uint8_t*)img_icon_eco_png_comp);
+			DrawTemperature(getModeTemperature(),0,15);
+			pxs.drawCompressedBitmap(12, 15, (uint8_t*)img_icon_eco_png_comp);
 			break;
 		case WorkMode_Antifrost:
-			DrawTemperature(getModeTemperature());
-			pxs.drawCompressedBitmap(22, 15, (uint8_t*)img_icon_antifrost_png_comp);
+			DrawTemperature(getModeTemperature(),0,15);
+			pxs.drawCompressedBitmap(12, 13, (uint8_t*)img_icon_antifrost_png_comp);
 			break;
 		case WorkMode_Off:
 			pxs.drawCompressedBitmap(150, 60, (uint8_t*)img_menu_program_off_png_comp);
-			pxs.setFont(ElectroluxSansRegular24a);
-			DrawTextAligment(140, 160, 82, 45, "Off", false, false);
+			pxs.setFont(FuturaBookC29a);
+			DrawTextAligment(145, 160, 82, 45, "Off", false, false);
 			break;
 	}
 
@@ -2072,36 +2173,32 @@ void DrawMainScreen(uint32_t updater)
 	if ((wifi_status == 4) && (currentMenu == NULL))
 	{
 		if(_settings.workMode == WorkMode_Off)
-			pxs.drawCompressedBitmap(22, 59, (uint8_t*)img_wifi_png_comp);
+			pxs.drawCompressedBitmap(12, 50, (uint8_t*)img_wifi_png_comp);
 		else
-			pxs.drawCompressedBitmap(_xWifi + 6, 125, (uint8_t*)img_wifi_png_comp);	
+			pxs.drawCompressedBitmap(_xWifi + 12, 137, (uint8_t*)img_wifi_png_comp);	
 	}
 	else
 	{
 		pxs.setColor(BG_COLOR);
 		if(_settings.workMode == WorkMode_Off)
-			pxs.fillRectangle(22, 59, 43, 26);
+			pxs.fillRectangle(12, 50, 43, 26);
 		else
-			pxs.fillRectangle(_xWifi + 6, 125, 43, 26);
+			pxs.fillRectangle(_xWifi + 12, 136, 43, 26);
 		pxs.setColor(MAIN_COLOR);			
 	}
 		
 	if ((_settings.modeOpenWindow) && (_settings.workMode != WorkMode_Off))
-		pxs.drawCompressedBitmap(22, 129, (uint8_t*)img_icon_open_png_comp);
-
-	//pxs.setColor(BG_COLOR);
-	//pxs.fillRectangle(15, 80, 44, 46);
-	//pxs.setColor(MAIN_COLOR);
+		pxs.drawCompressedBitmap(12, 140, (uint8_t*)img_icon_open_png_comp);
 		
 	if (_settings.timerOn == 1)
-		pxs.drawCompressedBitmap(22, 71, (uint8_t*)img_icon_timer_png_comp);
+				pxs.drawCompressedBitmap(12, 77, (uint8_t*)img_icon_timer_png_comp);
 	
 	else if (_settings.calendarOn == 1)
 	{
 		if(_settings.workMode == WorkMode_Off)
-			pxs.drawCompressedBitmap(22, 150, (uint8_t*)img_icon_calendar_png_comp);
+			pxs.drawCompressedBitmap(12, 147, (uint8_t*)img_icon_calendar_png_comp);
 		else
-			pxs.drawCompressedBitmap(22, 71, (uint8_t*)img_icon_calendar_png_comp);
+			pxs.drawCompressedBitmap(12, 80, (uint8_t*)img_icon_calendar_png_comp);
 	}
 
 	if (_settings.workMode != WorkMode_Off)
@@ -2145,15 +2242,23 @@ void DrawMainScreen(uint32_t updater)
 		for (int i = 0; i < powerLevel; i++)
 		{
 			pxs.setColor(powerLevelColors[i]); 
-			pxs.fillRectangle(22 + i * 49 + i * 8, 205, 49, 12);
+			pxs.fillRectangle(11 + i * 53 + i * 8, 213, 53, 12);
 		}
 
 		pxs.setColor(MAIN_COLOR); 
-		pxs.setFont(MyriadPro_Regular16a);
+		pxs.setBackground(BG_COLOR);
+		pxs.setFont(Futura_Bold13a);
+		
 		if (_settings.heatMode == HeatMode_User && _settings.calendarOn == 0)
-			pxs.print(21, 183, "CUSTOM");
+		{
+			int8_t kerning[] = {2,2,2,2,2,-100};
+			pxs.print(11, 194, "CUSTOM", kerning);
+		}
 		else
-			pxs.print(21, 183, "AUTO");
+		{
+			int8_t kerning[] = {2,2,2,-100};
+			pxs.print(11, 194, "AUTO", kerning);
+		}
 	}
 	
   if (updater != 0x01)
@@ -2304,13 +2409,13 @@ void blocked()
 	pxs.setBackground(BG_COLOR);
 	pxs.setColor(MAIN_COLOR); 
 	pxs.clear(); 
-	_backLight = 140;
+
 	if (pxs.sizeCompressedBitmap(width, height, img_blocked_png_comp) == 0)
 		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_blocked_png_comp);
 	delay_1ms(2000);
 	if(_settings.on)
 	{
-		_backLight = 140;
+
 		DrawMainScreen();
 	}
 	else
@@ -2326,13 +2431,13 @@ void unblocked()
 	pxs.setBackground(BG_COLOR);
 	pxs.setColor(MAIN_COLOR); 
 	pxs.clear(); 
-	_backLight = 140;
+
 	if (pxs.sizeCompressedBitmap(width, height, img_unblocked_png_comp) == 0)
 		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_unblocked_png_comp);
 	delay_1ms(2000);
 	if(_settings.on) 
 	{
-		_backLight = 140;
+
 		DrawMainScreen();
 	}
 	else
@@ -2357,28 +2462,25 @@ void startScreen()
 	smooth_backlight(0);
 	if (pxs.sizeCompressedBitmap(width, height, img_logo_png_comp) == 0)
 		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2-10, img_logo_png_comp);
-	pxs.fillRoundRectangle(50,50,20,20,7);
+	
 	smooth_backlight(1);
 	delay_1ms(2000);
 	smooth_backlight(0);
 	pxs.clear(); 	
-	pxs.setColor(modeColors[0]); 
-	pxs.setFont(ElectroluxSansRegular20a);
-	 _backLight = 140;
-	int16_t width_t = pxs.getTextWidth("digital INVERTER");
-	pxs.print(320 / 2 - width_t/2, 68-15, "digital INVERTER");
-	width_t = pxs.getTextWidth("technology");
-	pxs.print(320 / 2 - width_t/2, 98-15, "technology");
-	//pxs.print(320 / 2 - 105 / 2, 128, "HEATER");
+	pxs.setColor(powerLevelColors[4]); 
+	pxs.setFont(FuturaMediumC27a);
 
-	pxs.setColor(MAIN_COLOR); 
-  width_t = pxs.getTextWidth("ENERGY SAVING");
-	pxs.print(320 / 2 - width_t/2, 152-15, "ENERGY SAVING");
+	int16_t width_t = pxs.getTextWidth("EUROTECH METAL");
+	pxs.print(320 / 2 - width_t/2, 240/2 - 40, "EUROTECH METAL");
+	width_t = pxs.getTextWidth("PANEL HEATER");
+	pxs.print(320 / 2 - width_t/2, 240/2, "PANEL HEATER");
 	
-			char ver_buffer[20];
-		sprintf(ver_buffer, "%s%s", "V.", VERSION);	
-		width_t = pxs.getTextWidth(ver_buffer);
-		pxs.print(320/2 - width_t/2, 185, ver_buffer);
+	pxs.setFont(FuturaBookC20a);
+	pxs.setColor(MAIN_COLOR); 
+	char ver_buffer[20];
+	sprintf(ver_buffer, "%s%s", "V. ", VERSION);	
+	width_t = pxs.getTextWidth(ver_buffer);
+	pxs.print(320/2 - width_t/2, 185, ver_buffer);
   smooth_backlight(1);
 	delay_1ms(2000);
 	smooth_backlight(0);
@@ -2398,8 +2500,9 @@ void startScreen()
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
+					pxs.setFont(FuturaBookC90a);
 					DrawTextAligment(0, 0, SW, SH, "E1", false, false);
+					smooth_backlight(1);
 				}
 			}
 			else if (temp_current  == 127)
@@ -2410,8 +2513,9 @@ void startScreen()
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
+					pxs.setFont(FuturaBookC90a);
 					DrawTextAligment(0, 0, SW, SH, "E2", false, false);
+					smooth_backlight(1);
 				}
 			}
 			else if (temp_current > 48)
@@ -2422,8 +2526,9 @@ void startScreen()
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
+					pxs.setFont(FuturaBookC90a);
 					DrawTextAligment(0, 0, SW, SH, "E3", false, false);
+					smooth_backlight(1);
 				}
 			}
 			else if (temp_current < -26)
@@ -2434,8 +2539,9 @@ void startScreen()
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
+					pxs.setFont(FuturaBookC90a);
 					DrawTextAligment(0, 0, SW, SH, "E4", false, false);
+					smooth_backlight(1);
 				}
 			}
 			else
@@ -2495,7 +2601,7 @@ bool keyPressed()
 		if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 		else _stateBrightness = StateBrightness_LOW;
 		beep();
-		_backLight = 140;
+
 		blocked();
 		return false;
 	}
@@ -2590,12 +2696,12 @@ void open_window_func()
 		{			
 			if(_settings.modeOpenWindow)
 			{
-				pxs.drawCompressedBitmap(22, 129, (uint8_t*)img_icon_open_png_comp);
+				pxs.drawCompressedBitmap(12, 140, (uint8_t*)img_icon_open_png_comp);
 			}
 			else if(!_settings.modeOpenWindow)
 			{
 				pxs.setColor(BG_COLOR);
-				pxs.fillRectangle(22, 129, 46, 45);
+				pxs.fillRectangle(12, 140, 50, 48);
 				pxs.setColor(MAIN_COLOR);
 			}			
 		}
@@ -2614,7 +2720,7 @@ void open_window_func()
 				window_was_opened = 0;
 				window_is_opened = 0;
 				pxs.setColor(BG_COLOR);
-				pxs.fillRectangle(22, 129, 46, 45);
+				pxs.fillRectangle(12, 140, 50, 48);
 				pxs.setColor(MAIN_COLOR);
 			}
 		}		
@@ -2623,12 +2729,11 @@ void open_window_func()
 
 void loop(void)
 {
-	//uint8_t* p = (uint8_t*)&_settings;
-	//memcpy(p, (uint8_t*)SETTINGSADDR, sizeof(_settings));
-  //if (_settings.crc != crc32_1byte(p, offsetof(DeviceSettings, crc), 0xFFFFFFFF)) // not valid crc
+	uint8_t* p = (uint8_t*)&_settings;
+	memcpy(p, (uint8_t*)SETTINGSADDR, sizeof(_settings));
+  if (_settings.crc != crc32_1byte(p, offsetof(DeviceSettings, crc), 0xFFFFFFFF)) // not valid crc
 		ResetAllSettings();
 	
-	//while(1);
   timer_time_set = _settings.timerTime;
 
 
@@ -2645,19 +2750,15 @@ void loop(void)
 	getTemperature();
 	getTemperature();
 	
- _backLight = 500;
+
 	if (_settings.on)
 	{
-//	  HAL_TIM_Base_Start_IT(&htim7);
-//	  HAL_TIM_Base_Start_IT(&htim14);	
 		startScreen();
 		_timerStart = GetSystemTick();
 		
 	}
 	else
 	{
-//	  HAL_TIM_Base_Start_IT(&htim7);
-//	  HAL_TIM_Base_Start_IT(&htim14);		
 		pxs.displayOff();
 	}
 	
@@ -2767,7 +2868,7 @@ void loop(void)
 					idleTimeout = GetSystemTick();
 					if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 					else _stateBrightness = StateBrightness_LOW;
-					_backLight = 140;
+	
 					if (_settings.blocked)
 						blocked();
 					else
@@ -2812,7 +2913,7 @@ void loop(void)
 						_settings.workMode = WorkMode_Comfort;
 						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
-						_backLight = 140;
+					
 						DrawMainScreen(updater);
 						continue;						
 					}
@@ -2823,10 +2924,11 @@ void loop(void)
 						_settings.workMode = WorkMode_Comfort;
 						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
-						_backLight = 140;
+					
 					}
 					else
 					{
+						CleanTemperature(getModeTemperature(),0,15);
 						_settings.tempComfort--;
 						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						heat_from_cold = 1;
@@ -2869,7 +2971,7 @@ void loop(void)
 						_settings.workMode = WorkMode_Comfort;
 						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
-						_backLight = 140;
+			
 						DrawMainScreen(updater);
 						continue;						
 					}
@@ -2880,10 +2982,11 @@ void loop(void)
 						_settings.workMode = WorkMode_Comfort;
 						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						updater = 0;
-						_backLight = 140;
+				
 					}
 					else
 					{
+						CleanTemperature(getModeTemperature(),0,15);
 						_settings.tempComfort++;
 						_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 						heat_from_cold = 1;
@@ -2954,7 +3057,7 @@ void loop(void)
 					}
 					
 					_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
-					_backLight = 140;
+				
 					DrawMainScreen();
 				}
 			}
@@ -2973,12 +3076,12 @@ void loop(void)
 			if(GetSystemTick() > idleTimeout + 30000)
 			{
 				_stateBrightness = StateBrightness_OFF;
-				_backLight = 140;
+	
 				LL_GPIO_ResetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
 			}
 			else if (GetSystemTick() > idleTimeout + 15000)
 			{
-				_backLight = 80;
+			
 				_stateBrightness = StateBrightness_LOW;
 			}
 		}
@@ -3016,8 +3119,8 @@ void loop(void)
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
-					_backLight = 140;
+					pxs.setFont(FuturaBookC90a);
+			
 					DrawTextAligment(0, 0, SW, SH, "E1", false, false);
 				}
 			}
@@ -3031,8 +3134,8 @@ void loop(void)
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
-					_backLight = 140;
+					pxs.setFont(FuturaBookC90a);
+		
 					DrawTextAligment(0, 0, SW, SH, "E2", false, false);
 				}
 			}
@@ -3046,8 +3149,8 @@ void loop(void)
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
-					_backLight = 140;
+					pxs.setFont(FuturaBookC90a);
+			
 					DrawTextAligment(0, 0, SW, SH, "E3", false, false);
 				}
 			}
@@ -3061,8 +3164,8 @@ void loop(void)
 				{
 					_error_fl = 1;
 					pxs.clear();
-					pxs.setFont(ElectroluxSansLight80a);
-					_backLight = 140;
+					pxs.setFont(FuturaBookC90a);
+	
 					DrawTextAligment(0, 0, SW, SH, "E4", false, false);
 				}
 			}
@@ -3073,7 +3176,7 @@ void loop(void)
 				{
 					_error_fl = 0;
 					temp_steinhart = 25;
-					_backLight = 140;
+
 					DrawMainScreen();
 				}
 				
@@ -3168,15 +3271,15 @@ void loop(void)
 							if(i < powerLevel)
 							{
 								pxs.setColor(powerLevelColors[i]); 
-								pxs.fillRectangle(22 + i * 49 + i * 8, 205, 49, 12);
+								pxs.fillRectangle(11 + i * 53 + i * 8, 213, 53, 12);
 							}
 							else
 							{
 								pxs.setColor(BG_COLOR); 
-								pxs.fillRectangle(22 + i * 49 + i * 8, 205, 49, 12);
+								pxs.fillRectangle(11 + i * 53 + i * 8, 213, 53, 12);
 							}
 						}
-					}						
+					}					
 				if(refresh_system)
 				{
 					idleTimeout = GetSystemTick();
@@ -3194,16 +3297,16 @@ void loop(void)
 		{	
 			if (currentMenu == NULL && !_error)
 			{
-						
+				#ifdef DEBUG		
 				char buffer[10];
 				pxs.setColor(BG_COLOR);
 				pxs.fillRectangle(240, 20, 75, 20);
 				pxs.setColor(MAIN_COLOR);		
 				sprintf(buffer, "%d %d", getTemperature(), _currentPower);
 				
-				pxs.setFont(ElectroluxSansRegular20a);
+				pxs.setFont(FuturaBookC20a);
 				DrawTextAligment(265, 20, 30, 20, buffer, false);	
-				#ifdef DEBUG
+				
 				RTC_TimeTypeDef sTime1;
 				RTC_DateTypeDef sDate1;
 				HAL_RTC_GetTime(&hrtc, &sTime1, RTC_FORMAT_BIN);
@@ -3233,7 +3336,7 @@ void loop(void)
 					{
 						_settings.workMode = currentWorkMode;
 						nextChangeLevel = GetSystemTick() + 1000;
-						_backLight = 140;
+			
 						DrawMainScreen();
 					}
 				}
@@ -3245,11 +3348,11 @@ void loop(void)
 				{
 					static bool show_icon;
 					if(show_icon)
-					pxs.drawCompressedBitmap(22, 129, (uint8_t*)img_icon_open_png_comp);
+					pxs.drawCompressedBitmap(12, 140, (uint8_t*)img_icon_open_png_comp);
 				  else
 				  {
 					  pxs.setColor(BG_COLOR);
-					  pxs.fillRectangle(22, 129, 46, 45);
+					  pxs.fillRectangle(12, 140, 50, 48);
 					  pxs.setColor(MAIN_COLOR);
 				  }
 					show_icon = !show_icon;

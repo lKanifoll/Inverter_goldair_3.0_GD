@@ -42,6 +42,65 @@ uint16_t RGB::convertTo565() {
     return ((red / 8) << 11) | ((green / 4) << 5) | (blue / 8);
 }
 
+void PixelsBase::drawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
+
+    if (y1 == y2 && lineWidth == 1) {
+        hLine(x1, y1, x2);
+    } else if (x1 == x2 && lineWidth == 1) {
+        vLine(x1, y1, y2);
+    } else {
+        if ( lineWidth == 1 ) {
+            if ( antialiasing ) {
+                drawLineAntialiased(x1, y1, x2, y2);
+            } else {
+                int16_t dx;
+                int16_t dy;
+                int16_t sx;
+                int16_t sy;
+
+                if ( x2 > x1 ) {
+                    dx = x2 - x1;
+                    sx = 1;
+                } else {
+                    dx = x1 - x2;
+                    sx = -1;
+                }
+
+                if ( y2 > y1 ) {
+                    dy = y2 - y1;
+                    sy = 1;
+                } else {
+                    dy = y1 - y2;
+                    sy = -1;
+                }
+
+                int16_t x = x1;
+                int16_t y = y1;
+                int16_t err = dx - dy;
+                int16_t e2;
+                while (true) {
+                    drawPixel(x, y);
+                    if (x == x2 && y == y2) {
+                        break;
+                    }
+                    e2 = err << 1;
+                    if (e2 > -dy) {
+                        err = err - dy;
+                        x = x + sx;
+                    }
+                    if (e2 < dx) {
+                        err = err + dx;
+                        y = y + sy;
+                    }
+                }
+            }
+        } else {
+            drawFatLineAntialiased(x1, y1, x2, y2);
+        }
+    }
+}
+
+
 PixelsBase::PixelsBase(uint16_t width, uint16_t height) {
     deviceWidth = width < height ? width : height;
     deviceHeight = width > height ? width : height;

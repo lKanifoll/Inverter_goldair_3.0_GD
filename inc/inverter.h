@@ -185,6 +185,10 @@ void rtc_alarm_callback();
 void receive_uart_int(void);
 uint8_t bcdToDec(uint8_t val);
 uint8_t decToBcd(uint8_t val);
+void drawRoundRect(int16_t x, int16_t y, int16_t width, int16_t height, int16_t radius, int16_t thikness);
+
+void CleanTemperature(int8_t temp, int8_t xo, int8_t yo);
+
 
 #ifdef __cplusplus
 }
