@@ -80,11 +80,17 @@ static MenuItem_t _displayMenu[] = {
 	{422, 0, NULL, 					On, Off, NULL }, // Time
 };
 
+// Connect menu
+static MenuItem_t _connMenu[] = {
+	{4431, 0, NULL, 					NULL, NULL, MenuBack }, // connect
+	{4432, 0, NULL, 					On, Off, NULL },        // Reset
+};	
 // Service menu
 static MenuItem_t _serviceMenu[] = {
+	{443, 2, _connMenu, 		NULL, NULL, NULL }, // Wifi
 	{441, 0, NULL, 					On, Off, NULL }, // Reset
 	{442, 0, NULL, 					NULL, NULL, MenuBack }, // Info
-	{443, 0, NULL, 					NULL, NULL, NULL }, // Wifi
+	
 };
 
 // Settings menu
@@ -93,6 +99,7 @@ static MenuItem_t _settingsMenu[] = {
 	{42, 2, _displayMenu, 	NULL, NULL, NULL }, // Display
 	{43, 0, NULL, 					On, Off, NULL }, 		// Sound
 	{44, 3, _serviceMenu, 	NULL, NULL, NULL }, // Service
+	
 };
 
 static MenuItem_t _presetMenu = 
@@ -194,6 +201,8 @@ static struct TemperatureSettings _tempConfig;
 
 void drawRoundRect(int16_t x, int16_t y, int16_t width, int16_t height, int16_t radius, int16_t thikness)
 {
+	pxs.setColor(MAIN_COLOR);
+	pxs.setBackground(BG_COLOR);
 	pxs.fillRoundRectangle(320/2 - (x)/2, 240/2 - (y)/2, (width), (height), 12);
 	pxs.setColor(BG_COLOR);
 	pxs.setBackground(MAIN_COLOR);
@@ -429,7 +438,7 @@ void DrawMenu()
 			pxs.setColor(MAIN_COLOR);
 			pxs.setFont(FuturaMediumC53a);
 			width = pxs.getTextWidth("C");
-			pxs.print(320 / 2 - width / 2, 240/2 - 27, "C");
+			pxs.print(320 / 2 - width / 2-3, 240/2 - 28, "C");
 			text = "Custom";
 			break;
 		case 31:
@@ -479,6 +488,22 @@ void DrawMenu()
 			icon = img_menu_setting_info_png_comp ;
 			text = "Information";
 			break;
+		case 443:
+			icon = img_menu_conn_png_comp;
+			text = "Connection";
+			break;
+		case 4431:
+			drawRoundRect(133,84,133,84,12,6);
+			pxs.setColor(MAIN_COLOR);
+			pxs.setFont(FuturaBookC20a);
+			width = pxs.getTextWidth("START");
+			pxs.print(320 / 2 - width / 2-1, 240/2 - 10, "START");		
+			text = "Connecting";
+			break;	
+		case 4432:
+			icon = img_menu_setting_reset_png_comp;
+			text = "Reset connection";
+			break;		
 		case 411:
 			icon = img_menu_program_icon_png_comp;
 			text = "Set date";
@@ -1288,6 +1313,10 @@ void AcceptParameter()
 				_eventTimer = 0;
 				InitTimer();
 		  }		
+			else
+			{
+				_settings.workMode = WorkMode_Comfort;
+			}
 			GoOK();	
 			break;
 		case 53: // custom day
@@ -1359,13 +1388,14 @@ void AcceptParameter()
 				NVIC_SystemReset();
 			}
 			break;
+			/*
 		case 443: // wifi
 			
 			reset_wifi_state();
 		
 			GoOK();
 
-			break;			
+			break;		*/	
 	}
 }
 
@@ -2807,7 +2837,7 @@ void loop(void)
 
     receive_uart_int();
 
-		if (_key_window.getPressed()&& !_error && (currentMenu == NULL))
+		if (_key_window.getPressed()&& !_error && ((currentMenu == NULL) && (_settings.workMode != WorkMode_Off)))
 		{
 			if(!_settings.on)
 				continue;			
@@ -3025,7 +3055,6 @@ void loop(void)
 				{
 					EnterMenu();
 				}
-				
 			}
 			
 			if (_key_back.getPressed()&& !_error)
