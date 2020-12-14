@@ -143,7 +143,6 @@ void receive_uart_int()
 						answer_cmd[3] = CMD_NET_CONF;
 						answer_cmd[4] = 0x00;
 						answer_cmd[5] = 0x01;
-						//memmove(answer_cmd+6, prod_info, 0x2A);
 						answer_cmd[6] = 0x00;
 						answer_cmd[7] = chksum8(answer_cmd, 7);
 						usart_transmit_frame(answer_cmd, 8);		
@@ -425,6 +424,18 @@ void receive_uart_int()
 
 void reset_wifi_state()
 {
+		answer_frame.clear();
+		answer_frame.reset();
+		answer_frame.put(HEADER_1B);
+		answer_frame.put(HEADER_2B);
+		answer_frame.put(HEADER_VER);
+		answer_frame.put(CMD_NET_CONF);
+		answer_frame.put(0x00);
+		answer_frame.put(0x01);
+	  answer_frame.put(0x00);
+		answer_frame.put(chksum8(answer_frame.sptr(), 7));
+		usart_transmit_frame(answer_frame.sptr(), 8);	
+		delay_1ms(10);
 		answer_frame.clear();
 		answer_frame.reset();
 		answer_frame.put(HEADER_1B);

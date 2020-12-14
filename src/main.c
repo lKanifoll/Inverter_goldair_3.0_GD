@@ -244,9 +244,9 @@ void uart_init(void)
     
 	
     while (RESET == usart_flag_get(USART1, USART_FLAG_TC));
-	usart_interrupt_enable(USART1, USART_INT_RBNE);
-	usart_interrupt_enable(USART1, USART_INT_IDLE);
-	delay_1ms(100);
+		usart_interrupt_enable(USART1, USART_INT_RBNE);
+		usart_interrupt_enable(USART1, USART_INT_IDLE);
+		delay_1ms(100);
 
 }
 

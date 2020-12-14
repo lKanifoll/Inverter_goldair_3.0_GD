@@ -82,7 +82,7 @@ static MenuItem_t _displayMenu[] = {
 
 // Connect menu
 static MenuItem_t _connMenu[] = {
-	{4431, 0, NULL, 					NULL, NULL, MenuBack }, // connect
+	{4431, 0, NULL, 					NULL, NULL, NULL }, // connect
 	{4432, 0, NULL, 					On, Off, NULL },        // Reset
 };	
 // Service menu
@@ -234,7 +234,7 @@ void rtc_setup(void)
 
     /* RTC current time configuration */
     if(ERROR == rtc_init(&rtc_initpara)){    
-			while(1);
+			//while(1);
 		}
 
 }
@@ -451,11 +451,30 @@ void DrawMenu()
 			text = "Set timer";
 			break;
 		case 51:
-			icon = img_menu_program_setup_icon_png_comp;
+			//icon = img_menu_program_setup_icon_png_comp;
+			int16_t height;
+			if (pxs.sizeCompressedBitmap(width, height, img_prog_pattern_png_comp) == 0)
+			{
+				pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_prog_pattern_png_comp);
+			}		
+			if (pxs.sizeCompressedBitmap(width, height, img_menu_program_setup_icon_png_comp) == 0)
+			{
+				pxs.drawCompressedBitmap(320 / 2 +3, 240 / 2 +1, img_menu_program_setup_icon_png_comp);
+			}			
+			
 			text = "Setup";
 			break;
 		case 52:
-			icon = _settings.calendarOn ? img_program_cal_on_icon_png_comp : img_program_cal_off_icon_png_comp;
+			//icon = _settings.calendarOn ? img_program_cal_on_icon_png_comp : img_program_cal_off_icon_png_comp;
+
+			if (pxs.sizeCompressedBitmap(width, height, img_prog_pattern_png_comp) == 0)
+			{
+				pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_prog_pattern_png_comp);
+			}		
+			if (pxs.sizeCompressedBitmap(width, height, _settings.calendarOn ? img_program_cal_on_icon_png_comp : img_program_cal_off_icon_png_comp) == 0)
+			{
+				pxs.drawCompressedBitmap(320 / 2 +3, 240 / 2 +3, _settings.calendarOn ? img_program_cal_on_icon_png_comp : img_program_cal_off_icon_png_comp);
+			}			
 			text = _settings.calendarOn ? "On" : "Off";
 			break;
 		case 53:
@@ -700,19 +719,18 @@ void GoOK(int step = 1)
 		currentMenu->parent = _modeOK.parent;
 		smooth_backlight(0);
 		pxs.clear();
-			pxs.setColor(MAIN_COLOR);
-			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
-			pxs.setFont(FuturaBookC36a);
-			pxs.setColor(BG_COLOR);
-			pxs.setBackground(MAIN_COLOR);	
-			int16_t width = pxs.getTextWidth("OK");
-			int16_t height = pxs.getTextLineHeight();
-		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
-		  pxs.setColor(MAIN_COLOR);
-			pxs.setBackground(BG_COLOR);
+		pxs.setColor(MAIN_COLOR);
+		pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+		pxs.setFont(FuturaBookC36a);
+		pxs.setColor(BG_COLOR);
+		pxs.setBackground(MAIN_COLOR);	
+		int16_t width = pxs.getTextWidth("OK");
+		int16_t height = pxs.getTextLineHeight();
+		pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		pxs.setColor(MAIN_COLOR);
+		pxs.setBackground(BG_COLOR);
 		smooth_backlight(1);
 		delay_1ms(2000);
-		
 	}	
 	else if ((currentMenu->ID == 412) && (currentMenu->parent->parent->selected == 4))
 	{
@@ -900,7 +918,6 @@ void DrawEditParameter()
 		case 442: // info
 			pxs.setFont(FuturaBookC29a);
 			DrawTextAligment(0, 70, 320, 60, "Current firmware", false);
-			//DrawTextAligment(0, 115, 320, 60, "version: 12.3.3", false);
 		
 			char buffer[20];
 		  sprintf(buffer, "%s%s", "version: ", VERSION);		
@@ -908,17 +925,11 @@ void DrawEditParameter()
 			width = pxs.getTextWidth(buffer);
 			DrawTextAligment(0, 115, 320, 60, buffer, false);		
 			break;
-		case 443: // wifi
+		case 4431: // wifi
 			pxs.setFont(FuturaBookC29a);
-			DrawTextAligment(0, 70, 320, 60, "Find me in tuya app", false);
+			DrawTextAligment(0, 70, 320, 60, "Connecting...", false);
 			break;		
-		
 		case 51:
-			
-//			RTC_TimeTypeDef sTime;
-//	    RTC_DateTypeDef sDate;
-//	    HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-//	    HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);		
 		  rtc_current_time_get(&rtc_initpara);
 			for (int i = 0; i < 7; i++)
 			{
@@ -1388,14 +1399,11 @@ void AcceptParameter()
 				NVIC_SystemReset();
 			}
 			break;
-			/*
-		case 443: // wifi
 			
+		case 4431: // wifi
 			reset_wifi_state();
-		
 			GoOK();
-
-			break;		*/	
+			break;		
 	}
 }
 
@@ -2017,7 +2025,9 @@ void DrawWifi()
 		}
 	  else if (wifi_status == 0){
 			//_timerBlink += 250;
-		  _timerBlink += 500;}
+		  _timerBlink += 2000;}
+		else if (wifi_status == 2)
+			_timerBlink += 250;		
 		else if (wifi_status == 3)
 			_timerBlink += 500;
 		else if (wifi_status == 4)
@@ -2114,27 +2124,39 @@ void DrawTextAligment(int16_t x, int16_t y, int16_t w, int16_t h, char* text, bo
 	
 	int16_t cX = x + w / 2 - width / 2;
 	int16_t cY = y + h / 2 - height / 2;
-
+	
+	/*
 	pxs.setColor(selected ? fore : back);
 	pxs.fillRectangle(x, y, w, h);
-	
 	pxs.setColor(!selected ? fore : back);
 	
 	if (border > 0 && !selected)
 	{
 		for (int i = 0; i < border; i++)
 			pxs.drawRectangle(x + i, y + i, w - i * 2, h - i * 2);
+	}	
+	*/
+	if(selected)
+	{
+		pxs.setColor(MAIN_COLOR);
+		pxs.fillRoundRectangle(x, y, w, h, 12);
+		pxs.setColor(BG_COLOR);
+		pxs.setBackground(MAIN_COLOR);	
+		pxs.print(cX, cY, text);
 	}
-	
-	pxs.setBackground(selected ? fore : back);
-	pxs.print(cX, cY, text);
+	else
+	{
+		 pxs.setColor(MAIN_COLOR);
+		 pxs.setBackground(BG_COLOR);
+		 pxs.print(cX, cY, text);
+	}
 
 	if (underline)
 	{
 		pxs.setColor(!selected ? fore : back);
 		pxs.fillRectangle(cX, cY + height + 5, width, 3);
 	}
-
+  pxs.setColor(MAIN_COLOR);
 	pxs.setBackground(BG_COLOR);
 }
 	
