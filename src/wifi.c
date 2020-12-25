@@ -18,7 +18,9 @@ uint8_t idle_count = 0;
 uint8_t crc = 0;
 uint8_t answer_cmd[50] = {0x55, 0xAA, 0x03};
 uint8_t answer_cmd1[50] = {0x55, 0xAA, 0x03};
-uint8_t prod_info[] = "{\"p\":\"it7a8gqmqer2qbfz\",\"v\":\"1.1.1\",\"m\":0}";
+uint8_t prod_info[] = "{\"p\":\"xr6jsgylldbpkaz9\",\"v\":\"1.1.1\",\"m\":0}";
+//uint8_t prod_info[] = "{\"p\":\"it7a8gqmqer2qbfz\",\"v\":\"1.1.1\",\"m\":0}";
+//uint8_t prod_info[] = "{\"p\":\"7m0vk6rsenda0lbh\",\"v\":\"1.1.1\",\"m\":0}";
 extern uint8_t wifi_status;
 uint8_t idle_flag_stat = 0;	
 uint8_t recv_buffer[50];
@@ -261,9 +263,13 @@ void receive_uart_int()
 							answer_frame.put(frame[13]);
 							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
 							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
-								
+							
+							if(_settings.workMode == WorkMode_Eco) CleanTemperature(_settings.tempComfort - _settings.tempEco,0,15);	
+							if(_settings.workMode == WorkMode_Comfort) CleanTemperature(_settings.tempComfort,0,15);	
 							_settings.tempComfort = frame[13];
-							DrawMainScreen(1);
+							if(_settings.workMode == WorkMode_Comfort) DrawTemperature(_settings.tempComfort,0,15);
+							if(_settings.workMode == WorkMode_Eco) DrawTemperature(_settings.tempComfort - _settings.tempEco,0,15);
+							//DrawMainScreen(1);
 							refresh_system = true;
 						}	
 
@@ -282,9 +288,11 @@ void receive_uart_int()
 							answer_frame.put(frame[13]);
 							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
 							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
-								
+							
+							if(_settings.workMode == WorkMode_Eco) CleanTemperature(_settings.tempComfort - _settings.tempEco,0,15);	
 							_settings.tempEco = frame[13];
-							DrawMainScreen(1);
+							if(_settings.workMode == WorkMode_Eco) DrawTemperature(_settings.tempComfort - _settings.tempEco,0,15);
+							//DrawMainScreen(1);
 							refresh_system = true;
 						}
 
@@ -304,8 +312,9 @@ void receive_uart_int()
 							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
 							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
 								
+							if(_settings.workMode == WorkMode_Antifrost) CleanTemperature(_settings.tempAntifrost,0,15);	
 							_settings.tempAntifrost = frame[13];
-							DrawMainScreen(1);
+							if(_settings.workMode == WorkMode_Antifrost) DrawTemperature(_settings.tempAntifrost,0,15);
 							refresh_system = true;
 						}		
 
@@ -458,7 +467,7 @@ void query_settings()
 	answer_frame.put(HEADER_VER);
 	answer_frame.put(CMD_OUTPUT);
 	answer_frame.put(0);
-	answer_frame.put(98);
+	answer_frame.put(93);
 	//switch
 	answer_frame.put(ID_SWITCH);
 	answer_frame.put(1);
@@ -501,12 +510,6 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(0);
 	answer_frame.put(power_level_auto);
-	//TimerID_TIMER
-	answer_frame.put(ID_TIMER);
-	answer_frame.put(4);
-	answer_frame.put(0);
-	answer_frame.put(1);
-	answer_frame.put(1);		//_settings.timerTime
 	//Remining time
 	answer_frame.put(ID_REMTIME);
 	answer_frame.put(2);
@@ -572,7 +575,13 @@ void query_settings()
 	answer_frame.put(1);
 	answer_frame.put(0);
 	answer_frame.put(1);
-	answer_frame.put(_settings.modeOpenWindow);		
+	answer_frame.put(_settings.modeOpenWindow);
+	//TimerID_TIMER
+	//answer_frame.put(ID_TIMER);
+	//answer_frame.put(4);
+	//answer_frame.put(0);
+	//answer_frame.put(1);
+	//answer_frame.put(1);		//_settings.timerTime	
 	//send
 	answer_frame.put(chksum8(answer_frame.sptr(),98+6));//98
 	usart_transmit_frame(answer_frame.sptr(), 98+7);

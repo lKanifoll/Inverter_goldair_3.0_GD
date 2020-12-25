@@ -30,7 +30,6 @@ extern "C" {
 #define ID_CHILDLOCK	0x07
 #define ID_BRIGHT			0x0A
 #define ID_CURPOWER		0x0C
-#define ID_TIMER			0x13
 #define	ID_REMTIME		0x14
 #define ID_COMFORT		0x65
 #define ID_ECO				0x66
@@ -40,7 +39,9 @@ extern "C" {
 #define ID_SOUND			0x6A
 #define ID_HEATMODE		0x6B
 #define ID_OPENWINDOW	0x6C
-
+#define ID_TIMER			0x6D
+#define ID_TIMERTIME	0x6E
+#define ID_CUSTOM_P	  0x6F
 
 uint8_t chksum8(const uint8_t *buff, size_t len);
 //void receive_uart_int(void);

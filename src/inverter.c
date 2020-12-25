@@ -45,7 +45,7 @@ typedef struct MenuItem
 } MenuItem_t;
 
 static const RGB powerLevelColors[] = { RGB(255,255,255), RGB(255,70,70), RGB(255,0,0), RGB(200,0,0), RGB(160,0,0) };//{ RGB(255,255,255), RGB(255,242,90), RGB(235,147,79), RGB(227,109,79), RGB(224,86,74) };
-static const RGB modeColors[] = {RGB(255,237,0), RGB(255,255,255), RGB(14,117,188), RGB(0,0,0)};
+static const RGB modeColors[] = {RGB(200,0,0), RGB(255,255,255), RGB(14,117,188), RGB(0,0,0)};
 
 static MenuItem_t _modeOK = {999, 0, NULL, NULL, NULL, MenuBack }; // OK
 
@@ -271,7 +271,7 @@ void smooth_backlight(uint8_t mode)
 {
 	if(mode)
 	{
-		for(uint16_t i=0;i<500;i+=4)
+		for(uint16_t i=0;i<(_settings.brightness ? 500:100);i+=5)
 		{
 			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,i);
 			delay_1ms(2);	
@@ -279,10 +279,11 @@ void smooth_backlight(uint8_t mode)
 	}
 	else
 	{
-		for(uint16_t j=500;j>1;j-=1)
+		for(uint16_t j=(_settings.brightness ? 500:100);j>0;j--)
 		{
 			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,j);
 		}
+		timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,0);
 	}
 }
 
@@ -591,7 +592,9 @@ void DrawCustomDay(int _old = -1)
 			sprintf(buf, "%d", i);
 			if (_pr->hour[i] > 3) _pr->hour[i] = pEco;
 			if (i == _old || currentMenu->selected == i || _old == -1)
-				DrawTextAligment(cX, cY, 41, 31, buf, false, false, (currentMenu->selected == i) ? 0 : ((_pr->hour[i] == 3) ? 2 : 0), _pr->hour[i] == 3 ? MAIN_COLOR : BG_COLOR, currentMenu->selected == i ? GREEN_COLOR : modeColors[_pr->hour[i]]);
+				DrawTextAligment(cX, cY, 42, 32, buf, false, false, (currentMenu->selected == i) ? 2 : ((_pr->hour[i] == 3) ? 2 : 0) ,BG_COLOR, modeColors[_pr->hour[i]]);
+				//DrawTextAligment(cX, cY, 41, 31, buf, false, false, (currentMenu->selected == i) ? 2 : ((_pr->hour[i] == 3) ? 2 : 0), _pr->hour[i] == 3 ? MAIN_COLOR : BG_COLOR, 
+				//																											currentMenu->selected == i ? RGB(255,237,0) : modeColors[_pr->hour[i]]);
 		}
 	}
 }
@@ -686,6 +689,7 @@ void MenuOK()
 		pxs.setColor(BG_COLOR);
 		pxs.fillRectangle(70, 70, 200, 200);		
 	}
+
 	
 	if (currentMenu->ID == 5)
 	{
@@ -739,16 +743,16 @@ void GoOK(int step = 1)
 		currentMenu->parent = old;
 		smooth_backlight(0);
 		pxs.clear();
-			pxs.setColor(MAIN_COLOR);
-			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
-			pxs.setFont(FuturaBookC36a);
-			pxs.setColor(BG_COLOR);
-			pxs.setBackground(MAIN_COLOR);	
-			int16_t width = pxs.getTextWidth("OK");
-			int16_t height = pxs.getTextLineHeight();
-		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
-		  pxs.setColor(MAIN_COLOR);
-			pxs.setBackground(BG_COLOR);
+		pxs.setColor(MAIN_COLOR);
+		pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+		pxs.setFont(FuturaBookC36a);
+		pxs.setColor(BG_COLOR);
+		pxs.setBackground(MAIN_COLOR);	
+		int16_t width = pxs.getTextWidth("OK");
+		int16_t height = pxs.getTextLineHeight();
+		pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+		pxs.setColor(MAIN_COLOR);
+		pxs.setBackground(BG_COLOR);
 		smooth_backlight(1);
 		delay_1ms(2000);
 	}		
@@ -779,11 +783,11 @@ void DrawDateEdit()
 	//DrawTextSelected(240, y, buf_day, (currentMenu->selected == 2), false, 5, 15);
 	
 	uint8_t widthX = pxs.getTextWidth(buf_year);
-	DrawTextAligment(25, y, widthX + 20, 60, buf_year, (currentMenu->selected == 0),0,0,  (currentMenu->selected == 0) ? GREEN_COLOR : MAIN_COLOR, (currentMenu->selected == 0) ? MAIN_COLOR   : BG_COLOR );
+	DrawTextAligment(15, y, widthX + 20, 60, buf_year, (currentMenu->selected == 0),0,0,  /*(currentMenu->selected == 0) ? GREEN_COLOR :*/ MAIN_COLOR, /*(currentMenu->selected == 0) ? MAIN_COLOR   :*/ BG_COLOR );
 	widthX = pxs.getTextWidth(buf_month);
-	DrawTextAligment(155, y, widthX + 20, 60, buf_month, (currentMenu->selected == 1),0,0,  (currentMenu->selected == 1) ? GREEN_COLOR : MAIN_COLOR, (currentMenu->selected == 1) ? MAIN_COLOR   : BG_COLOR );
+	DrawTextAligment(150, y, widthX + 20, 60, buf_month, (currentMenu->selected == 1),0,0,  /*(currentMenu->selected == 1) ? GREEN_COLOR :*/ MAIN_COLOR, /*(currentMenu->selected == 1) ? MAIN_COLOR   :*/ BG_COLOR );
 	pxs.getTextWidth(buf_day);
-	DrawTextAligment(235, y, widthX + 20, 60, buf_day,   (currentMenu->selected == 2),0,0,  (currentMenu->selected == 2) ? GREEN_COLOR : MAIN_COLOR,  (currentMenu->selected == 2) ? MAIN_COLOR : BG_COLOR );
+	DrawTextAligment(230, y, widthX + 20, 60, buf_day,   (currentMenu->selected == 2),0,0,  /*(currentMenu->selected == 2) ? GREEN_COLOR :*/ MAIN_COLOR,  /*(currentMenu->selected == 2) ? MAIN_COLOR :*/ BG_COLOR );
 	
 	
 	
@@ -806,11 +810,10 @@ void DrawTimeEdit()
 	
 	sprintf(buf, "%02d", _dateTime.tm_hour);
 	uint8_t widthX = pxs.getTextWidth(buf);
-	DrawTextAligment(SW/2 - widthX/2 - 73, y, 70, 60, buf, (currentMenu->selected == 0),0,0,  (currentMenu->selected == 0) ? GREEN_COLOR : MAIN_COLOR, (currentMenu->selected == 0) ? MAIN_COLOR : BG_COLOR );
+	DrawTextAligment(SW/2 - widthX/2 - 73, y, 70, 60, buf, (currentMenu->selected == 0),0,0,  /*(currentMenu->selected == 0) ? GREEN_COLOR : */MAIN_COLOR, /*(currentMenu->selected == 0) ? MAIN_COLOR : */BG_COLOR );
 	sprintf(buf, "%02d", _dateTime.tm_min);
 	widthX = pxs.getTextWidth(buf);
-	DrawTextAligment(SW/2 - widthX/2 + 43, y, 70, 60, buf, (currentMenu->selected == 1),0,0,  (currentMenu->selected == 1) ? GREEN_COLOR : MAIN_COLOR, (currentMenu->selected == 1) ? MAIN_COLOR : BG_COLOR );	
-	
+	DrawTextAligment(SW/2 - widthX/2 + 43, y, 70, 60, buf, (currentMenu->selected == 1),0,0,  /*(currentMenu->selected == 1) ? GREEN_COLOR : */MAIN_COLOR, /*(currentMenu->selected == 1) ? MAIN_COLOR : */BG_COLOR );	
 	
 	
 	pxs.setColor(MAIN_COLOR);
@@ -827,11 +830,7 @@ void DrawEditParameter()
 	struct Presets* _pr = NULL;
 	if(!(currentMenu->ID == 11 || currentMenu->ID == 12 || currentMenu->ID == 13))
 		pxs.clear();
-	else
-	{
-		//pxs.setColor(BG_COLOR);
-		//pxs.fillRectangle(70, 70, 200, 200);
-	}
+
 	
 	switch (currentMenu->ID)
 	{
@@ -872,20 +871,26 @@ void DrawEditParameter()
 		case 52:
 			DrawMenuTitle("Programme");
 			pxs.setFont(FuturaBookC36a);
-			DrawTextAligment(20, 100, 100, 100,"ON", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
-			DrawTextAligment(200, 100, 100, 100,"OFF", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
+			//DrawTextAligment(20, 100, 100, 100,"ON", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
+			//DrawTextAligment(200, 100, 100, 100,"OFF", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
+			DrawTextAligment( 20, 100, 100, 100, "ON",  _onoffSet.parameter,0,0,  MAIN_COLOR, BG_COLOR );
+			DrawTextAligment(200, 100, 100, 100,"OFF", !_onoffSet.parameter,0,0,  MAIN_COLOR, BG_COLOR );				
 			break;
 		case 31:
 		case 43:
 		case 422:
 			pxs.setFont(FuturaBookC36a);
-			DrawTextAligment( 20, 70, 100, 100,  "ON", _onoffSet.parameter,_onoffSet.current,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
-			DrawTextAligment(200, 70, 100, 100, "OFF", !_onoffSet.parameter,!_onoffSet.current,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
+			//DrawTextAligment( 20, 70, 100, 100,  "ON", _onoffSet.parameter,_onoffSet.current,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
+			//DrawTextAligment(200, 70, 100, 100, "OFF", !_onoffSet.parameter,!_onoffSet.current,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
+			DrawTextAligment( 20, 70, 100, 100,  "ON",  _onoffSet.parameter, _onoffSet.current,0, MAIN_COLOR, BG_COLOR );
+			DrawTextAligment(200, 70, 100, 100, "OFF", !_onoffSet.parameter,!_onoffSet.current,0, MAIN_COLOR, BG_COLOR );				
 			break;
 		case 421:
 			pxs.setFont(FuturaBookC36a);
-			DrawTextAligment(20, 60, 120, 120,"50%", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
-			DrawTextAligment(180, 60, 120, 120,"100%", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
+			//DrawTextAligment(20, 60, 120, 120,"50%", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
+			//DrawTextAligment(180, 60, 120, 120,"100%", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );
+			DrawTextAligment( 20, 60, 120, 120, "50%",  _onoffSet.parameter,0,0, MAIN_COLOR, BG_COLOR );
+			DrawTextAligment(180, 60, 120, 120,"100%", !_onoffSet.parameter,0,0, MAIN_COLOR, BG_COLOR );
 			break;
 		case 32:
 			DrawTimeEdit();
@@ -909,8 +914,10 @@ void DrawEditParameter()
 			}
 			
 			pxs.setFont(FuturaBookC29a);
-			DrawTextAligment(20, 115, 90, 90,"Yes", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
-			DrawTextAligment(210, 115, 90, 90,"No", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );		
+			//DrawTextAligment(20, 115, 90, 90,"Yes", _onoffSet.parameter,0,0,  _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );
+			//DrawTextAligment(210, 115, 90, 90,"No", !_onoffSet.parameter,0,0, _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );	
+			DrawTextAligment( 20, 115, 90, 90,"Yes",  _onoffSet.parameter,0,0, MAIN_COLOR, BG_COLOR );
+			DrawTextAligment(210, 115, 90, 90, "No", !_onoffSet.parameter,0,0, MAIN_COLOR, BG_COLOR );			
 			
 			//DrawTextAligment(20, 115, 90, 90,"Yes", !_onoffSet.parameter,0,0,  _onoffSet.parameter ? MAIN_COLOR : GREEN_COLOR, _onoffSet.parameter ? BG_COLOR : MAIN_COLOR );
 			//DrawTextAligment(210, 115, 90, 90,"No", _onoffSet.parameter,0,0, _onoffSet.parameter ? GREEN_COLOR : MAIN_COLOR, _onoffSet.parameter ? MAIN_COLOR : BG_COLOR );				
@@ -939,7 +946,7 @@ void DrawEditParameter()
 				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y, 50, 30, (char*)_calendarInfo[i].week, false, false, 0);
 				pxs.setFont(FuturaMediumC22a);
 				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y + 30, 50, 50, (char*)_calendarPresetName[_settings.calendar[i]], (currentMenu->selected == i), i == (rtc_initpara.rtc_day_of_week -1) ? 1 : 0 , 2, 
-					                currentMenu->selected == i ? GREEN_COLOR : MAIN_COLOR, currentMenu->selected == i ? MAIN_COLOR : BG_COLOR );
+					                /*currentMenu->selected == i ? GREEN_COLOR :*/ MAIN_COLOR,/* currentMenu->selected == i ? MAIN_COLOR :*/ BG_COLOR );
 			}
 			break;
 		case 510:
@@ -963,7 +970,7 @@ void DrawEditParameter()
 					int16_t cX = ix * 75 + 22;
 					int16_t cY = iy * 75 + 80;
 					DrawTextAligment(cX, cY, 50, 50, (char*)_calendarPresetName[i], (currentMenu->selected == i), (_settings.calendar[_presetSet.week] == i), 2, 
-													 currentMenu->selected == i ? GREEN_COLOR : MAIN_COLOR, currentMenu->selected == i ? MAIN_COLOR : BG_COLOR);
+													 /*currentMenu->selected == i ? GREEN_COLOR : */MAIN_COLOR, /*currentMenu->selected == i ? MAIN_COLOR :*/ BG_COLOR);
 				}
 			}
 			break;
@@ -2025,7 +2032,7 @@ void DrawWifi()
 		}
 	  else if (wifi_status == 0){
 			//_timerBlink += 250;
-		  _timerBlink += 2000;}
+		  _timerBlink += 1000;}
 		else if (wifi_status == 2)
 			_timerBlink += 250;		
 		else if (wifi_status == 3)
@@ -2117,47 +2124,78 @@ void DrawMenuTitle2(const char *text)
 	pxs.print(320 / 2 - width / 2, 16, (char*)text);
 }
 
-void DrawTextAligment(int16_t x, int16_t y, int16_t w, int16_t h, char* text, bool selected, bool underline, uint8_t border, RGB fore, RGB back)
+void DrawTextAligment(int16_t x, int16_t y, int16_t w, int16_t h, char* text, bool selected, bool underline, uint8_t border, RGB fore, RGB back, bool round)
 {
+	/*
 	int16_t width = pxs.getTextWidth(text);
 	int16_t height = pxs.getTextLineHeight();
 	
 	int16_t cX = x + w / 2 - width / 2;
 	int16_t cY = y + h / 2 - height / 2;
-	
-	/*
+
 	pxs.setColor(selected ? fore : back);
 	pxs.fillRectangle(x, y, w, h);
+	
 	pxs.setColor(!selected ? fore : back);
 	
 	if (border > 0 && !selected)
 	{
 		for (int i = 0; i < border; i++)
 			pxs.drawRectangle(x + i, y + i, w - i * 2, h - i * 2);
-	}	
-	*/
-	if(selected)
-	{
-		pxs.setColor(MAIN_COLOR);
-		pxs.fillRoundRectangle(x, y, w, h, 12);
-		pxs.setColor(BG_COLOR);
-		pxs.setBackground(MAIN_COLOR);	
-		pxs.print(cX, cY, text);
 	}
-	else
-	{
-		 pxs.setColor(MAIN_COLOR);
-		 pxs.setBackground(BG_COLOR);
-		 pxs.print(cX, cY, text);
-	}
+	
+	pxs.setBackground(selected ? fore : back);
+	pxs.print(cX, cY, text);
 
 	if (underline)
 	{
 		pxs.setColor(!selected ? fore : back);
 		pxs.fillRectangle(cX, cY + height + 5, width, 3);
 	}
-  pxs.setColor(MAIN_COLOR);
+
 	pxs.setBackground(BG_COLOR);
+	*/
+	
+	int16_t width = pxs.getTextWidth(text);
+	int16_t height = pxs.getTextLineHeight();
+	
+	int16_t cX = x + w / 2 - width / 2;
+	int16_t cY = y + h / 2 - height / 2;
+
+
+	pxs.setColor(selected ? fore : back);
+	pxs.fillRoundRectangle(x, y, w, h, 7);
+	pxs.setColor(!selected ? fore : back);
+
+	if (border > 0 && !selected)
+	{
+		pxs.setColor(!selected ? fore : back);
+		pxs.setBackground(selected ? fore : back);
+		pxs.fillRoundRectangle(x, y, w, h, 7);
+		pxs.setColor(selected ? fore : back);
+		pxs.setBackground(!selected ? fore : back);
+		pxs.fillRoundRectangle(x + border, y + border, w - border * 2, h - border * 2, 7);
+		pxs.setColor(!selected ? fore : back);
+		pxs.setBackground(selected ? fore : back);
+	}
+
+/*
+	if (border > 0 && !selected)
+	{
+		for (int i = 0; i < border; i++)
+			pxs.drawRoundRectangle(x + i, y + i, w - i * 2, h - i * 2, 9);
+	}
+	*/
+	pxs.setBackground(selected ? fore : back);
+	pxs.print(cX, cY, text);
+
+	if (underline)
+	{
+		pxs.setColor(!selected ? fore : back);
+		pxs.fillRectangle(cX, cY + height + 5, width, 3);
+	}
+
+	pxs.setBackground(BG_COLOR);	
 }
 	
 void DrawTextSelected(int16_t x, int16_t y, char* text, bool selected, bool underline = false, int16_t oX = 5, int16_t oY = 5)
@@ -3357,17 +3395,7 @@ void loop(void)
 				
 				pxs.setFont(FuturaBookC20a);
 				DrawTextAligment(265, 20, 30, 20, buffer, false);	
-				
-				RTC_TimeTypeDef sTime1;
-				RTC_DateTypeDef sDate1;
-				HAL_RTC_GetTime(&hrtc, &sTime1, RTC_FORMAT_BIN);
-				HAL_RTC_GetDate(&hrtc, &sDate1, RTC_FORMAT_BIN);
-				sprintf(buffer, "%02d %02d %02d  %02d", sTime1.Hours, sTime1.Minutes, sTime1.Seconds, sDate1.WeekDay);
-				uint8_t widthX = pxs.getTextWidth(buffer);
-				pxs.setColor(BG_COLOR);
-				pxs.fillRectangle(75, 0, widthX+20, 40);
-				pxs.setColor(MAIN_COLOR);
-				DrawTextAligment(75, 2, widthX, 20, buffer, false);
+
 				#endif
 			}
 			

@@ -15,7 +15,7 @@ extern "C" {
 #define SH									240
 	
 	
-#define VERSION "12.4.0"		
+#define VERSION "12.5.0"		
 	
 	
 #define	BALANCE_RESISTOR 		33000.0
@@ -161,7 +161,7 @@ void AcceptParameter(void);
 void DrawMainScreen(uint32_t updater = 0);
 void DrawTemperature(int8_t, int8_t xo = 0, int8_t yo = 0);
 void DrawTextSelected(int16_t x, int16_t y, char* text, bool selected, bool underline, int16_t oX, int16_t oY);
-void DrawTextAligment(int16_t x, int16_t y, int16_t w, int16_t h, char* text, bool selected, bool underline = false, uint8_t border = 0, RGB fore = MAIN_COLOR, RGB back = BG_COLOR);
+void DrawTextAligment(int16_t x, int16_t y, int16_t w, int16_t h, char* text, bool selected, bool underline = false, uint8_t border = 0, RGB fore = MAIN_COLOR, RGB back = BG_COLOR , bool round = 1);
 void DrawMenuText(const char *text);
 void PrepareEditParameter();
 void DrawMenu();
