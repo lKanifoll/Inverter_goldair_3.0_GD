@@ -13,6 +13,8 @@ extern uint32_t __SaveFlash;
 extern bool refresh_system;
 extern struct DeviceSettings _settings;
 extern uint8_t power_level_auto;	
+extern uint16_t timer_time_set;
+extern uint8_t _eventTimer;
 uint8_t rxcount = 0;
 uint8_t idle_count = 0;
 uint8_t crc = 0;
@@ -337,26 +339,7 @@ void receive_uart_int()
 							}			
 						}
 
-						if(device_cmd == ID_PROG)
-						{
-							answer_frame.put(CMD_OUTPUT);
-							answer_frame.put(frame[4]);
-							answer_frame.put(frame[5]);
-							answer_frame.put(ID_PROG);
-							answer_frame.put(1);
-							answer_frame.put(0);
-							answer_frame.put(1);
-							answer_frame.put(frame[10]);
-							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
-							usart_transmit_frame(answer_frame.sptr(), payload_len+7);
-							
-							if(_settings.calendarOn != frame[10])
-							{
-								_settings.calendarOn = frame[10];
-								DrawMainScreen();
-							  refresh_system = true;
-							}			
-						}						
+				
 
 						if(device_cmd == ID_SOUND)
 						{
@@ -417,7 +400,120 @@ void receive_uart_int()
 								DrawMainScreen();
 							  refresh_system = true;								
 							}			
-						}																			
+						}
+
+						if(device_cmd == ID_TIMER)
+						{
+							answer_frame.put(CMD_OUTPUT);
+							answer_frame.put(frame[4]);
+							answer_frame.put(frame[5]);
+							answer_frame.put(ID_TIMER);
+							answer_frame.put(1);
+							answer_frame.put(0);
+							answer_frame.put(1);
+							answer_frame.put(frame[10]);
+							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
+							usart_transmit_frame(answer_frame.sptr(), payload_len+7);
+							
+							if(_settings.timerOn != frame[10])
+							{
+								_settings.timerOn = frame[10];
+								if(_settings.timerOn)
+								{
+									if((getCalendarMode() == WorkMode_Off))
+									{
+										_settings.workMode = WorkMode_Comfort;
+									}
+									_settings.calendarOn = 0;
+									_eventTimer = 0;
+									InitTimer();
+								}									
+								DrawMainScreen();
+							  refresh_system = true;								
+							}			
+							query_settings();
+						}			
+						
+						if(device_cmd == ID_PROG)
+						{
+							
+							answer_frame.put(CMD_OUTPUT);
+							answer_frame.put(frame[4]);
+							answer_frame.put(frame[5]);
+							answer_frame.put(ID_PROG);
+							answer_frame.put(1);
+							answer_frame.put(0);
+							answer_frame.put(1);
+							answer_frame.put(frame[10]);
+							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
+							usart_transmit_frame(answer_frame.sptr(), payload_len+7);
+							
+							if(_settings.calendarOn != frame[10])
+							{
+								_settings.calendarOn = frame[10];
+								if(_settings.calendarOn)
+								{
+									_settings.heatMode = HeatMode_Auto;
+									_settings.timerOn = 0;
+									_eventTimer = 0;
+									InitTimer();
+								}							
+								
+								DrawMainScreen();
+							  refresh_system = true;
+							}		
+							query_settings();
+						}				
+						
+						if(device_cmd == ID_TIMERTIME)
+						{
+							answer_frame.put(CMD_OUTPUT);
+							answer_frame.put(frame[4]);
+							answer_frame.put(frame[5]);
+							answer_frame.put(ID_TIMERTIME);
+							answer_frame.put(2);
+							answer_frame.put(0);
+							answer_frame.put(4);
+							answer_frame.put(0);
+							answer_frame.put(0);
+							answer_frame.put(frame[12]);
+							answer_frame.put(frame[13]);
+							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
+							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
+							
+							uint16_t temp_timer_time = (frame[12] << 8) + frame[13];
+							if(temp_timer_time <= 1439)
+							{
+								if((timer_time_set != temp_timer_time) &&(_settings.timerOn))
+								{
+									_settings.timerTime = temp_timer_time;
+									timer_time_set = _settings.timerTime;
+								}	
+								else if(_settings.timerTime != temp_timer_time)
+								{
+									_settings.timerTime = temp_timer_time;
+									timer_time_set = _settings.timerTime;
+								}
+							}				
+						}
+						if(device_cmd == ID_CUSTOM_P)
+						{
+							answer_frame.put(CMD_OUTPUT);
+							answer_frame.put(frame[4]);
+							answer_frame.put(frame[5]);
+							answer_frame.put(ID_CUSTOM_P);
+							answer_frame.put(2);
+							answer_frame.put(0);
+							answer_frame.put(4);
+							answer_frame.put(0);
+							answer_frame.put(0);
+							answer_frame.put(0);
+							answer_frame.put(frame[13]);
+							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
+							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
+							
+							_settings.powerLevel = frame[13];
+						}							
 					}
 				}
 				delete []frame;	
@@ -467,7 +563,7 @@ void query_settings()
 	answer_frame.put(HEADER_VER);
 	answer_frame.put(CMD_OUTPUT);
 	answer_frame.put(0);
-	answer_frame.put(93);
+	answer_frame.put(114);
 	//switch
 	answer_frame.put(ID_SWITCH);
 	answer_frame.put(1);
@@ -517,8 +613,8 @@ void query_settings()
 	answer_frame.put(4);
 	answer_frame.put(0);	
 	answer_frame.put(0);
-	answer_frame.put(0x02);
-	answer_frame.put(0xD0);	
+	answer_frame.put(timer_time_set >> 8);
+	answer_frame.put(timer_time_set);	
 	//Comfort temperature
 	answer_frame.put(ID_COMFORT);
 	answer_frame.put(2);
@@ -576,13 +672,31 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(1);
 	answer_frame.put(_settings.modeOpenWindow);
-	//TimerID_TIMER
-	//answer_frame.put(ID_TIMER);
-	//answer_frame.put(4);
-	//answer_frame.put(0);
-	//answer_frame.put(1);
-	//answer_frame.put(1);		//_settings.timerTime	
-	//send
-	answer_frame.put(chksum8(answer_frame.sptr(),98+6));//98
-	usart_transmit_frame(answer_frame.sptr(), 98+7);
+	//Timer
+	answer_frame.put(ID_TIMER);
+	answer_frame.put(1);
+	answer_frame.put(0);
+	answer_frame.put(1);
+	answer_frame.put(_settings.timerOn);
+	//Timertime
+	answer_frame.put(ID_TIMERTIME);
+	answer_frame.put(2);
+	answer_frame.put(0);
+	answer_frame.put(4);
+	answer_frame.put(0);	
+	answer_frame.put(0);
+	answer_frame.put(timer_time_set >> 8);
+	answer_frame.put(timer_time_set);
+	//custom power level
+	answer_frame.put(ID_CUSTOM_P);
+	answer_frame.put(2);
+	answer_frame.put(0);
+	answer_frame.put(4);
+	answer_frame.put(0);	
+	answer_frame.put(0);
+	answer_frame.put(0);
+	answer_frame.put(_settings.powerLevel);
+	
+	answer_frame.put(chksum8(answer_frame.sptr(),114+6));//98
+	usart_transmit_frame(answer_frame.sptr(), 1147);
 }

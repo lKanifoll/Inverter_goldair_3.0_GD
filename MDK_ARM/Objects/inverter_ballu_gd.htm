@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\inverter_ballu_gd.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\inverter_ballu_gd.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Fri Dec 25 10:04:17 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Dec 29 18:19:44 2020
 <BR><P>
 <H3>Maximum Stack Usage =        864 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1142,6 +1142,7 @@ Global Symbols
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getCalendarMode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceON()
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
@@ -1209,7 +1210,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[26]"></a>RTC_IRQHandler</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, gd32f3x0_it.o(i.RTC_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RTC_IRQHandler
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = RTC_IRQHandler &rArr; rtc_alarm_callback &rArr; query_settings &rArr; getTemperature &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_get
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_clear
@@ -1407,8 +1408,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[101]"></a>startScreen()</STRONG> (Thumb, 826 bytes, Stack size 96 bytes, inverter.o(i._Z11startScreenv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 512 + Unknown Stack Size
+<P><STRONG><a name="[101]"></a>startScreen()</STRONG> (Thumb, 774 bytes, Stack size 88 bytes, inverter.o(i._Z11startScreenv))
+<BR><BR>[Stack]<UL><LI>Max Depth = 504 + Unknown Stack Size
 <LI>Call Chain = startScreen() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_1ms
@@ -1416,8 +1417,6 @@ Global Symbols
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::sizeCompressedBitmap(short&, short&, const unsigned char*)
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::getTextWidth(char*, signed char*)
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTemperature
@@ -1666,7 +1665,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[11d]"></a>deviceON()</STRONG> (Thumb, 52 bytes, Stack size 16 bytes, inverter.o(i._Z8deviceONv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 528 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 520 + Unknown Stack Size
 <LI>Call Chain = deviceON() &rArr; startScreen() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
@@ -1916,7 +1915,6 @@ Global Symbols
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWindowOpen
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
@@ -1929,7 +1927,6 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMenu
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
@@ -2572,6 +2569,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_current_time_get
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitTimer
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
@@ -2821,8 +2819,8 @@ Global Symbols
 <LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_config()
 </UL>
 
-<P><STRONG><a name="[17a]"></a>query_settings</STRONG> (Thumb, 842 bytes, Stack size 8 bytes, wifi.o(i.query_settings))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = query_settings &rArr; getTemperature &rArr; __aeabi_dmul
+<P><STRONG><a name="[17a]"></a>query_settings</STRONG> (Thumb, 1040 bytes, Stack size 16 bytes, wifi.o(i.query_settings))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = query_settings &rArr; getTemperature &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_transmit_frame
 <LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chksum8
@@ -2831,6 +2829,7 @@ Global Symbols
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTemperature
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_alarm_callback
 <LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 </UL>
 
@@ -2881,8 +2880,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_config()
 </UL>
 
-<P><STRONG><a name="[176]"></a>receive_uart_int</STRONG> (Thumb, 2240 bytes, Stack size 40 bytes, wifi.o(i.receive_uart_int))
-<BR><BR>[Stack]<UL><LI>Max Depth = 568 + Unknown Stack Size
+<P><STRONG><a name="[176]"></a>receive_uart_int</STRONG> (Thumb, 2758 bytes, Stack size 40 bytes, wifi.o(i.receive_uart_int))
+<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
 <LI>Call Chain = receive_uart_int &rArr; deviceON() &rArr; startScreen() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_transmit_frame
@@ -2890,8 +2889,10 @@ Global Symbols
 <LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stream::clear()
 <LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stream::put(unsigned char)
 <LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getCalendarMode
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceOFF()
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceON()
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitTimer
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CleanTemperature
@@ -2914,7 +2915,11 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[d5]"></a>rtc_alarm_callback</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, inverter.o(i.rtc_alarm_callback))
-<BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = rtc_alarm_callback &rArr; query_settings &rArr; getTemperature &rArr; __aeabi_dmul
+</UL>
+<BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
+</UL>
+<BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_IRQHandler
 </UL>
 

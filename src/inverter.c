@@ -1710,11 +1710,11 @@ void TIMER_Heat_callback()
 
 
 
-uint32_t ioio=0;
+
 
 void rtc_alarm_callback()
 {
-	ioio++;
+
 	if (_settings.timerOn)
 	{
 		if (timer_time_set > 0)
@@ -1727,6 +1727,7 @@ void rtc_alarm_callback()
 			timer_time_set = _settings.timerTime;
 			_eventTimer = 1;
 		}
+		query_settings();
 	}
 	else
 	{
@@ -2438,9 +2439,6 @@ void InitTimer()
 		
 		//alarm_set(0);
 	}	
-	   
-  
-
 }
 
 void ResetAllSettings()
@@ -2550,8 +2548,8 @@ void startScreen()
 	pxs.displayOn();
 	
 	smooth_backlight(0);
-	if (pxs.sizeCompressedBitmap(width, height, img_logo_png_comp) == 0)
-		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2-10, img_logo_png_comp);
+	//if (pxs.sizeCompressedBitmap(width, height, img_logo_png_comp) == 0)
+	//	pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2-10, img_logo_png_comp);
 	
 	smooth_backlight(1);
 	delay_1ms(2000);
