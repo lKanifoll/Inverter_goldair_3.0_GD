@@ -124,11 +124,11 @@ static MenuItem_t _mainMenu[] = {
 	{2, 2, _powerMenu, 			NULL, NULL, NULL }, // Power
 	{3, 2, _timerMenu, 			NULL, NULL, NULL }, // Timer
 	{4, 4, _settingsMenu,		NULL, NULL, NULL }, // Settings
-	{5, 3, _programMenu, 		NULL, NULL, NULL }, // Program
+	//{5, 3, _programMenu, 		NULL, NULL, NULL }, // Program
 };
 
 static MenuItem_t _menu = 
-	{0, 5, _mainMenu, 			NULL, NULL, NULL};
+	{0, 4, _mainMenu, 			NULL, NULL, NULL};
 
 	struct MenuItem* old;
 MenuItem_t* currentMenu = NULL;
@@ -271,7 +271,7 @@ void smooth_backlight(uint8_t mode)
 {
 	if(mode)
 	{
-		for(uint16_t i=0;i<(_settings.brightness ? 500:100);i+=5)
+		for(uint16_t i=0;i<(_stateBrightness ? 100:500);i+=5)
 		{
 			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,i);
 			delay_1ms(2);	
@@ -279,7 +279,7 @@ void smooth_backlight(uint8_t mode)
 	}
 	else
 	{
-		for(uint16_t j=(_settings.brightness ? 500:100);j>0;j--)
+		for(uint16_t j=(_stateBrightness ? 100:500);j>0;j--)
 		{
 			timer_channel_output_pulse_value_config(TIMER1,TIMER_CH_0,j);
 		}
@@ -935,6 +935,7 @@ void DrawEditParameter()
 		case 4431: // wifi
 			pxs.setFont(FuturaBookC29a);
 			DrawTextAligment(0, 70, 320, 60, "Connecting...", false);
+			reset_wifi_state();
 			break;		
 		case 51:
 		  rtc_current_time_get(&rtc_initpara);
@@ -1179,16 +1180,16 @@ void AcceptParameter()
 				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
 				timer_time_set = _settings.timerTime;
 				pxs.clear();
-			pxs.setColor(MAIN_COLOR);
-			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
-			pxs.setFont(FuturaBookC36a);
-			pxs.setColor(BG_COLOR);
-			pxs.setBackground(MAIN_COLOR);	
-			int16_t width = pxs.getTextWidth("OK");
-			int16_t height = pxs.getTextLineHeight();
-		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
-		  pxs.setColor(MAIN_COLOR);
-			pxs.setBackground(BG_COLOR);
+				pxs.setColor(MAIN_COLOR);
+				pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+				pxs.setFont(FuturaBookC36a);
+				pxs.setColor(BG_COLOR);
+				pxs.setBackground(MAIN_COLOR);	
+				int16_t width = pxs.getTextWidth("OK");
+				int16_t height = pxs.getTextLineHeight();
+				pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+				pxs.setColor(MAIN_COLOR);
+				pxs.setBackground(BG_COLOR);
 				delay_1ms(1000);
 				pxs.clear();
 				_timeoutSaveFlash = GetSystemTick();
@@ -1237,16 +1238,16 @@ void AcceptParameter()
 					_dateTime.tm_year += 1900;
 				}
 				pxs.clear();
-			pxs.setColor(MAIN_COLOR);
-			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
-			pxs.setFont(FuturaBookC36a);
-			pxs.setColor(BG_COLOR);
-			pxs.setBackground(MAIN_COLOR);	
-			int16_t width = pxs.getTextWidth("OK");
-			int16_t height = pxs.getTextLineHeight();
-		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
-		  pxs.setColor(MAIN_COLOR);
-			pxs.setBackground(BG_COLOR);
+				pxs.setColor(MAIN_COLOR);
+				pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+				pxs.setFont(FuturaBookC36a);
+				pxs.setColor(BG_COLOR);
+				pxs.setBackground(MAIN_COLOR);	
+				int16_t width = pxs.getTextWidth("OK");
+				int16_t height = pxs.getTextLineHeight();
+				pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+				pxs.setColor(MAIN_COLOR);
+				pxs.setBackground(BG_COLOR);
 				delay_1ms(1000);
 				pxs.clear();
 				_timeoutSaveFlash = GetSystemTick();
@@ -1295,16 +1296,16 @@ void AcceptParameter()
         //rtc_init_param.rtc_factor_syn = 0xFFU;
 				rtc_init(&rtc_init_param);
 				pxs.clear();
-			pxs.setColor(MAIN_COLOR);
-			pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
-			pxs.setFont(FuturaBookC36a);
-			pxs.setColor(BG_COLOR);
-			pxs.setBackground(MAIN_COLOR);	
-			int16_t width = pxs.getTextWidth("OK");
-			int16_t height = pxs.getTextLineHeight();
-		  pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
-		  pxs.setColor(MAIN_COLOR);
-			pxs.setBackground(BG_COLOR);
+				pxs.setColor(MAIN_COLOR);
+				pxs.fillRoundRectangle(320/2 - 92/2,240/2 - 84/2,92,84,12);
+				pxs.setFont(FuturaBookC36a);
+				pxs.setColor(BG_COLOR);
+				pxs.setBackground(MAIN_COLOR);	
+				int16_t width = pxs.getTextWidth("OK");
+				int16_t height = pxs.getTextLineHeight();
+				pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+				pxs.setColor(MAIN_COLOR);
+				pxs.setBackground(BG_COLOR);
 				delay_1ms(1000);
 				pxs.clear();
 				_timeoutSaveFlash = GetSystemTick();
@@ -1408,9 +1409,13 @@ void AcceptParameter()
 			break;
 			
 		case 4431: // wifi
-			reset_wifi_state();
+			//reset_wifi_state();
 			GoOK();
 			break;		
+		case 4432: // wifi
+		//reset_wifi_state();
+		GoOK();
+		break;	
 	}
 }
 
@@ -1989,7 +1994,7 @@ int8_t getTemperature()
 void DrawWindowOpen()
 {
 	_stateBrightness = StateBrightness_ON;
-	LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
+	smooth_backlight(1);
 	if (_timerBlink < GetSystemTick())
 	{
 		_blink = !_blink;
@@ -2500,14 +2505,15 @@ void blocked()
 
 	if (pxs.sizeCompressedBitmap(width, height, img_blocked_png_comp) == 0)
 		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_blocked_png_comp);
+	smooth_backlight(1);
 	delay_1ms(2000);
 	if(_settings.on)
 	{
-
 		DrawMainScreen();
 	}
 	else
 	{
+		smooth_backlight(0);
 		pxs.clear();
 	  pxs.displayOff();
 	}
@@ -2522,6 +2528,7 @@ void unblocked()
 
 	if (pxs.sizeCompressedBitmap(width, height, img_unblocked_png_comp) == 0)
 		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_unblocked_png_comp);
+	smooth_backlight(1);
 	delay_1ms(2000);
 	if(_settings.on) 
 	{
@@ -2530,6 +2537,7 @@ void unblocked()
 	}
 	else
 	{
+		smooth_backlight(0);
 		pxs.clear();
 	  pxs.displayOff();
 	}
@@ -2548,8 +2556,8 @@ void startScreen()
 	pxs.displayOn();
 	
 	smooth_backlight(0);
-	//if (pxs.sizeCompressedBitmap(width, height, img_logo_png_comp) == 0)
-	//	pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2-10, img_logo_png_comp);
+	if (pxs.sizeCompressedBitmap(width, height, img_logo_png_comp) == 0)
+		pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2-10, img_logo_png_comp);
 	
 	smooth_backlight(1);
 	delay_1ms(2000);
@@ -2667,8 +2675,9 @@ void deviceOFF()
 	smooth_backlight(0);
 	pxs.displayOff();
 	pxs.clear();
+	query_settings();
 	//InitTimer();
-	//_timeoutSaveFlash = GetSystemTick();
+	_timeoutSaveFlash = GetSystemTick();
 }
 
 bool keyPressed()
@@ -2689,7 +2698,7 @@ bool keyPressed()
 		if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 		else _stateBrightness = StateBrightness_LOW;
 		beep();
-
+		smooth_backlight(0);
 		blocked();
 		return false;
 	}
@@ -2700,6 +2709,7 @@ bool keyPressed()
 		pxs.displayOn();
 		if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 		else _stateBrightness = StateBrightness_LOW;
+		smooth_backlight(0);
 		blocked();
 		idleTimeout = GetSystemTick() - 27000;
 		result = false;
@@ -2707,15 +2717,27 @@ bool keyPressed()
 	
 	if (!_settings.blocked && _settings.on)
 	{
+
+		
 		if((_settings.displayAutoOff) && (_stateBrightness == StateBrightness_OFF))
 		{
+			if(_settings.brightness)
+			{
+				_stateBrightness = StateBrightness_ON;
+			}
+			else 
+			{
+				_stateBrightness = StateBrightness_LOW;
+			}
 			DrawMainScreen();
 			nextChangeLevel = GetSystemTick();
 		}
 		pxs.displayOn();
-		if(_settings.brightness) _stateBrightness = StateBrightness_ON;
-		else _stateBrightness = StateBrightness_LOW;
-		
+		if(currentMenu == NULL)
+		{
+
+			//smooth_backlight(1);
+	  }
 	}
 	
 	nextChangeLevel = GetSystemTick() + 5000;
@@ -2858,7 +2880,7 @@ void loop(void)
 	if (_settings.heatMode == HeatMode_Auto)
 		SetPower(0);
 	
-
+  idleTimeout = GetSystemTick();
 
 	
 	while (1)
@@ -2956,11 +2978,13 @@ void loop(void)
 					idleTimeout = GetSystemTick();
 					if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 					else _stateBrightness = StateBrightness_LOW;
-	
+					smooth_backlight(0);
 					if (_settings.blocked)
 						blocked();
 					else
 						unblocked();
+					//
+					
           _timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;				  
 
 					_key_down.getPressed();
@@ -3160,16 +3184,17 @@ void loop(void)
 		// auto switch off
 		if (_settings.displayAutoOff && !_error && !window_is_opened)
 		{
-			if(GetSystemTick() > idleTimeout + 30000)
+			if((GetSystemTick() > idleTimeout + 30000) && (_stateBrightness == StateBrightness_LOW))
 			{
 				_stateBrightness = StateBrightness_OFF;
+				smooth_backlight(0);
 	
-				LL_GPIO_ResetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
+				//LL_GPIO_ResetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
 			}
-			else if (GetSystemTick() > idleTimeout + 15000)
+			else if ((GetSystemTick() > idleTimeout + 15000) && (_stateBrightness == StateBrightness_ON))
 			{
-			
 				_stateBrightness = StateBrightness_LOW;
+				smooth_backlight(1);
 			}
 		}
 
@@ -3350,6 +3375,7 @@ void loop(void)
 						powerLevel = 0;
 					
 					power_level_auto = powerLevel;	
+					query_settings();
 				}	
 					if (currentMenu == NULL && !_error && (!window_is_opened))
 					{

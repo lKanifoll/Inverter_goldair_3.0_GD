@@ -15,13 +15,16 @@ extern struct DeviceSettings _settings;
 extern uint8_t power_level_auto;	
 extern uint16_t timer_time_set;
 extern uint8_t _eventTimer;
+extern StateBrightness _stateBrightness;
+extern uint32_t idleTimeout;
+extern uint32_t _timeoutSaveFlash;
 uint8_t rxcount = 0;
 uint8_t idle_count = 0;
 uint8_t crc = 0;
 uint8_t answer_cmd[50] = {0x55, 0xAA, 0x03};
 uint8_t answer_cmd1[50] = {0x55, 0xAA, 0x03};
 uint8_t prod_info[] = "{\"p\":\"xr6jsgylldbpkaz9\",\"v\":\"1.1.1\",\"m\":0}";
-//uint8_t prod_info[] = "{\"p\":\"it7a8gqmqer2qbfz\",\"v\":\"1.1.1\",\"m\":0}";
+//uint8_t prod_info[] = "{\"p\":\"6bbwxfx9leraqht1\",\"v\":\"1.1.1\",\"m\":0}";
 //uint8_t prod_info[] = "{\"p\":\"7m0vk6rsenda0lbh\",\"v\":\"1.1.1\",\"m\":0}";
 extern uint8_t wifi_status;
 uint8_t idle_flag_stat = 0;	
@@ -247,6 +250,18 @@ void receive_uart_int()
 							if(_settings.brightness != frame[10])
 							{
 								_settings.brightness = frame[10];
+								if (_settings.brightness)
+								{
+									_stateBrightness = StateBrightness_ON;
+								}
+								else
+								{
+									_stateBrightness = StateBrightness_LOW;
+								}
+								if(!_settings.displayAutoOff)
+								{
+									smooth_backlight(1);
+							  }
 							}			
 						}		
 						
@@ -336,6 +351,19 @@ void receive_uart_int()
 							if(_settings.displayAutoOff != frame[10])
 							{
 								_settings.displayAutoOff = frame[10];
+								if(!_settings.displayAutoOff)
+								{
+									if (_settings.brightness)
+									{
+										_stateBrightness = StateBrightness_ON;
+									}
+									else
+									{
+										_stateBrightness = StateBrightness_LOW;
+									}
+									smooth_backlight(1);
+								}		
+               idleTimeout = GetSystemTick(); 								
 							}			
 						}
 
@@ -513,6 +541,7 @@ void receive_uart_int()
 							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
 							
 							_settings.powerLevel = frame[13];
+							refresh_system = true;
 						}							
 					}
 				}
@@ -524,6 +553,7 @@ void receive_uart_int()
 		rxcount = 0;
 		//i = 0;
 		idle_flag_stat = 0;
+		_timeoutSaveFlash = GetSystemTick() + SAVE_TIMEOUT;
 	}
 }
 
