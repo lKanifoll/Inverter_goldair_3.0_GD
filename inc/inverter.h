@@ -119,6 +119,8 @@ const struct Presets _presets[7] = {
 	{ pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost, pAntiFrost }
 };
 
+
+
 struct DeviceSettings
 {
 	uint8_t on;
@@ -137,6 +139,8 @@ struct DeviceSettings
 	uint8_t modeOpenWindow;
 	uint8_t calendar[7];
 	struct Presets custom;
+	Presets week_schedule[7];
+
 	uint8_t timerOn;
 	uint16_t timerTime;
 	char UDID[16];
@@ -175,6 +179,7 @@ void DrawWifi();
 void DrawWindowOpen();
 void open_window_func();
 WorkMode getCalendarMode();
+uint8_t getCalendartemp();
 uint8_t xw09A_read_data(uint8_t button_num);
 void SysTick_Handler_Callback();
 void smooth_backlight(uint8_t mode);

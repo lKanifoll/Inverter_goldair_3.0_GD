@@ -9,7 +9,7 @@ extern void InitTimer();
 extern void DrawMainScreen(uint32_t updater);
 extern void deviceOFF();
 extern void deviceON();
-extern uint32_t __SaveFlash;
+
 extern bool refresh_system;
 extern struct DeviceSettings _settings;
 extern uint8_t power_level_auto;	
@@ -25,13 +25,13 @@ uint8_t answer_cmd[50] = {0x55, 0xAA, 0x03};
 uint8_t answer_cmd1[50] = {0x55, 0xAA, 0x03};
 uint8_t prod_info[] = "{\"p\":\"xr6jsgylldbpkaz9\",\"v\":\"1.1.1\",\"m\":0}";
 //uint8_t prod_info[] = "{\"p\":\"6bbwxfx9leraqht1\",\"v\":\"1.1.1\",\"m\":0}";
-//uint8_t prod_info[] = "{\"p\":\"7m0vk6rsenda0lbh\",\"v\":\"1.1.1\",\"m\":0}";
+//uint8_t prod_info[] = "{\"p\":\"jxe9szwafgw47a4h\",\"v\":\"1.1.1\",\"m\":0}";
 extern uint8_t wifi_status;
 uint8_t idle_flag_stat = 0;	
-uint8_t recv_buffer[50];
+uint8_t recv_buffer[200];
 void receive_uart_int(void);
-uint8_t answer_out[150];
-Stream answer_frame(answer_out, 150);
+uint8_t answer_out[300];
+Stream answer_frame(answer_out, 300);
 //uint8_t recv_buffer_compl[255];
 
 uint8_t chksum8(const uint8_t *buff, size_t len)
@@ -193,9 +193,6 @@ void receive_uart_int()
 									deviceOFF();
 							}
 					
-							
-							//refresh_system = true;
-							//__SaveFlash = GetSystemTick() + 5000;
 						}
 						if(device_cmd == ID_WORKMODE)
 						{
@@ -542,7 +539,23 @@ void receive_uart_int()
 							
 							_settings.powerLevel = frame[13];
 							refresh_system = true;
-						}							
+						}	
+						if(device_cmd == ID_SCHEDULE)
+						{
+							answer_frame.put(CMD_OUTPUT);
+							answer_frame.put(frame[4]);
+							answer_frame.put(frame[5]);
+							answer_frame.put(ID_SCHEDULE);
+							answer_frame.put(0);
+							answer_frame.put(0);
+							answer_frame.put(0xA8);
+							answer_frame.put_str(&frame[10],168);
+							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
+							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
+							memcpy(&_settings.week_schedule, frame+10, 168);
+							refresh_system = true;
+						}	
+						
 					}
 				}
 				delete []frame;	
@@ -726,7 +739,14 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(0);
 	answer_frame.put(_settings.powerLevel);
+	//Schedule
+	/*
+	answer_frame.put(ID_SCHEDULE);
+	answer_frame.put(0);
+	answer_frame.put(0);
+	answer_frame.put(0xA8);
+	answer_frame.put_str((uint8_t*)_settings.week_schedule,168);*/
 	
 	answer_frame.put(chksum8(answer_frame.sptr(),114+6));//98
-	usart_transmit_frame(answer_frame.sptr(), 1147);
+	usart_transmit_frame(answer_frame.sptr(), 114+7);
 }

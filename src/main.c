@@ -50,18 +50,7 @@ void heat_timer_config(void);
 void i2c_config(void);
 void RTC_config(void);
 
-
-
-
 uint32_t sck;
-
-
-
-
-
-
-
-
 
 int main(void)
 {

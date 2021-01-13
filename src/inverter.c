@@ -143,12 +143,12 @@ uint8_t _currentPowerTicks = 20;
 uint8_t temp_prev = 0;
 uint8_t mode_prev = 0;
 
-
+uint8_t currentWorkMode;
 uint8_t _eventTimer = 0;
 uint8_t _blocked = 0;
 uint32_t _durationClick = 0;
 uint32_t _timeoutSaveFlash = 0;
-uint32_t __SaveFlash = 0;
+
 uint8_t _error = 0;
 uint8_t _error_fl = 0;
 int16_t _xWifi;
@@ -402,7 +402,7 @@ void DrawMenu()
 			text = "Settings";
 			break;
 		case 5:
-			icon = img_menu_program_icon_png_comp;
+			//icon = img_menu_program_icon_png_comp;
 			text = "Programme";
 			break;
 		case 11:
@@ -452,7 +452,8 @@ void DrawMenu()
 			text = "Set timer";
 			break;
 		case 51:
-			//icon = img_menu_program_setup_icon_png_comp;
+			/*
+			icon = img_menu_program_setup_icon_png_comp;
 			int16_t height;
 			if (pxs.sizeCompressedBitmap(width, height, img_prog_pattern_png_comp) == 0)
 			{
@@ -463,11 +464,11 @@ void DrawMenu()
 				pxs.drawCompressedBitmap(320 / 2 +3, 240 / 2 +1, img_menu_program_setup_icon_png_comp);
 			}			
 			
-			text = "Setup";
+			text = "Setup";*/
 			break;
 		case 52:
 			//icon = _settings.calendarOn ? img_program_cal_on_icon_png_comp : img_program_cal_off_icon_png_comp;
-
+/*
 			if (pxs.sizeCompressedBitmap(width, height, img_prog_pattern_png_comp) == 0)
 			{
 				pxs.drawCompressedBitmap(320 / 2 - width / 2, 240 / 2 - height / 2, img_prog_pattern_png_comp);
@@ -476,11 +477,11 @@ void DrawMenu()
 			{
 				pxs.drawCompressedBitmap(320 / 2 +3, 240 / 2 +3, _settings.calendarOn ? img_program_cal_on_icon_png_comp : img_program_cal_off_icon_png_comp);
 			}			
-			text = _settings.calendarOn ? "On" : "Off";
+			text = _settings.calendarOn ? "On" : "Off";*/
 			break;
 		case 53:
-			icon = img_menu_program_custom_png_comp;
-			text = "Custom day";
+			//icon = img_menu_program_custom_png_comp;
+			//text = "Custom day";
 			break;
 		case 41:
 			icon = img_menu_setdate_png_comp;
@@ -937,7 +938,7 @@ void DrawEditParameter()
 			DrawTextAligment(0, 70, 320, 60, "Connecting...", false);
 			reset_wifi_state();
 			break;		
-		case 51:
+	/*	case 51:
 		  rtc_current_time_get(&rtc_initpara);
 			for (int i = 0; i < 7; i++)
 			{
@@ -947,7 +948,7 @@ void DrawEditParameter()
 				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y, 50, 30, (char*)_calendarInfo[i].week, false, false, 0);
 				pxs.setFont(FuturaMediumC22a);
 				DrawTextAligment(_calendarInfo[i].x, _calendarInfo[i].y + 30, 50, 50, (char*)_calendarPresetName[_settings.calendar[i]], (currentMenu->selected == i), i == (rtc_initpara.rtc_day_of_week -1) ? 1 : 0 , 2, 
-					                /*currentMenu->selected == i ? GREEN_COLOR :*/ MAIN_COLOR,/* currentMenu->selected == i ? MAIN_COLOR :*/ BG_COLOR );
+					                 MAIN_COLOR, BG_COLOR );
 			}
 			break;
 		case 510:
@@ -971,7 +972,7 @@ void DrawEditParameter()
 					int16_t cX = ix * 75 + 22;
 					int16_t cY = iy * 75 + 80;
 					DrawTextAligment(cX, cY, 50, 50, (char*)_calendarPresetName[i], (currentMenu->selected == i), (_settings.calendar[_presetSet.week] == i), 2, 
-													 /*currentMenu->selected == i ? GREEN_COLOR : */MAIN_COLOR, /*currentMenu->selected == i ? MAIN_COLOR :*/ BG_COLOR);
+													 MAIN_COLOR,  BG_COLOR);
 				}
 			}
 			break;
@@ -1033,7 +1034,7 @@ void DrawEditParameter()
 					DrawMenuText("Off");
 					break;
 			}
-			break;
+			break;*/
 		default:
 			DrawMenuText("Not implemented");
 			break;
@@ -2031,7 +2032,7 @@ void DrawWifi()
 			}
 			else
 			{
-				pxs.fillRectangle(_xWifi + 11, 137, 43, 26);
+				pxs.fillRectangle(_xWifi + 11, 137, 83, 26);
 			}
 			pxs.setColor(MAIN_COLOR);
 			return;
@@ -2067,7 +2068,7 @@ void DrawWifi()
 		else
 		{
 			pxs.setColor(BG_COLOR);
-			pxs.fillRectangle(_xWifi + 12, 137, 43, 26);
+			pxs.fillRectangle(_xWifi + 12, 137, 83, 26);
 			if (_blink)
 				pxs.drawCompressedBitmap(_xWifi + 12, 137, (uint8_t*)img_wifi_png_comp);
 			pxs.setColor(MAIN_COLOR);
@@ -2241,31 +2242,40 @@ void DrawMainScreen(uint32_t updater)
 		pxs.clear();
 	}
 	
-	pxs.setColor(MAIN_COLOR);
 	
+	pxs.setColor(BG_COLOR);
+	pxs.fillRectangle(_xWifi + 12, 137, 83, 26);
 
-	switch (_settings.workMode)
+
+	pxs.setColor(MAIN_COLOR);
+  if(_settings.calendarOn == 0)
 	{
-		case WorkMode_Comfort:
-			DrawTemperature(getModeTemperature(),0,15);
-			pxs.drawCompressedBitmap(12, 15, (uint8_t*)img_icon_comfort_png_comp);
-			break;
-		case WorkMode_Eco:
-			DrawTemperature(getModeTemperature(),0,15);
-			pxs.drawCompressedBitmap(12, 15, (uint8_t*)img_icon_eco_png_comp);
-			break;
-		case WorkMode_Antifrost:
-			DrawTemperature(getModeTemperature(),0,15);
-			pxs.drawCompressedBitmap(12, 13, (uint8_t*)img_icon_antifrost_png_comp);
-			break;
-		case WorkMode_Off:
-			pxs.drawCompressedBitmap(150, 60, (uint8_t*)img_menu_program_off_png_comp);
-			pxs.setFont(FuturaBookC29a);
-			DrawTextAligment(145, 160, 82, 45, "Off", false, false);
-			break;
+		switch (_settings.workMode)
+		{
+			case WorkMode_Comfort:
+				DrawTemperature(getModeTemperature(),0,15);
+				pxs.drawCompressedBitmap(12, 15, (uint8_t*)img_icon_comfort_png_comp);
+				break;
+			case WorkMode_Eco:
+				DrawTemperature(getModeTemperature(),0,15);
+				pxs.drawCompressedBitmap(12, 15, (uint8_t*)img_icon_eco_png_comp);
+				break;
+			case WorkMode_Antifrost:
+				DrawTemperature(getModeTemperature(),0,15);
+				pxs.drawCompressedBitmap(12, 13, (uint8_t*)img_icon_antifrost_png_comp);
+				break;
+			case WorkMode_Off:
+				pxs.drawCompressedBitmap(150, 60, (uint8_t*)img_menu_program_off_png_comp);
+				pxs.setFont(FuturaBookC29a);
+				DrawTextAligment(145, 160, 82, 45, "Off", false, false);
+				break;
+		}
+	}
+	else
+	{
+		DrawTemperature(getCalendartemp(),0,15);
 	}
 
-	
 	if ((wifi_status == 4) && (currentMenu == NULL))
 	{
 		if(_settings.workMode == WorkMode_Off)
@@ -2279,9 +2289,10 @@ void DrawMainScreen(uint32_t updater)
 		if(_settings.workMode == WorkMode_Off)
 			pxs.fillRectangle(12, 50, 43, 26);
 		else
-			pxs.fillRectangle(_xWifi + 12, 136, 43, 26);
+			pxs.fillRectangle(_xWifi + 12, 136, 83, 26);
 		pxs.setColor(MAIN_COLOR);			
-	}
+	}	
+
 		
 	if ((_settings.modeOpenWindow) && (_settings.workMode != WorkMode_Off))
 		pxs.drawCompressedBitmap(12, 140, (uint8_t*)img_icon_open_png_comp);
@@ -2380,14 +2391,16 @@ int8_t getModeTemperature()
 
 WorkMode getCalendarMode()
 {
-//	RTC_TimeTypeDef sTime;
-//	RTC_DateTypeDef sDate;
-
-//	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-//	HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
 	rtc_current_time_get(&rtc_initpara); 
 	struct Presets* _pr = (_settings.calendar[rtc_initpara.rtc_day_of_week - 1] < 7) ? (struct Presets*)&_presets[_settings.calendar[rtc_initpara.rtc_day_of_week - 1]] : &_settings.custom;
 	return (WorkMode)_pr->hour[bcdToDec(rtc_initpara.rtc_hour)];
+}
+
+uint8_t getCalendartemp()
+{
+	rtc_current_time_get(&rtc_initpara); 
+	struct Presets* _pr = (struct Presets*)&_settings.week_schedule[rtc_initpara.rtc_day_of_week - 1];
+	return _pr->hour[bcdToDec(rtc_initpara.rtc_hour)];
 }
 
 
@@ -2453,7 +2466,7 @@ void ResetAllSettings()
 	_settings.tempComfort = 24;
 	_settings.tempEco = 4;
 	_settings.tempAntifrost = 5;
-	_settings.calendarOn = 0;
+	_settings.calendarOn = 1;
 	_settings.brightness = 1;
 	_settings.soundOn = 1;
 	_settings.displayAutoOff = 0;
@@ -2470,11 +2483,26 @@ void ResetAllSettings()
 	_settings.calendar[4] = 3;
 	_settings.calendar[5] = 3;
 	_settings.calendar[6] = 3;
+	memset(&_settings.week_schedule, 5, sizeof(_settings.week_schedule));
+	_settings.week_schedule[1].hour[20] = 30;
+	_settings.week_schedule[1].hour[21] = 10;
+	/*
+	 _settings.week_schedule[7] = {
+	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 },
+	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }
+  };
+	*/
+	
 	memset(&_settings.custom, pEco, sizeof(_settings.custom));
 	_settings.timerOn = 0;
 	_settings.timerTime = 12 * 60; // 12:00
 	memset(&_settings.UDID, 0, sizeof(_settings.UDID));
-
+	
 	rtc_deinit();
 	rtc_initpara.rtc_factor_asyn = 0x7F;
 	rtc_initpara.rtc_factor_syn = 0xFF;
@@ -2485,9 +2513,9 @@ void ResetAllSettings()
 	rtc_initpara.rtc_display_format = RTC_24HOUR;
 	rtc_initpara.rtc_am_pm = 0;
 
-	rtc_initpara.rtc_hour = 0x11;
+	rtc_initpara.rtc_hour = 0x12;
 		 
-	rtc_initpara.rtc_minute = 0x58;
+	rtc_initpara.rtc_minute = 0x00;
 
 	rtc_initpara.rtc_second = 0x00;
 
@@ -2962,11 +2990,7 @@ void loop(void)
 				//_wifi.sendChanged(_settings, _error, _timerStart / 1000);
 				query_settings();
 			}
-			if (__SaveFlash != 0 && GetSystemTick() >= __SaveFlash)
-			{
-				__SaveFlash = 0;
-				SaveFlash();			
-			}
+
 
 			if (_key_down.getState() && _key_up.getState() && ((!_error && _settings.on) || (!_settings.on)))
 			{
@@ -3218,7 +3242,23 @@ void loop(void)
 		{	
 
 			temp_current = getTemperature();
-			int8_t modeTemp = getModeTemperature();
+			int8_t modeTemp;
+			if(_settings.calendarOn)
+			{
+				modeTemp = getCalendartemp();
+				
+				if (modeTemp != currentWorkMode)
+				{
+					CleanTemperature(currentWorkMode,0,15);
+					currentWorkMode = modeTemp;
+					DrawMainScreen(1);
+				}
+			}
+			else
+			{
+				modeTemp = getModeTemperature();
+			}
+			
 			power_current = _currentPower;
 		
 			if (temp_current  == -127)
@@ -3410,7 +3450,7 @@ void loop(void)
 		{	
 			if (currentMenu == NULL && !_error)
 			{
-				#ifdef DEBUG		
+					
 				char buffer[10];
 				pxs.setColor(BG_COLOR);
 				pxs.fillRectangle(240, 20, 75, 20);
@@ -3419,7 +3459,7 @@ void loop(void)
 				
 				pxs.setFont(FuturaBookC20a);
 				DrawTextAligment(265, 20, 30, 20, buffer, false);	
-
+#ifdef DEBUG	
 				#endif
 			}
 			
@@ -3434,13 +3474,13 @@ void loop(void)
 				}
 				else if (_settings.calendarOn == 1)
 				{
-					WorkMode currentWorkMode = getCalendarMode();
-					if (_settings.workMode != currentWorkMode)
+					//uint8_t currentWorktemp = getCalendartemp();
+					//if (modeTemp != currentWorkMode)
 					{
-						_settings.workMode = currentWorkMode;
-						nextChangeLevel = GetSystemTick() + 1000;
+						//_settings.workMode = currentWorkMode;
+						//nextChangeLevel = GetSystemTick() + 1000;
 			
-						DrawMainScreen();
+					//	DrawMainScreen();
 					}
 				}
 				_eventTimer = 0;
