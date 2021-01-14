@@ -83,11 +83,11 @@ static MenuItem_t _displayMenu[] = {
 // Connect menu
 static MenuItem_t _connMenu[] = {
 	{4431, 0, NULL, 					NULL, NULL, NULL }, // connect
-	{4432, 0, NULL, 					On, Off, NULL },        // Reset
+	//{4432, 0, NULL, 					On, Off, NULL },        // Reset
 };	
 // Service menu
 static MenuItem_t _serviceMenu[] = {
-	{443, 2, _connMenu, 		NULL, NULL, NULL }, // Wifi
+	{443, 1, _connMenu, 		NULL, NULL, NULL }, // Wifi
 	{441, 0, NULL, 					On, Off, NULL }, // Reset
 	{442, 0, NULL, 					NULL, NULL, MenuBack }, // Info
 	
@@ -934,8 +934,8 @@ void DrawEditParameter()
 			DrawTextAligment(0, 115, 320, 60, buffer, false);		
 			break;
 		case 4431: // wifi
-			pxs.setFont(FuturaBookC29a);
-			DrawTextAligment(0, 70, 320, 60, "Connecting...", false);
+			//pxs.setFont(FuturaBookC29a);
+			pxs.print(60, 90, "Connecting");
 			reset_wifi_state();
 			break;		
 	/*	case 51:
@@ -3283,8 +3283,9 @@ void loop(void)
 					pxs.setFont(FuturaBookC90a);
 			
 					DrawTextAligment(0, 0, SW, SH, "E1", false, false);
+					query_settings();
 				}
-				query_settings();
+				
 			}
 			else if (temp_current  == 127)
 			{
@@ -3300,8 +3301,9 @@ void loop(void)
 					pxs.setFont(FuturaBookC90a);
 		
 					DrawTextAligment(0, 0, SW, SH, "E2", false, false);
+					query_settings();
 				}
-				query_settings();
+				
 			}
 			else if (temp_current > 48)
 			{
@@ -3317,8 +3319,9 @@ void loop(void)
 					pxs.setFont(FuturaBookC90a);
 			
 					DrawTextAligment(0, 0, SW, SH, "E3", false, false);
+					query_settings();
 				}
-				query_settings();
+				
 			}
 			else if (temp_current < -26)
 			{
@@ -3334,8 +3337,9 @@ void loop(void)
 					pxs.setFont(FuturaBookC90a);
 	
 					DrawTextAligment(0, 0, SW, SH, "E4", false, false);
+					query_settings();
 				}
-				query_settings();
+				
 			}
 			else
 			{
@@ -3464,9 +3468,34 @@ void loop(void)
 //========================================================= refrash 1 sec		
 		if (GetSystemTick() > refrash_time && _settings.on)
 		{	
+			
+			if(currentMenu->ID == 4431)
+			{
+				static uint8_t connstep = 1;
+				pxs.setFont(FuturaBookC29a);
+				switch (connstep) {				
+					case 1:
+					  pxs.print(235, 90, ".");
+						break;
+					case 2:
+						pxs.cleanText(235, 90, ".");
+					  pxs.print(235, 90, "..");
+						break;
+					case 3:
+						pxs.cleanText(235, 90, "..");
+					  pxs.print(235, 90, "...");
+						break;
+					case 4:
+					  pxs.cleanText(235, 90, "...");
+						break;						
+					
+				}
+				if(++connstep == 5) connstep = 1;
+			}
+			
 			if (currentMenu == NULL && !_error)
 			{
-					
+				#ifdef DEBUG	
 				char buffer[10];
 				pxs.setColor(BG_COLOR);
 				pxs.fillRectangle(240, 20, 75, 20);
@@ -3475,7 +3504,6 @@ void loop(void)
 				
 				pxs.setFont(FuturaBookC20a);
 				DrawTextAligment(265, 20, 30, 20, buffer, false);	
-#ifdef DEBUG	
 				#endif
 			}
 			

@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\inverter_ballu_gd.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\inverter_ballu_gd.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Jan 14 14:32:45 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Jan 14 17:54:15 2021
 <BR><P>
-<H3>Maximum Stack Usage =        768 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        752 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 __rt_entry_main &rArr; main &rArr; loop &rArr; MenuOK() &rArr; PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 <P>
@@ -47,8 +47,8 @@ Function Pointers
  <LI><a href="#[1d]">MemManage_Handler</a> from gd32f3x0_it.o(i.MemManage_Handler) referenced from startup_gd32f3x0.o(RESET)
  <LI><a href="#[f]">MenuBack</a> from inverter.o(i.MenuBack) referenced 4 times from inverter.o(.data)
  <LI><a href="#[1b]">NMI_Handler</a> from gd32f3x0_it.o(i.NMI_Handler) referenced from startup_gd32f3x0.o(RESET)
- <LI><a href="#[15]">Off</a> from inverter.o(i.Off) referenced 14 times from inverter.o(.data)
- <LI><a href="#[14]">On</a> from inverter.o(i.On) referenced 14 times from inverter.o(.data)
+ <LI><a href="#[15]">Off</a> from inverter.o(i.Off) referenced 12 times from inverter.o(.data)
+ <LI><a href="#[14]">On</a> from inverter.o(i.On) referenced 12 times from inverter.o(.data)
  <LI><a href="#[22]">PendSV_Handler</a> from gd32f3x0_it.o(i.PendSV_Handler) referenced from startup_gd32f3x0.o(RESET)
  <LI><a href="#[28]">RCU_CTC_IRQHandler</a> from startup_gd32f3x0.o(.text) referenced from startup_gd32f3x0.o(RESET)
  <LI><a href="#[26]">RTC_IRQHandler</a> from gd32f3x0_it.o(i.RTC_IRQHandler) referenced from startup_gd32f3x0.o(RESET)
@@ -245,7 +245,7 @@ Global Symbols
 <P><STRONG><a name="[1c8]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[69]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 768 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 752 + Unknown Stack Size
 <LI>Call Chain = __rt_entry_main &rArr; main &rArr; loop &rArr; MenuOK() &rArr; PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -381,8 +381,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
+<BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawCustomDay(int)
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTimeEdit()
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawDateEdit()
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
@@ -813,7 +812,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[9f]"></a>AcceptParameter</STRONG> (Thumb, 1788 bytes, Stack size 48 bytes, inverter.o(i.AcceptParameter))
-<BR><BR>[Stack]<UL><LI>Max Depth = 664 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 656 + Unknown Stack Size
 <LI>Call Chain = AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
@@ -885,7 +884,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
 <P><STRONG><a name="[10]"></a>DateMinus</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, inverter.o(i.DateMinus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = DateMinus &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isValidDate
@@ -894,7 +893,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
 <P><STRONG><a name="[11]"></a>DatePlus</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, inverter.o(i.DatePlus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 568 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
 <LI>Call Chain = DatePlus &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isValidDate
@@ -905,8 +904,8 @@ Global Symbols
 <P><STRONG><a name="[21]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, gd32f3x0_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
-<P><STRONG><a name="[b7]"></a>DrawEditParameter</STRONG> (Thumb, 1920 bytes, Stack size 128 bytes, inverter.o(i.DrawEditParameter))
-<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
+<P><STRONG><a name="[b7]"></a>DrawEditParameter</STRONG> (Thumb, 1850 bytes, Stack size 120 bytes, inverter.o(i.DrawEditParameter))
+<BR><BR>[Stack]<UL><LI>Max Depth = 544 + Unknown Stack Size
 <LI>Call Chain = DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
@@ -971,7 +970,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c7]"></a>DrawMenu</STRONG> (Thumb, 1586 bytes, Stack size 56 bytes, inverter.o(i.DrawMenu))
-<BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 600 + Unknown Stack Size
 <LI>Call Chain = DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
@@ -1156,7 +1155,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
 <P><STRONG><a name="[f]"></a>MenuBack</STRONG> (Thumb, 94 bytes, Stack size 8 bytes, inverter.o(i.MenuBack))
-<BR><BR>[Stack]<UL><LI>Max Depth = 616 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
@@ -1173,25 +1172,23 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
 <P><STRONG><a name="[15]"></a>Off</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, inverter.o(i.Off))
-<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 544 + Unknown Stack Size
 <LI>Call Chain = Off &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
-<BR>[Address Reference Count : 5]<UL><LI> inverter.o(.data)
-<LI> inverter.o(.data)
+<BR>[Address Reference Count : 4]<UL><LI> inverter.o(.data)
 <LI> inverter.o(.data)
 <LI> inverter.o(.data)
 <LI> inverter.o(.data)
 </UL>
 <P><STRONG><a name="[14]"></a>On</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, inverter.o(i.On))
-<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 544 + Unknown Stack Size
 <LI>Call Chain = On &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
 </UL>
-<BR>[Address Reference Count : 5]<UL><LI> inverter.o(.data)
-<LI> inverter.o(.data)
+<BR>[Address Reference Count : 4]<UL><LI> inverter.o(.data)
 <LI> inverter.o(.data)
 <LI> inverter.o(.data)
 <LI> inverter.o(.data)
@@ -1200,7 +1197,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
 <P><STRONG><a name="[d3]"></a>PrepareEditParameter</STRONG> (Thumb, 336 bytes, Stack size 24 bytes, inverter.o(i.PrepareEditParameter))
-<BR><BR>[Stack]<UL><LI>Max Depth = 688 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 680 + Unknown Stack Size
 <LI>Call Chain = PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_current_time_get
@@ -1268,7 +1265,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[18]"></a>TempMinus</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, inverter.o(i.TempMinus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = TempMinus &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
@@ -1277,7 +1274,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
 <P><STRONG><a name="[19]"></a>TempPlus</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, inverter.o(i.TempPlus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = TempPlus &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
@@ -1286,7 +1283,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> inverter.o(.data)
 </UL>
 <P><STRONG><a name="[12]"></a>TimeMinus</STRONG> (Thumb, 86 bytes, Stack size 8 bytes, inverter.o(i.TimeMinus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 552 + Unknown Stack Size
 <LI>Call Chain = TimeMinus &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
@@ -1295,7 +1292,7 @@ Global Symbols
 <LI> inverter.o(.data)
 </UL>
 <P><STRONG><a name="[13]"></a>TimePlus</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, inverter.o(i.TimePlus))
-<BR><BR>[Stack]<UL><LI>Max Depth = 568 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
 <LI>Call Chain = TimePlus &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawEditParameter
@@ -1598,7 +1595,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[11a]"></a>MenuOK()</STRONG> (Thumb, 200 bytes, Stack size 24 bytes, inverter.o(i._Z6MenuOKv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 704 + Unknown Stack Size
 <LI>Call Chain = MenuOK() &rArr; PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_current_time_get
@@ -1638,7 +1635,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[11c]"></a>MenuNext()</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, inverter.o(i._Z8MenuNextv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 616 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = MenuNext() &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
@@ -1648,7 +1645,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[11d]"></a>MenuPrev()</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, inverter.o(i._Z8MenuPrevv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 616 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = MenuPrev() &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
@@ -1683,7 +1680,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[120]"></a>EnterMenu()</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, inverter.o(i._Z9EnterMenuv))
-<BR><BR>[Stack]<UL><LI>Max Depth = 616 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = EnterMenu() &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
@@ -2003,7 +2000,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
+<BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GoOK(int)
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextAligment
@@ -2121,7 +2119,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CleanTemperature
+<BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CleanTemperature
 </UL>
 
 <P><STRONG><a name="[13d]"></a>PixelsBase::drawPixel(short, short)</STRONG> (Thumb, 148 bytes, Stack size 24 bytes, pixels.o(i._ZN10PixelsBase9drawPixelEss))
@@ -2726,8 +2725,8 @@ Global Symbols
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
-<P><STRONG><a name="[175]"></a>loop</STRONG> (Thumb, 2628 bytes, Stack size 48 bytes, inverter.o(i.loop))
-<BR><BR>[Stack]<UL><LI>Max Depth = 760 + Unknown Stack Size
+<P><STRONG><a name="[175]"></a>loop</STRONG> (Thumb, 2586 bytes, Stack size 40 bytes, inverter.o(i.loop))
+<BR><BR>[Stack]<UL><LI>Max Depth = 744 + Unknown Stack Size
 <LI>Call Chain = loop &rArr; MenuOK() &rArr; PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetSystemTick
@@ -2737,7 +2736,9 @@ Global Symbols
 <LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
 <LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::cleanText(short, short, char*, signed char*)
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::print(short, short, char*, signed char*)
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 <LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setOrientation(unsigned char)
@@ -2779,13 +2780,12 @@ Global Symbols
 <LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CleanTemperature
 <LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[6a]"></a>main</STRONG> (Thumb, 96 bytes, Stack size 8 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 768 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 752 + Unknown Stack Size
 <LI>Call Chain = main &rArr; loop &rArr; MenuOK() &rArr; PrepareEditParameter &rArr; AcceptParameter &rArr; MenuBack &rArr; DrawMenu &rArr; DrawEditParameter &rArr; DrawTimeEdit() &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;systick_config
