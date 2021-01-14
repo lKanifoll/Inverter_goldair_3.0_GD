@@ -31,6 +31,7 @@ extern "C" {
 #define ID_BRIGHT			0x0A
 #define ID_CURPOWER		0x0C
 #define	ID_REMTIME		0x14
+#define ID_FAULT			0x15
 #define	ID_SCHEDULE		0x1A
 #define ID_COMFORT		0x65
 #define ID_ECO				0x66

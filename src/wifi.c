@@ -18,6 +18,7 @@ extern uint8_t _eventTimer;
 extern StateBrightness _stateBrightness;
 extern uint32_t idleTimeout;
 extern uint32_t _timeoutSaveFlash;
+extern uint8_t _error;
 uint8_t rxcount = 0;
 uint8_t idle_count = 0;
 uint8_t crc = 0;
@@ -281,9 +282,9 @@ void receive_uart_int()
 							if(_settings.workMode == WorkMode_Eco) CleanTemperature(_settings.tempComfort - _settings.tempEco,0,15);	
 							if(_settings.workMode == WorkMode_Comfort) CleanTemperature(_settings.tempComfort,0,15);	
 							_settings.tempComfort = frame[13];
-							if(_settings.workMode == WorkMode_Comfort) DrawTemperature(_settings.tempComfort,0,15);
-							if(_settings.workMode == WorkMode_Eco) DrawTemperature(_settings.tempComfort - _settings.tempEco,0,15);
-							//DrawMainScreen(1);
+							//if(_settings.workMode == WorkMode_Comfort) DrawTemperature(_settings.tempComfort,0,15);
+							//if(_settings.workMode == WorkMode_Eco) DrawTemperature(_settings.tempComfort - _settings.tempEco,0,15);
+							DrawMainScreen(1);
 							refresh_system = true;
 						}	
 
@@ -305,8 +306,8 @@ void receive_uart_int()
 							
 							if(_settings.workMode == WorkMode_Eco) CleanTemperature(_settings.tempComfort - _settings.tempEco,0,15);	
 							_settings.tempEco = frame[13];
-							if(_settings.workMode == WorkMode_Eco) DrawTemperature(_settings.tempComfort - _settings.tempEco,0,15);
-							//DrawMainScreen(1);
+							//if(_settings.workMode == WorkMode_Eco) DrawTemperature(_settings.tempComfort - _settings.tempEco,0,15);
+							DrawMainScreen(1);
 							refresh_system = true;
 						}
 
@@ -328,7 +329,8 @@ void receive_uart_int()
 								
 							if(_settings.workMode == WorkMode_Antifrost) CleanTemperature(_settings.tempAntifrost,0,15);	
 							_settings.tempAntifrost = frame[13];
-							if(_settings.workMode == WorkMode_Antifrost) DrawTemperature(_settings.tempAntifrost,0,15);
+							//if(_settings.workMode == WorkMode_Antifrost) DrawTemperature(_settings.tempAntifrost,0,15);
+							DrawMainScreen(1);
 							refresh_system = true;
 						}		
 
@@ -605,8 +607,8 @@ void query_settings()
 	answer_frame.put(HEADER_2B);
 	answer_frame.put(HEADER_VER);
 	answer_frame.put(CMD_OUTPUT);
-	answer_frame.put(0);
-	answer_frame.put(114);
+	answer_frame.put(0x01);
+	answer_frame.put(0x23);
 	//switch
 	answer_frame.put(ID_SWITCH);
 	answer_frame.put(1);
@@ -658,6 +660,22 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(timer_time_set >> 8);
 	answer_frame.put(timer_time_set);	
+	//Fault
+	answer_frame.put(ID_FAULT);
+	answer_frame.put(5);
+	answer_frame.put(0);
+	answer_frame.put(1);
+	answer_frame.put((_error == 1 ? 0x01 : 0x00) |
+	                 (_error == 2 ? 0x04 : 0x00) |
+	                 (_error == 3 ? 0x05 : 0x00) |
+	                 (_error == 4 ? 0x08 : 0x00) );
+									 	
+	//Schedule
+	answer_frame.put(ID_SCHEDULE);
+	answer_frame.put(0);
+	answer_frame.put(0);
+	answer_frame.put(0xA8);
+	answer_frame.put_str((uint8_t*)_settings.week_schedule,168);
 	//Comfort temperature
 	answer_frame.put(ID_COMFORT);
 	answer_frame.put(2);
@@ -739,14 +757,8 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(0);
 	answer_frame.put(_settings.powerLevel);
-	//Schedule
-	/*
-	answer_frame.put(ID_SCHEDULE);
-	answer_frame.put(0);
-	answer_frame.put(0);
-	answer_frame.put(0xA8);
-	answer_frame.put_str((uint8_t*)_settings.week_schedule,168);*/
+
 	
-	answer_frame.put(chksum8(answer_frame.sptr(),114+6));//98
-	usart_transmit_frame(answer_frame.sptr(), 114+7);
+	answer_frame.put(chksum8(answer_frame.sptr(),291+6));//98
+	usart_transmit_frame(answer_frame.sptr(), 291+7);
 }

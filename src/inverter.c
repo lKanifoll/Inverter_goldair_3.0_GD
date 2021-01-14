@@ -2615,63 +2615,71 @@ void startScreen()
 		_settings.workMode = getCalendarMode();
 	}
 	
-			temp_current = getTemperature();
-			if (temp_current  == -127)
-			{
-				SetPower(0);
-				_error = 1;
-				if(!_error_fl)
-				{
-					_error_fl = 1;
-					pxs.clear();
-					pxs.setFont(FuturaBookC90a);
-					DrawTextAligment(0, 0, SW, SH, "E1", false, false);
-					smooth_backlight(1);
-				}
-			}
-			else if (temp_current  == 127)
-			{
-				SetPower(0);
-				_error = 2;
-				if(!_error_fl)
-				{
-					_error_fl = 1;
-					pxs.clear();
-					pxs.setFont(FuturaBookC90a);
-					DrawTextAligment(0, 0, SW, SH, "E2", false, false);
-					smooth_backlight(1);
-				}
-			}
-			else if (temp_current > 48)
-			{
-				SetPower(0);
-				_error = 3;
-				if(!_error_fl)
-				{
-					_error_fl = 1;
-					pxs.clear();
-					pxs.setFont(FuturaBookC90a);
-					DrawTextAligment(0, 0, SW, SH, "E3", false, false);
-					smooth_backlight(1);
-				}
-			}
-			else if (temp_current < -26)
-			{
-				SetPower(0);
-				_error = 4;
-				if(!_error_fl)
-				{
-					_error_fl = 1;
-					pxs.clear();
-					pxs.setFont(FuturaBookC90a);
-					DrawTextAligment(0, 0, SW, SH, "E4", false, false);
-					smooth_backlight(1);
-				}
-			}
-			else
-			{
-				DrawMainScreen();
-			}
+	temp_current = getTemperature();
+	if (temp_current  == -127)
+	{
+		SetPower(0);
+		power_level_auto = 0;
+		_error = 1;
+		if(!_error_fl)
+		{
+			_error_fl = 1;
+			pxs.clear();
+			pxs.setFont(FuturaBookC90a);
+			DrawTextAligment(0, 0, SW, SH, "E1", false, false);
+			smooth_backlight(1);
+		}
+		query_settings();
+	}
+	else if (temp_current  == 127)
+	{
+		SetPower(0);
+		power_level_auto = 0;
+		_error = 2;
+		if(!_error_fl)
+		{
+			_error_fl = 1;
+			pxs.clear();
+			pxs.setFont(FuturaBookC90a);
+			DrawTextAligment(0, 0, SW, SH, "E2", false, false);
+			smooth_backlight(1);
+		}
+		query_settings();
+	}
+	else if (temp_current > 48)
+	{
+		SetPower(0);
+		power_level_auto = 0;
+		_error = 3;
+		if(!_error_fl)
+		{
+			_error_fl = 1;
+			pxs.clear();
+			pxs.setFont(FuturaBookC90a);
+			DrawTextAligment(0, 0, SW, SH, "E3", false, false);
+			smooth_backlight(1);
+		}
+		query_settings();
+	}
+	else if (temp_current < -26)
+	{
+		SetPower(0);
+		power_level_auto = 0;
+		_error = 4;
+		if(!_error_fl)
+		{
+			_error_fl = 1;
+			pxs.clear();
+			pxs.setFont(FuturaBookC90a);
+			DrawTextAligment(0, 0, SW, SH, "E4", false, false);
+			smooth_backlight(1);
+		}
+		query_settings();
+	}
+	else
+	{
+		DrawMainScreen();
+	}
 }
 
 void deviceON()
@@ -3264,6 +3272,7 @@ void loop(void)
 			if (temp_current  == -127)
 			{
 				SetPower(0);
+				power_level_auto = 0;
 				_error = 1;
 				if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 				else _stateBrightness = StateBrightness_LOW;
@@ -3275,10 +3284,12 @@ void loop(void)
 			
 					DrawTextAligment(0, 0, SW, SH, "E1", false, false);
 				}
+				query_settings();
 			}
 			else if (temp_current  == 127)
 			{
 				SetPower(0);
+				power_level_auto = 0;
 				_error = 2;
 				if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 				else _stateBrightness = StateBrightness_LOW;
@@ -3290,10 +3301,12 @@ void loop(void)
 		
 					DrawTextAligment(0, 0, SW, SH, "E2", false, false);
 				}
+				query_settings();
 			}
 			else if (temp_current > 48)
 			{
 				SetPower(0);
+				power_level_auto = 0;
 				_error = 3;
 				if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 				else _stateBrightness = StateBrightness_LOW;
@@ -3305,10 +3318,12 @@ void loop(void)
 			
 					DrawTextAligment(0, 0, SW, SH, "E3", false, false);
 				}
+				query_settings();
 			}
 			else if (temp_current < -26)
 			{
 				SetPower(0);
+				power_level_auto = 0;
 				_error = 4;
 				if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 				else _stateBrightness = StateBrightness_LOW;
@@ -3320,6 +3335,7 @@ void loop(void)
 	
 					DrawTextAligment(0, 0, SW, SH, "E4", false, false);
 				}
+				query_settings();
 			}
 			else
 			{
