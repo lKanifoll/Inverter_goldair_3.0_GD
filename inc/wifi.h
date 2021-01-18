@@ -50,7 +50,7 @@ uint8_t chksum8(const uint8_t *buff, size_t len);
 void usart_transmit_frame(const uint8_t *buff, size_t len);
 void query_settings();	
 void reset_wifi_state();
-	
+void query_faults();
 	
 	
 #ifdef __cplusplus

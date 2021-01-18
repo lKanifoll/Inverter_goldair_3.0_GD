@@ -256,7 +256,7 @@ void receive_uart_int()
 								{
 									_stateBrightness = StateBrightness_LOW;
 								}
-								if(!_settings.displayAutoOff)
+								//if(!_settings.displayAutoOff)
 								{
 									smooth_backlight(1);
 							  }
@@ -557,7 +557,6 @@ void receive_uart_int()
 							memcpy(&_settings.week_schedule, frame+10, 168);
 							refresh_system = true;
 						}	
-						
 					}
 				}
 				delete []frame;	
@@ -598,6 +597,40 @@ void reset_wifi_state()
 		usart_transmit_frame(answer_frame.sptr(), 7);
 }
 
+
+void query_faults()
+{
+	answer_frame.clear();
+	answer_frame.reset();
+	answer_frame.put(HEADER_1B);
+	answer_frame.put(HEADER_2B);
+	answer_frame.put(HEADER_VER);
+	answer_frame.put(CMD_OUTPUT);
+	answer_frame.put(0x00);
+	answer_frame.put(0x0D);
+	//Fault
+	answer_frame.put(ID_FAULT);
+	answer_frame.put(5);
+	answer_frame.put(0);
+	answer_frame.put(1);
+	answer_frame.put(1);/*
+	answer_frame.put((_error == 1 ? 0x01 : 0x00) |
+	                 (_error == 2 ? 0x04 : 0x00) |
+	                 (_error == 3 ? 0x05 : 0x00) |
+	                 (_error == 4 ? 0x08 : 0x00) );*/
+		//Current power
+	answer_frame.put(ID_CURPOWER);
+	answer_frame.put(2);
+	answer_frame.put(0);
+	answer_frame.put(4);
+	answer_frame.put(0);	
+	answer_frame.put(0);
+	answer_frame.put(0);
+	answer_frame.put(power_level_auto);
+	
+	answer_frame.put(chksum8(answer_frame.sptr(),13+6));//98
+	usart_transmit_frame(answer_frame.sptr(), 13+7);
+}
 
 void query_settings()
 {

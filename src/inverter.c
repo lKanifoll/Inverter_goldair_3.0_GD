@@ -1733,7 +1733,7 @@ void rtc_alarm_callback()
 			timer_time_set = _settings.timerTime;
 			_eventTimer = 1;
 		}
-		query_settings();
+		//query_settings();
 	}
 	else
 	{
@@ -2621,60 +2621,65 @@ void startScreen()
 		SetPower(0);
 		power_level_auto = 0;
 		_error = 1;
+		/*
 		if(!_error_fl)
 		{
 			_error_fl = 1;
 			pxs.clear();
 			pxs.setFont(FuturaBookC90a);
 			DrawTextAligment(0, 0, SW, SH, "E1", false, false);
-			smooth_backlight(1);
-		}
-		query_settings();
+			//smooth_backlight(1);
+			//query_faults();
+		}*/
+		
 	}
 	else if (temp_current  == 127)
 	{
 		SetPower(0);
 		power_level_auto = 0;
 		_error = 2;
+		/*
 		if(!_error_fl)
 		{
 			_error_fl = 1;
 			pxs.clear();
 			pxs.setFont(FuturaBookC90a);
 			DrawTextAligment(0, 0, SW, SH, "E2", false, false);
-			smooth_backlight(1);
-		}
-		query_settings();
+			//smooth_backlight(1);
+			//query_faults();
+		}*/
 	}
 	else if (temp_current > 48)
 	{
 		SetPower(0);
 		power_level_auto = 0;
 		_error = 3;
+		/*
 		if(!_error_fl)
 		{
 			_error_fl = 1;
 			pxs.clear();
 			pxs.setFont(FuturaBookC90a);
 			DrawTextAligment(0, 0, SW, SH, "E3", false, false);
-			smooth_backlight(1);
-		}
-		query_settings();
+			//smooth_backlight(1);
+			//query_faults();
+		}*/
 	}
 	else if (temp_current < -26)
 	{
 		SetPower(0);
 		power_level_auto = 0;
 		_error = 4;
+		/*
 		if(!_error_fl)
 		{
 			_error_fl = 1;
 			pxs.clear();
 			pxs.setFont(FuturaBookC90a);
 			DrawTextAligment(0, 0, SW, SH, "E4", false, false);
-			smooth_backlight(1);
-		}
-		query_settings();
+			//smooth_backlight(1);
+			//query_faults();
+		}*/
 	}
 	else
 	{
@@ -2995,7 +3000,6 @@ void loop(void)
 			{
 				_timeoutSaveFlash = 0;
 				SaveFlash();
-				//_wifi.sendChanged(_settings, _error, _timerStart / 1000);
 				query_settings();
 			}
 
@@ -3276,14 +3280,16 @@ void loop(void)
 				_error = 1;
 				if(_settings.brightness) _stateBrightness = StateBrightness_ON;
 				else _stateBrightness = StateBrightness_LOW;
+				
 				if(!_error_fl)
 				{
 					_error_fl = 1;
 					pxs.clear();
 					pxs.setFont(FuturaBookC90a);
-			
+			    //smooth_backlight(0);
 					DrawTextAligment(0, 0, SW, SH, "E1", false, false);
-					query_settings();
+					smooth_backlight(1);
+					query_faults();
 				}
 				
 			}
@@ -3301,6 +3307,7 @@ void loop(void)
 					pxs.setFont(FuturaBookC90a);
 		
 					DrawTextAligment(0, 0, SW, SH, "E2", false, false);
+					smooth_backlight(1);
 					query_settings();
 				}
 				
@@ -3319,6 +3326,7 @@ void loop(void)
 					pxs.setFont(FuturaBookC90a);
 			
 					DrawTextAligment(0, 0, SW, SH, "E3", false, false);
+					smooth_backlight(1);
 					query_settings();
 				}
 				
@@ -3337,6 +3345,7 @@ void loop(void)
 					pxs.setFont(FuturaBookC90a);
 	
 					DrawTextAligment(0, 0, SW, SH, "E4", false, false);
+					smooth_backlight(1);
 					query_settings();
 				}
 				
