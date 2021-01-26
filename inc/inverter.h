@@ -15,7 +15,7 @@ extern "C" {
 #define SH									240
 	
 	
-#define VERSION "12.5.2"		
+#define VERSION "12.5.5"		
 	
 	
 #define	BALANCE_RESISTOR 		33000.0
@@ -72,7 +72,7 @@ struct TemperatureSettings
 
 struct PresetSettings
 {
-    int8_t week;
+    int8_t week_day;
     int8_t preset;
 };
 
@@ -100,13 +100,13 @@ struct CalendarInfo
 };
 const struct CalendarInfo _calendarInfo[7] = 
 {
-	{"MO", 30, 30},
-	{"TU", 100, 30},
-	{"WE", 170, 30},
-	{"TH", 240, 30},
-	{"FR", 30, 130},
-	{"SA", 100, 130},
-	{"SU", 170, 130},
+	{"MO", 30, 20},
+	{"TU", 100, 20},
+	{"WE", 170, 20},
+	{"TH", 240, 20},
+	{"FR", 65, 110},
+	{"SA", 135, 110},
+	{"SU", 205, 110},
 };
 
 const struct Presets _presets[7] = {

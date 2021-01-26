@@ -404,7 +404,7 @@ void receive_uart_int()
 							{
 								_settings.heatMode = (HeatMode)frame[10];
 								DrawMainScreen();
-							  refresh_system = true;								
+							  refresh_system = true;					
 							}			
 						}		
 						
@@ -454,6 +454,10 @@ void receive_uart_int()
 									_settings.calendarOn = 0;
 									_eventTimer = 0;
 									InitTimer();
+								}		
+								else	
+								{
+									_settings.workMode = WorkMode_Comfort;
 								}									
 								DrawMainScreen();
 							  refresh_system = true;								
@@ -503,13 +507,13 @@ void receive_uart_int()
 							answer_frame.put(4);
 							answer_frame.put(0);
 							answer_frame.put(0);
-							answer_frame.put(frame[12]);
+							answer_frame.put(0);
 							answer_frame.put(frame[13]);
 							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
 							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
 							
-							uint16_t temp_timer_time = (frame[12] << 8) + frame[13];
-							if(temp_timer_time <= 1439)
+							uint16_t temp_timer_time = frame[13] * 60;
+							if(temp_timer_time <= 1440)
 							{
 								if((timer_time_set != temp_timer_time) &&(_settings.timerOn))
 								{
@@ -520,6 +524,12 @@ void receive_uart_int()
 								{
 									_settings.timerTime = temp_timer_time;
 									timer_time_set = _settings.timerTime;
+								}
+								
+								if(_settings.timerOn)
+								{
+									_eventTimer = 0;
+									InitTimer();	
 								}
 							}				
 						}
@@ -613,11 +623,10 @@ void query_faults()
 	answer_frame.put(5);
 	answer_frame.put(0);
 	answer_frame.put(1);
-	answer_frame.put(1);/*
 	answer_frame.put((_error == 1 ? 0x01 : 0x00) |
 	                 (_error == 2 ? 0x04 : 0x00) |
 	                 (_error == 3 ? 0x05 : 0x00) |
-	                 (_error == 4 ? 0x08 : 0x00) );*/
+	                 (_error == 4 ? 0x08 : 0x00) );
 		//Current power
 	answer_frame.put(ID_CURPOWER);
 	answer_frame.put(2);
@@ -632,6 +641,8 @@ void query_faults()
 	usart_transmit_frame(answer_frame.sptr(), 13+7);
 }
 
+
+uint32_t current_temp;
 void query_settings()
 {
 	answer_frame.clear();
@@ -648,15 +659,25 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(1);
 	answer_frame.put(_settings.on);
+
+	
 	//Current temperature
 	answer_frame.put(ID_CURRTEMP);
 	answer_frame.put(2);
 	answer_frame.put(0);
 	answer_frame.put(4);
+/*	
 	answer_frame.put(0);	
 	answer_frame.put(0);
 	answer_frame.put(0);
-	answer_frame.put((uint8_t)getTemperature());
+	answer_frame.put((uint8_t)getTemperature());*/
+	
+	current_temp = getTemperature();
+	answer_frame.put(current_temp>>24);	
+	answer_frame.put((current_temp>>16)&0xFF);
+	answer_frame.put((current_temp>>8)&0xFFFF);
+	answer_frame.put(current_temp&0xFFFFFF);
+
 	//Working mode
 	answer_frame.put(ID_WORKMODE);
 	answer_frame.put(4);
@@ -675,6 +696,7 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(1);
 	answer_frame.put(_settings.brightness);	
+
 	//Current power
 	answer_frame.put(ID_CURPOWER);
 	answer_frame.put(2);
@@ -683,7 +705,7 @@ void query_settings()
 	answer_frame.put(0);	
 	answer_frame.put(0);
 	answer_frame.put(0);
-	answer_frame.put(power_level_auto);
+	answer_frame.put(_settings.heatMode ? _settings.powerLevel : power_level_auto);
 	//Remining time
 	answer_frame.put(ID_REMTIME);
 	answer_frame.put(2);
@@ -702,6 +724,7 @@ void query_settings()
 	                 (_error == 2 ? 0x04 : 0x00) |
 	                 (_error == 3 ? 0x05 : 0x00) |
 	                 (_error == 4 ? 0x08 : 0x00) );
+
 									 	
 	//Schedule
 	answer_frame.put(ID_SCHEDULE);
@@ -709,6 +732,7 @@ void query_settings()
 	answer_frame.put(0);
 	answer_frame.put(0xA8);
 	answer_frame.put_str((uint8_t*)_settings.week_schedule,168);
+
 	//Comfort temperature
 	answer_frame.put(ID_COMFORT);
 	answer_frame.put(2);
@@ -779,8 +803,8 @@ void query_settings()
 	answer_frame.put(4);
 	answer_frame.put(0);	
 	answer_frame.put(0);
-	answer_frame.put(timer_time_set >> 8);
-	answer_frame.put(timer_time_set);
+	answer_frame.put(0);
+	answer_frame.put(_settings.timerTime/60);
 	//custom power level
 	answer_frame.put(ID_CUSTOM_P);
 	answer_frame.put(2);
