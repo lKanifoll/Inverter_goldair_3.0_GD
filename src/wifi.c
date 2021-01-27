@@ -32,6 +32,7 @@ uint8_t idle_flag_stat = 0;
 uint8_t recv_buffer[200];
 void receive_uart_int(void);
 uint8_t answer_out[300];
+uint8_t datetime_arr[8];
 Stream answer_frame(answer_out, 300);
 //uint8_t recv_buffer_compl[255];
 
@@ -166,11 +167,42 @@ void receive_uart_int()
 					if(frame_cmd == CMD_QUERY)
 					{ 
 						query_settings();				
+						query_datetime();
 					}
+					if(frame_cmd == CMD_DATETIME)
+					{
+						
+						if(frame[6])
+						{/*
+							datetime_arr[0] = decToBcd(frame[7]);
+							datetime_arr[1] = decToBcd(frame[8]);
+							datetime_arr[2] = decToBcd(frame[9]);
+							datetime_arr[3] = decToBcd(frame[10]);
+							datetime_arr[4] = decToBcd(frame[11]);
+							datetime_arr[5] = decToBcd(frame[12]);
+							datetime_arr[6] = frame[13];
+							*/
+							rtc_deinit();
+							rtc_parameter_struct rtc_from_module;
+							
+							rtc_from_module.rtc_year = decToBcd(frame[7]);
+							rtc_from_module.rtc_month = decToBcd(frame[8]);
+							rtc_from_module.rtc_date = decToBcd(frame[9]);
+							rtc_from_module.rtc_hour = decToBcd(frame[10]);
+							rtc_from_module.rtc_minute = decToBcd(frame[11]);
+							rtc_from_module.rtc_second = 0;//decToBcd(frame[12]);
+							rtc_from_module.rtc_day_of_week = frame[13];
+							
+							rtc_from_module.rtc_factor_asyn = 0x7FU;
+							rtc_from_module.rtc_factor_syn = 0xFFU;
+							rtc_from_module.rtc_display_format = RTC_24HOUR;	
+							
+							rtc_init(&rtc_from_module);
+						}
+					}				
 					
 					if(frame_cmd == CMD_INPUT)
 					{
-						
 						if(device_cmd == ID_SWITCH)
 						{
 							answer_frame.put(CMD_OUTPUT);
@@ -507,12 +539,12 @@ void receive_uart_int()
 							answer_frame.put(4);
 							answer_frame.put(0);
 							answer_frame.put(0);
-							answer_frame.put(0);
+							answer_frame.put(frame[12]);
 							answer_frame.put(frame[13]);
 							answer_frame.put(chksum8(answer_frame.sptr(), payload_len+6));
 							usart_transmit_frame(answer_frame.sptr(), payload_len+7);	
 							
-							uint16_t temp_timer_time = frame[13] * 60;
+							uint16_t temp_timer_time = (frame[12] << 8) + frame[13];
 							if(temp_timer_time <= 1440)
 							{
 								if((timer_time_set != temp_timer_time) &&(_settings.timerOn))
@@ -607,6 +639,20 @@ void reset_wifi_state()
 		usart_transmit_frame(answer_frame.sptr(), 7);
 }
 
+void query_datetime()
+{
+	answer_frame.clear();
+	answer_frame.reset();
+	answer_frame.put(HEADER_1B);
+	answer_frame.put(HEADER_2B);
+	answer_frame.put(HEADER_VER);
+	answer_frame.put(CMD_DATETIME);
+	answer_frame.put(0x00);
+	answer_frame.put(0x00);	
+	answer_frame.put(chksum8(answer_frame.sptr(), 6));
+	usart_transmit_frame(answer_frame.sptr(), 7);
+}
+
 
 void query_faults()
 {
@@ -637,7 +683,7 @@ void query_faults()
 	answer_frame.put(0);
 	answer_frame.put(power_level_auto);
 	
-	answer_frame.put(chksum8(answer_frame.sptr(),13+6));//98
+	answer_frame.put(chksum8(answer_frame.sptr(),13+6));
 	usart_transmit_frame(answer_frame.sptr(), 13+7);
 }
 
@@ -803,8 +849,8 @@ void query_settings()
 	answer_frame.put(4);
 	answer_frame.put(0);	
 	answer_frame.put(0);
-	answer_frame.put(0);
-	answer_frame.put(_settings.timerTime/60);
+	answer_frame.put(_settings.timerTime >> 8);
+	answer_frame.put(_settings.timerTime);
 	//custom power level
 	answer_frame.put(ID_CUSTOM_P);
 	answer_frame.put(2);

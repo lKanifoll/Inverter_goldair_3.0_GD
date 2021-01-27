@@ -133,7 +133,7 @@ static MenuItem_t _mainMenu[] = {
 };
 
 static MenuItem_t _menu = 
-	{0, 5, _mainMenu, 			NULL, NULL, NULL};
+	{0, 4, _mainMenu, 			NULL, NULL, NULL};
 
 
 struct MenuItem* old;
@@ -188,6 +188,7 @@ uint8_t btn_buff[2];
 
 rtc_parameter_struct rtc_initpara;
 rtc_alarm_struct  rtc_alarm;
+rtc_parameter_struct rtc_init_param;
 
 ClickButton _key_window(12);
 ClickButton _key_power(11);
@@ -809,18 +810,7 @@ void DrawTimeEdit()
 	char buf[10];
 	pxs.setFont(FuturaBookC36a);
 	int16_t y = 240 / 2 - pxs.getTextLineHeight() ;
-	if(currentMenu->ID == 32)
-	{
-		sprintf(buf, "%02d", _dateTime.tm_hour);
-		uint8_t widthX = pxs.getTextWidth(buf);
-		DrawTextAligment(SW/2 - widthX/2, y, 70, 60, buf, 1,0,0, MAIN_COLOR, BG_COLOR );
 
-		pxs.setColor(MAIN_COLOR);
-		pxs.setBackground(BG_COLOR);
-		DrawMenuText("Set hour");
-	}	
-	else
-	{
 		sprintf(buf, "%02d", _dateTime.tm_hour);
 		uint8_t widthX = pxs.getTextWidth(buf);
 		DrawTextAligment(SW/2 - widthX/2 - 73, y, 70, 60, buf, (currentMenu->selected == 0),0,0,  /*(currentMenu->selected == 0) ? GREEN_COLOR : */MAIN_COLOR, /*(currentMenu->selected == 0) ? MAIN_COLOR : */BG_COLOR );
@@ -832,7 +822,7 @@ void DrawTimeEdit()
 		pxs.setBackground(BG_COLOR);
 		DrawTextAligment(SW / 2 - pxs.getTextWidth(":") / 2, y, 4, 55, ":",0);
 		DrawMenuText((currentMenu->selected == 0) ? "Set hour" : "Set minute");
-	}
+	
 }
 
 void DrawEditParameter()
@@ -966,10 +956,10 @@ void DrawEditParameter()
 					                 MAIN_COLOR, BG_COLOR );
 			}
 			break;
-		case 510:
+	/*	case 510:
 			
 		  DrawCustomDay();
-		/*
+		
 			switch (_presetSet.week_day)
 			{
 				case 0: DrawMenuTitle("Monday"); 		break;
@@ -992,7 +982,7 @@ void DrawEditParameter()
 					DrawTextAligment(cX, cY, 50, 50, (char*)_calendarPresetName[i], (currentMenu->selected == i), (_settings.calendar[_presetSet.week_day] == i), 2, 
 													 MAIN_COLOR,  BG_COLOR);
 				}
-			}*/
+			}
 			break;
 		case 511:
 			switch (_presetSet.preset)
@@ -1025,12 +1015,12 @@ void DrawEditParameter()
 
 				}
 			}
-			break;
+			break;*/
 			/*
 		case 53: // custom day
 			DrawMenuTitle("CUSTOM 24h", -3);
 			DrawCustomDay();
-			break;*/
+			break;
 		case 530: // custom day select mode
 			DrawLeftRight();
 
@@ -1053,7 +1043,7 @@ void DrawEditParameter()
 					DrawMenuText("Off");
 					break;
 			}
-			break;
+			break;*/
 		default:
 			DrawMenuText("Not implemented");
 			break;
@@ -1104,7 +1094,7 @@ void PrepareEditParameter()
 			break;
 		case 32: // timer time
 			_dateTime.tm_hour = _settings.timerTime / 60;
-			_dateTime.tm_min = 0;
+			_dateTime.tm_min = _settings.timerTime % 60;
 			_dateTime.tm_sec = 0;
 			currentMenu->selected = 0;
 			break;
@@ -1157,7 +1147,7 @@ void PrepareEditParameter()
 
 
 
-rtc_parameter_struct rtc_init_param;
+
 void AcceptParameter()
 {
 	switch (currentMenu->ID)
@@ -1203,12 +1193,35 @@ void AcceptParameter()
 			GoOK();
 			break;
 		case 32:
-			_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
-			timer_time_set = _settings.timerTime;
-			GoOK();
-			_timeoutSaveFlash = GetSystemTick();
-			idleTimeout = GetSystemTick();	
-			InitTimer();				
+			currentMenu->selected++;
+			if ((currentMenu->selected > 0) && (currentMenu->selected < 2))
+			{		
+				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
+				timer_time_set = _settings.timerTime;
+				pxs.clear();
+				pxs.setColor(MAIN_COLOR);
+				pxs.fillOval(320/2 - 95/2,240/2 - 95/2, 95,95);
+				pxs.setFont(FuturaBookC36a);
+				pxs.setColor(BG_COLOR);
+				pxs.setBackground(MAIN_COLOR);	
+				int16_t width = pxs.getTextWidth("OK");
+				int16_t height = pxs.getTextLineHeight();
+				pxs.print(320 / 2 - width/2-2, 240/2 - height/2, "OK");
+				pxs.setColor(MAIN_COLOR);
+				pxs.setBackground(BG_COLOR);
+				delay_1ms(1000);
+				pxs.clear();
+				_timeoutSaveFlash = GetSystemTick();
+				idleTimeout = GetSystemTick();	
+				InitTimer();				
+			}		
+			if (currentMenu->selected == 2)
+			{
+				_settings.timerTime = _dateTime.tm_hour * 60 + _dateTime.tm_min;
+				timer_time_set = _settings.timerTime;
+				GoOK();
+				InitTimer();
+			}					
 			break;
 		case 43:
 			_settings.soundOn = _onoffSet.parameter;
@@ -3468,7 +3481,7 @@ void loop(void)
 				}
 				else
 				{
-					nextChangeLevel = GetSystemTick() + 3000;			
+					nextChangeLevel = GetSystemTick() + 60000;			
 				}					
 			}
 		}

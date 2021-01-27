@@ -23,6 +23,7 @@ extern "C" {
 #define CMD_OUTPUT  	0x07	
 	
 #define CMD_QUERY			0x08
+#define CMD_DATETIME	0x1C
 	
 #define ID_SWITCH			0x01
 #define ID_CURRTEMP		0x03
@@ -46,11 +47,11 @@ extern "C" {
 #define ID_CUSTOM_P	  0x6F
 
 uint8_t chksum8(const uint8_t *buff, size_t len);
-//void receive_uart_int(void);
 void usart_transmit_frame(const uint8_t *buff, size_t len);
 void query_settings();	
 void reset_wifi_state();
 void query_faults();
+void query_datetime();
 	
 	
 #ifdef __cplusplus
