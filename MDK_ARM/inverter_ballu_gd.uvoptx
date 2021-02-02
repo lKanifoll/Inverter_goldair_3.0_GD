@@ -203,6 +203,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>rtc_init_param</ItemText>
         </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>_blink</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

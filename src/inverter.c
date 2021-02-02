@@ -57,10 +57,6 @@ static MenuItem_t _modeMenu[] = {
 	 
 };
 
-static MenuItem_t _tempshedMenu = 
-	{14, 0, NULL, 					TempMinus, TempPlus, NULL };
-
-
 // Power menu
 static MenuItem_t _powerMenu[] = {
 	{21, 0, NULL, 					NULL, NULL, NULL}, // Auto
@@ -580,6 +576,15 @@ void MainScreen()
 	currentMenu = NULL;
 	DrawMainScreen();
 		
+}
+
+void refresh_mainscreen()
+{
+	if(currentMenu != NULL)
+	{
+		currentMenu = NULL;
+		DrawMainScreen();
+	}
 }
 
 void DrawCustomDay(int _old = -1)
@@ -1160,11 +1165,11 @@ void AcceptParameter()
 			_settings.tempEco = _tempConfig.desired;
 			GoOK();
 			break;
-		case 13: // anti
+		case 14: // anti
 			_settings.week_schedule[_presetSet.week_day].hour[currentMenu->selected] = _tempConfig.desired;
 			GoOK();
 			break;
-		case 14: // anti
+		case 13: // anti
 			_settings.tempAntifrost = _tempConfig.desired;
 			GoOK();
 			break;		
@@ -1362,7 +1367,7 @@ void AcceptParameter()
 			_selectModeMenu.parent = currentMenu;
 			currentMenu = &_selectModeMenu;
 			currentMenu->selected = _settings.custom.hour[select];
-			break;*/
+			break;
 		case 530: // custom day
 			_settings.custom.hour[currentMenu->parent->selected] = currentMenu->selected;
 			GoOK();
@@ -1377,15 +1382,15 @@ void AcceptParameter()
 		case 510: // presets
 			//_presetSet.preset = currentMenu->selected;
 			//_presetViewMenu.parent = currentMenu;
-			currentMenu = &_tempshedMenu;
-			currentMenu->selected = 0;
-			break;
+			//currentMenu = &_tempshedMenu;
+			//currentMenu->selected = 0;
+			//break;
 		case 511: // presets
 			_settings.calendar[_presetSet.week_day] = _presetSet.preset;
 			GoOK();
 			break;
 		case 421:
-			/*_settings.brightness = !_onoffSet.parameter;
+			_settings.brightness = !_onoffSet.parameter;
 			if (_settings.brightness)
 				LL_GPIO_SetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
 			GoOK();*/
@@ -2070,13 +2075,16 @@ void DrawWifi()
 			_timerBlink += 500;
 		else if (wifi_status == 4)
 		{
-			//_blink = 0;
-			
-			if (_blink)
-				return;
+			if (_settings.workMode == WorkMode_Off)
+			{
+				pxs.drawCompressedBitmap(22, 59, (uint8_t*)img_wifi_png_comp);
+			}
 			else
-				_blink = false;
-			
+			{
+				pxs.drawCompressedBitmap(_xWifi + 12, 137, (uint8_t*)img_wifi_png_comp);
+			}
+      _timerBlink += 5000;			
+			return;		
 		}
 		//if (wifi_status != 4)
 		_blink = !_blink;

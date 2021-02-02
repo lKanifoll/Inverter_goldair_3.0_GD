@@ -599,6 +599,7 @@ void receive_uart_int()
 							memcpy(&_settings.week_schedule, frame+10, 168);
 							refresh_system = true;
 						}	
+						refresh_mainscreen();
 					}
 				}
 				delete []frame;	
