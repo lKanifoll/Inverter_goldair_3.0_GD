@@ -2898,6 +2898,14 @@ void open_window_func()
 	}	
 }
 
+void set_watchdog()
+{
+    rcu_osci_on(RCU_IRC40K);
+    /* wait till IRC40K is ready */
+    while(ERROR == rcu_osci_stab_wait(RCU_IRC40K));
+	  fwdgt_config(625, FWDGT_PSC_DIV64);
+    fwdgt_enable();
+}
 void loop(void)
 {
 	uint8_t* p = (uint8_t*)&_settings;
@@ -2942,7 +2950,7 @@ void loop(void)
 		SetPower(0);
 	
   idleTimeout = GetSystemTick();
-
+  set_watchdog();
 	
 	while (1)
   {
@@ -2954,6 +2962,7 @@ void loop(void)
 			_key_down.update();
 			_key_up.update();
 		
+		fwdgt_counter_reload();
 		
 		if(RESET != rtc_flag_get(RTC_STAT_ALRM0F))
 		{
