@@ -2900,10 +2900,9 @@ void open_window_func()
 
 void set_watchdog()
 {
-    rcu_osci_on(RCU_IRC40K);
-    /* wait till IRC40K is ready */
-    while(ERROR == rcu_osci_stab_wait(RCU_IRC40K));
-	  fwdgt_config(625, FWDGT_PSC_DIV64);
+		rcu_osci_on(RCU_IRC40K);
+	  while(ERROR == rcu_osci_stab_wait(RCU_IRC40K));
+	  fwdgt_config(6553, FWDGT_PSC_DIV64);
     fwdgt_enable();
 }
 void loop(void)
@@ -2915,9 +2914,6 @@ void loop(void)
 	
   timer_time_set = _settings.timerTime;
 
-
-	
-	
 	pxs.setOrientation(LANDSCAPE);
 	pxs.enableAntialiasing(true);
 	pxs.init();
@@ -2929,7 +2925,6 @@ void loop(void)
 	getTemperature();
 	getTemperature();
 	
-
 	if (_settings.on)
 	{
 		startScreen();
@@ -2942,10 +2937,7 @@ void loop(void)
 	}
 	
 	InitTimer();
-	//alarm_set(0);
-	
-	
-	
+
 	if (_settings.heatMode == HeatMode_Auto)
 		SetPower(0);
 	
@@ -2962,7 +2954,7 @@ void loop(void)
 			_key_down.update();
 			_key_up.update();
 		
-		fwdgt_counter_reload();
+		
 		
 		if(RESET != rtc_flag_get(RTC_STAT_ALRM0F))
 		{
@@ -3253,8 +3245,6 @@ void loop(void)
 			{
 				_stateBrightness = StateBrightness_OFF;
 				smooth_backlight(0);
-	
-				//LL_GPIO_ResetOutputPin(LCD_BL_GPIO_Port, LCD_BL_Pin);
 			}
 			else if ((GetSystemTick() > idleTimeout + 15000) && (_stateBrightness == StateBrightness_ON))
 			{
@@ -3271,10 +3261,7 @@ void loop(void)
 		{
 			MainScreen();
 		}
-		if ((GetSystemTick() > (idleTimeout + 5000)) && (_settings.brightness == 0) && (_stateBrightness < StateBrightness_OFF) /*&& (!_settings.displayAutoOff)*/) // If 50% brightness, back from 100% to 50% after 5s
-		{
-			//_stateBrightness = StateBrightness_LOW;
-		}		
+		
 
 		
 		
@@ -3506,6 +3493,7 @@ void loop(void)
 //========================================================= refrash 1 sec		
 		if (GetSystemTick() > refrash_time && _settings.on)
 		{	
+			fwdgt_counter_reload();
 			
 			if(currentMenu->ID == 4431)
 			{
