@@ -1694,7 +1694,6 @@ void SetPower(int8_t value)
 		{
 			LL_GPIO_ResetOutputPin(GPIOB, GPIO_PIN_5);
 			delay_1ms(100);
-			
 		}
 		semistor_power = value;
 	}
@@ -1712,11 +1711,22 @@ void SetPower(int8_t value)
 			{
 				LL_GPIO_ResetOutputPin(GPIOB, GPIO_PIN_5);
 				delay_1ms(100);
-				
 			}
 			semistor_power = value*2;
 		}		
 	}
+	if(semistor_power == 20)
+	{
+		LL_GPIO_SetOutputPin(GPIOB, GPIO_PIN_6);
+	}
+	else
+	{
+		if (gpio_input_bit_get(GPIOB, GPIO_PIN_6))
+		{
+			LL_GPIO_ResetOutputPin(GPIOB, GPIO_PIN_6);
+			delay_1ms(100);
+		}
+	}		
 }
 	
 void TIMER_Heat_callback()
@@ -2467,7 +2477,7 @@ void InitTimer()
     rtc_alarm.rtc_alarm_second = 0x00;
 		rtc_alarm.rtc_alarm_mask = RTC_ALARM_MINUTE_MASK | RTC_ALARM_HOUR_MASK | RTC_ALARM_SECOND_MASK | RTC_ALARM_DATE_MASK;
 		
-		_settings.workMode = getCalendarMode();
+		
 		rtc_alarm.rtc_weekday_or_date = RTC_ALARM_WEEKDAY_SELECTED;
 		rtc_alarm.rtc_alarm_day = RTC_WEDSDAY;
 		rtc_alarm_config(&rtc_alarm);
@@ -2902,7 +2912,8 @@ void set_watchdog()
 {
 		rcu_osci_on(RCU_IRC40K);
 	  while(ERROR == rcu_osci_stab_wait(RCU_IRC40K));
-	  fwdgt_config(6553, FWDGT_PSC_DIV64);
+	  fwdgt_config(0x0FFF, FWDGT_PSC_DIV128);
+		//fwdgt_window_value_config(0x0FFF);
     fwdgt_enable();
 }
 void loop(void)
@@ -2954,6 +2965,7 @@ void loop(void)
 			_key_down.update();
 			_key_up.update();
 		
+		fwdgt_counter_reload();
 		
 		
 		if(RESET != rtc_flag_get(RTC_STAT_ALRM0F))
@@ -3493,7 +3505,7 @@ void loop(void)
 //========================================================= refrash 1 sec		
 		if (GetSystemTick() > refrash_time && _settings.on)
 		{	
-			fwdgt_counter_reload();
+			//
 			
 			if(currentMenu->ID == 4431)
 			{

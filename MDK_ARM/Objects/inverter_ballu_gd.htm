@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\inverter_ballu_gd.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\inverter_ballu_gd.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Fri Feb 05 16:03:35 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Mon Feb 08 15:27:10 2021
 <BR><P>
 <H3>Maximum Stack Usage =        800 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -438,7 +438,7 @@ Global Symbols
 
 <P><STRONG><a name="[174]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 </UL>
 
 <P><STRONG><a name="[77]"></a>__rt_memcpy</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
@@ -860,7 +860,7 @@ Global Symbols
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TempPlus
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TempMinus
 </UL>
@@ -942,9 +942,9 @@ Global Symbols
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTemperature
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;refresh_mainscreen
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_open_window(signed char, unsigned char)
@@ -1095,7 +1095,7 @@ Global Symbols
 
 <P><STRONG><a name="[ab]"></a>GetSystemTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, systick.o(i.GetSystemTick))
 <BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::update()
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceOFF()
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceON()
@@ -1114,18 +1114,17 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_gd32f3x0.o(RESET)
 </UL>
-<P><STRONG><a name="[ac]"></a>InitTimer</STRONG> (Thumb, 192 bytes, Stack size 32 bytes, inverter.o(i.InitTimer))
-<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = InitTimer &rArr; getCalendarMode &rArr; rtc_current_time_get
+<P><STRONG><a name="[ac]"></a>InitTimer</STRONG> (Thumb, 156 bytes, Stack size 24 bytes, inverter.o(i.InitTimer))
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = InitTimer &rArr; rtc_current_time_get
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_clear
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_current_time_get
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_alarm_enable
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_alarm_disable
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_alarm_config
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getCalendarMode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceON()
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
@@ -1622,8 +1621,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
 
-<P><STRONG><a name="[102]"></a>SetPower(signed char)</STRONG> (Thumb, 114 bytes, Stack size 24 bytes, inverter.o(i._Z8SetPowera))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = SetPower(signed char)
+<P><STRONG><a name="[102]"></a>SetPower(signed char)</STRONG> (Thumb, 162 bytes, Stack size 32 bytes, inverter.o(i._Z8SetPowera))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = SetPower(signed char)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_1ms
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_input_bit_get
@@ -1644,7 +1643,7 @@ Global Symbols
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitTimer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 </UL>
 
 <P><STRONG><a name="[11d]"></a>EnterMenu()</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, inverter.o(i._Z9EnterMenuv))
@@ -1682,7 +1681,7 @@ Global Symbols
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetPower(signed char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 </UL>
 
 <P><STRONG><a name="[126]"></a>spi0_init()</STRONG> (Thumb, 56 bytes, Stack size 40 bytes, main.o(i._Z9spi0_initv))
@@ -1810,7 +1809,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::fillRoundRectangle(short, short, short, short, short)
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MenuOK()
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawWifi
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawTextSelected
@@ -1893,7 +1892,7 @@ Global Symbols
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;operator delete[] (void*)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawLeftRight()
@@ -2060,7 +2059,7 @@ Global Symbols
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::putColor(short, short, bool, double)
 <LI><a href="#[137]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::printString(short, short, char*, bool, signed char*)
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::clear()
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drawRoundRect
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
@@ -2128,11 +2127,11 @@ Global Symbols
 
 <P><STRONG><a name="[1e4]"></a>PixelsBase::PixelsBase__sub_object(unsigned short, unsigned short)</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, pixels.o(i._ZN10PixelsBaseC1Ett), UNUSED)
 
-<P><STRONG><a name="[178]"></a>ClickButton::getPressed()</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, inverter.o(i._ZN11ClickButton10getPressedEv))
+<P><STRONG><a name="[179]"></a>ClickButton::getPressed()</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, inverter.o(i._ZN11ClickButton10getPressedEv))
 <BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
 
-<P><STRONG><a name="[17a]"></a>ClickButton::getLongPressed()</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, inverter.o(i._ZN11ClickButton14getLongPressedEv))
+<P><STRONG><a name="[17b]"></a>ClickButton::getLongPressed()</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, inverter.o(i._ZN11ClickButton14getLongPressedEv))
 <BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
 
@@ -2167,7 +2166,7 @@ Global Symbols
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::computeColor(RGB, unsigned char)
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::computeColor(RGB, double)
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::PixelsBase(unsigned short, unsigned short)
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drawRoundRect
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;blocked()
@@ -2274,9 +2273,9 @@ Global Symbols
 <P><STRONG><a name="[182]"></a>Stream::put(unsigned char)</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, wifi.o(i._ZN6Stream3putEh))
 <BR><BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_datetime
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
 </UL>
 
 <P><STRONG><a name="[181]"></a>Stream::clear()</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, wifi.o(i._ZN6Stream5clearEv))
@@ -2284,9 +2283,9 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_datetime
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
 </UL>
 
 <P><STRONG><a name="[52]"></a>Stream::flush()</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, wifi.o(i._ZN6Stream5flushEv))
@@ -2299,7 +2298,7 @@ Global Symbols
 <P><STRONG><a name="[185]"></a>Stream::put_str(unsigned char*, unsigned char)</STRONG> (Thumb, 32 bytes, Stack size 12 bytes, wifi.o(i._ZN6Stream7put_strEPhh))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = Stream::put_str(unsigned char*, unsigned char)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
 </UL>
 
@@ -2335,7 +2334,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;operator delete (void*)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 </UL>
 
@@ -2352,7 +2351,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;operator new(unsigned)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::drawCompressedBitmap(short, short, const unsigned char*)
 </UL>
 
@@ -2473,13 +2472,13 @@ Global Symbols
 <P><STRONG><a name="[183]"></a>chksum8</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, wifi.o(i.chksum8))
 <BR><BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_datetime
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
 </UL>
 
 <P><STRONG><a name="[ae]"></a>decToBcd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, inverter.o(i.decToBcd))
-<BR><BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR><BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
@@ -2568,7 +2567,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_watchdog
 </UL>
 
-<P><STRONG><a name="[17c]"></a>fwdgt_counter_reload</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, gd32f3x0_fwdgt.o(i.fwdgt_counter_reload))
+<P><STRONG><a name="[177]"></a>fwdgt_counter_reload</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, gd32f3x0_fwdgt.o(i.fwdgt_counter_reload))
 <BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 </UL>
 
@@ -2581,9 +2580,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_current_time_get
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startScreen()
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitTimer
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
 
@@ -2732,10 +2730,10 @@ Global Symbols
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_get
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_flag_clear
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_alarm_callback
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
-<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fwdgt_counter_reload
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
+<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fwdgt_counter_reload
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB::RGB(unsigned char, unsigned char, unsigned char)
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::cleanText(short, short, char*, signed char*)
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setFont(const unsigned char*)
@@ -2747,7 +2745,7 @@ Global Symbols
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc32_1byte(const void*, int, unsigned)
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth_backlight
 <LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_watchdog
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;open_window_func
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTemperature
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getModeTemperature
 <LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getCalendartemp
@@ -2755,8 +2753,8 @@ Global Symbols
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::init()
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pixels::displayOff()
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::update()
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::getLongPressed()
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::getPressed()
+<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::getLongPressed()
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ClickButton::getPressed()
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PixelsBase::setColor(RGB)
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceOFF()
@@ -2828,7 +2826,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
 </UL>
 
-<P><STRONG><a name="[179]"></a>open_window_func</STRONG> (Thumb, 162 bytes, Stack size 16 bytes, inverter.o(i.open_window_func))
+<P><STRONG><a name="[17a]"></a>open_window_func</STRONG> (Thumb, 162 bytes, Stack size 16 bytes, inverter.o(i.open_window_func))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432 + Unknown Stack Size
 <LI>Call Chain = open_window_func &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
@@ -2854,10 +2852,10 @@ Global Symbols
 <LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stream::clear()
 <LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stream::put(unsigned char)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 </UL>
 
-<P><STRONG><a name="[17b]"></a>query_faults</STRONG> (Thumb, 244 bytes, Stack size 8 bytes, wifi.o(i.query_faults))
+<P><STRONG><a name="[17c]"></a>query_faults</STRONG> (Thumb, 244 bytes, Stack size 8 bytes, wifi.o(i.query_faults))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = query_faults &rArr; usart_transmit_frame
 </UL>
 <BR>[Calls]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_transmit_frame
@@ -2879,7 +2877,7 @@ Global Symbols
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTemperature
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceOFF()
 </UL>
 
@@ -2932,7 +2930,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_config()
 </UL>
 
-<P><STRONG><a name="[177]"></a>receive_uart_int</STRONG> (Thumb, 2878 bytes, Stack size 56 bytes, wifi.o(i.receive_uart_int))
+<P><STRONG><a name="[178]"></a>receive_uart_int</STRONG> (Thumb, 2878 bytes, Stack size 56 bytes, wifi.o(i.receive_uart_int))
 <BR><BR>[Stack]<UL><LI>Max Depth = 560 + Unknown Stack Size
 <LI>Call Chain = receive_uart_int &rArr; deviceON() &rArr; startScreen() &rArr; DrawMainScreen &rArr; DrawTextAligment &rArr; PixelsBase::print(short, short, char*, signed char*) &rArr; PixelsBase::printString(short, short, char*, bool, signed char*) &rArr; PixelsBase::vLine(short, short, short) &rArr; PixelsBase::fill(int, short, short, short, short)
 </UL>
@@ -2968,7 +2966,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DrawMainScreen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 </UL>
 
 <P><STRONG><a name="[bf]"></a>reset_wifi_state</STRONG> (Thumb, 186 bytes, Stack size 8 bytes, wifi.o(i.reset_wifi_state))
@@ -3022,7 +3020,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_register_sync_wait
 <LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init_mode_enter
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
 </UL>
 
@@ -3044,7 +3042,7 @@ Global Symbols
 <LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init_mode_exit
 <LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rtc_init_mode_enter
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ResetAllSettings
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AcceptParameter
 </UL>
@@ -3084,7 +3082,7 @@ Global Symbols
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_1ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[136]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;unblocked()
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deviceOFF()
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnterMenu()
@@ -3281,9 +3279,9 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_datetime
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_wifi_state
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receive_uart_int
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_settings
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;query_faults
 </UL>
 
 <P><STRONG><a name="[12d]"></a>usart_word_length_set</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, gd32f3x0_usart.o(i.usart_word_length_set))

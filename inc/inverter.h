@@ -15,7 +15,7 @@ extern "C" {
 #define SH									240
 	
 	
-#define VERSION "12.5.8"		
+#define VERSION "12.6.0"		
 	
 	
 #define	BALANCE_RESISTOR 		33000.0
